@@ -13,3 +13,4 @@ class ResConfigSettings(models.TransientModel):
                                              related='company_id.fiscalyear_last_month', readonly=False)
     period_lock_date = fields.Date(related='company_id.period_lock_date', readonly=False)
     fiscalyear_lock_date = fields.Date(related='company_id.fiscalyear_lock_date', readonly=False)
+    group_fiscal_year = fields.Boolean(string='Fiscal Years', implied_group='om_account_accountant.group_fiscal_year')

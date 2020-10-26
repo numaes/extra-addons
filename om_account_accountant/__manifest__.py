@@ -14,10 +14,11 @@
     'license': 'LGPL-3',
     'support': 'odoomates@gmail.com',
     'website': '',
-    'depends': ['accounting_pdf_reports', 'om_account_asset', 'om_account_budget'],
+    'depends': ['account', 'accounting_pdf_reports', 'om_account_asset', 'om_account_budget'],
     'demo': [],
     'data': [
-        'views/account.xml'
+        'views/account.xml',
+        'security/security.xml',
     ],
     'installable': True,
     'application': True,
