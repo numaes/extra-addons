@@ -42,6 +42,7 @@
             <field name="key">app_show_poweredby</field>
             <field name="value">False</field>
         </record>
+        <!--
         <record id="app_documentation_url" model="ir.config_parameter">
             <field name="key">app_documentation_url</field>
             <field name="value">https://www.sunpop.cn/documentation/user/12.0/zh_CN/index.html</field>
@@ -54,6 +55,7 @@
             <field name="key">app_support_url</field>
             <field name="value">https://www.sunpop.cn/trial</field>
         </record>
+        -->
         <record id="app_account_title" model="ir.config_parameter">
             <field name="key">app_account_title</field>
             <field name="value">My Online Account</field>
