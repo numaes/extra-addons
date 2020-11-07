@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+    <!-- ### Add New Settings To existing Setting Page ### -->
+    <record id="cx_plantuml_res_config_settings_for" model="ir.ui.view">
+        <field name="name">cx.plantuml.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='general_settings']" position="inside">
+                <h2>Cetmix PlantUML Settings</h2>
+                <div class="row mt16 o_settings_container"
+                     id="cetmix_plantuml_settings"
+                     title="Cetmix PlantUML Settings">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="cetmix_plantuml_server_url">
+                            <label for="cetmix_plantuml_server_url"/>
+                            <div class="text-muted">
+                                PlantUML server used for rendering previews
+                            </div>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="cetmix_plantuml_server_url"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="cx_max_selection">
+                            <label for="cx_max_selection"/>
+                            <div class="text-muted">
+                                If the number of options for Selection field exceeds this amount it will be shortened to "x options"
+                            </div>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="cx_max_selection"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

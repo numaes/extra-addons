@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+tls_toll_user,tls_toll,model_tls_toll,fleet.fleet_group_user,1,0,0,0
+tls_toll,tls_toll,model_tls_toll,fleet.fleet_group_manager,1,1,1,1
+
+tls_toll_provider_user,tls_toll_provider,model_tls_toll_provider,fleet.fleet_group_manager,1,0,0,0
+tls_toll_provider,tls_toll_provider,model_tls_toll_provider,base.group_system,1,1,1,1

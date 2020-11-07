@@ -1,0 +1,13 @@
+$color-liteGray: #e0e0e0;
+
+span {
+  &.tls-input {
+    padding: 2px 4px;
+    line-height: 1.5;
+    min-height: 1.75rem;
+    background-color: $color-liteGray;
+    border: 1px solid $color-liteGray;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+}

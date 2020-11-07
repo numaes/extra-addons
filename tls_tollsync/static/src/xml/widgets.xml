@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+	<t t-name="tls_widget_route">
+		<div class="tls-h24 tls-route-map">
+			<a href="#" id="tls_route_warn" class="tls-route-warn">Widget not configured</a>
+		</div>
+	</t>
+
+    <t t-name="tls_widget_img_route">
+		<div class="tls-h24 tls-route-box">
+			<img id="tls_drag_map" class="tls-drag-map" t-attf-src="{{base64_map_data}}" ondragstart="return false"/>
+		</div>
+	</t>
+</templates>

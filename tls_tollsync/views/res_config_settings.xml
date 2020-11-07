@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.tls.toll</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="80"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div data-string="Toll Sync" string="Toll Sync" data-key="tls_tollsync" class="app_settings_block mb32"
+                     groups="fleet.fleet_group_manager">
+                    <h2>Route Widget</h2>
+                    <div name="route_widget" class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="tls_google_maps_api_key"/>
+                                <div class="text-muted">You can visualize a route with Maps API + Directions API</div>
+                                <field name="tls_google_maps_api_key" class="w-75 mt4 tls-input"
+                                       attrs="{'readonly':['|', ('tls_use_route_booster','=',True), ('tls_route_disable','=',True)]}"/>
+                                <div class="mt8">
+                                    <a href="https://developers.google.com/maps/documentation/javascript/overview"
+                                       class="oe-link" target="_blank">
+                                        <i class="fa fa-fw fa-arrow-right"/>
+                                        Maps JavaScript API
+                                    </a>
+                                </div>
+                                <div class="mt4">
+                                    <a href="https://developers.google.com/maps/documentation/javascript/directions"
+                                       class="oe-link" target="_blank">
+                                        <i class="fa fa-fw fa-arrow-right"/>
+                                        Directions Service API
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="tls_use_route_booster" attrs="{'readonly':[('tls_route_disable','=',True)]}"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="tls_use_route_booster"/>
+                                <div class="text-muted">
+                                    Use our service for route visualization. We do not collect sensitive information from you
+                                </div>
+                            </div>
+                            <div class="mt16">
+                                <div class="o_setting_left_pane">
+                                    <field name="tls_route_disable"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="tls_route_disable"/>
+                                    <div class="text-muted">Hide Route Widget area</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Tollsync.eu Booster</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="tls_booster_login"/>
+                                <div class="text-muted" attrs="{'invisible':[('tls_use_route_booster', '!=', True)]}">
+                                    We do not collect sensitive information from you
+                                </div>
+                                <div class="text-muted" attrs="{'invisible':[('tls_use_route_booster', '=', True)]}">
+                                    Extra functionality. Disabled by default
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="tls_booster_login" string="Email" class="col-lg-3 o_light_label"/>
+                                        <field name="tls_booster_login" class="tls-input"
+                                               attrs="{'readonly':[('tls_use_route_booster','=',False)]}"/>
+                                    </div>
+                                    <div class="row">
+                                        <label for="tls_booster_password" string="Password" class="col-lg-3 o_light_label"/>
+                                        <field name="tls_booster_password" class="tls-input"
+                                               attrs="{'readonly':[('tls_use_route_booster','=',False)]}" password="True"/>
+                                    </div>
+                                    <div class="row mt8" attrs="{'invisible':[('tls_use_route_booster','=',False)]}">
+                                        <label for="tls_test_connect" string="" class="col-lg-3"/>
+                                        <button name="tls_test_connect" type="object" string="Test connection"
+                                                attrs="{'invisible':[('tls_booster_confirmed', '!=', False)]}" class="btn btn-primary"/>
+                                        <button name="tls_retest_connect" type="object" string="Confirmed"
+                                                attrs="{'invisible':[('tls_booster_confirmed', '=', False)]}" class="btn btn-success"/>
+                                        <field name="tls_booster_confirmed" invisible="1"/>
+                                    </div>
+                                </div>
+                                <div class="mt16">
+                                    <a href="https://auth.tollsync.eu/signup?response_type=code&amp;client_id=7orvc22rcp0podmu4ue9a1u4qq&amp;redirect_uri=https://tollsync.eu/reg.html"
+                                       class="oe-link" target="_blank">
+                                        <i class="fa fa-fw fa-arrow-right"/>
+                                        Need an account? Sign up
+                                    </a>
+                                </div>
+                                <div class="mt4">
+                                    <a href="https://auth.tollsync.eu/forgotPassword?response_type=code&amp;client_id=7orvc22rcp0podmu4ue9a1u4qq&amp;redirect_uri=https://tollsync.eu/reg.html"
+                                       class="oe-link" target="_blank">
+                                        <i class="fa fa-fw fa-arrow-right"/>
+                                        Forgot your password?
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="tls_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'tls_tollsync'}</field>
+    </record>
+
+    <menuitem id="tls_config_settings_menu_action" name="Toll Sync Settings" parent="fleet.fleet_configuration"
+              sequence="128" action="tls_config_settings_action" groups="base.group_system"/>
+</odoo>
