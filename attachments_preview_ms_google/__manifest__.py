@@ -30,8 +30,9 @@
 {
     'name': "Preview attachment in MS and Google online",
 
-    'summary': """
-        Image files (.JPEG, .PNG, .GIF, .TIFF, .BMP)
+    'summary': """ Preview attachments in many formats""",
+    'description': """
+            Image files (.JPEG, .PNG, .GIF, .TIFF, .BMP)
         Video files (WebM, .MPEG4, .3GPP, .MOV, .AVI, .MPEGPS, .WMV, .FLV)
         Text files (.TXT)
         Markup/Code (.CSS, .HTML, .PHP, .C, .CPP, .H, .HPP, .JS)
@@ -49,8 +50,8 @@
         TrueType (.TTF)
         XML Paper Specification (.XPS)
         Archive file types (.ZIP and .RAR)
-        """,
 
+    """,
     'author': "Shurshilov Artem",
     'website': "http://www.eurodoo.com",
     "live_test_url": "https://eurodoo.com/login_employee?login=demo1&amp;password=demo1",
