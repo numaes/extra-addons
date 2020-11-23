@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-	<record id="type_service_toll" model="fleet.service.type">
-		<field name="name">Road toll</field>
-		<field name="category">service</field>
-	</record>
-</odoo>
