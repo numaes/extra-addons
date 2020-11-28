@@ -305,8 +305,8 @@ $chatter_zone_width: 35%;
                 overflow-y: hidden;
                 overflow-x: scroll;
                 overflow: auto;
-                background: url("../img/home-menu-bg-overlay.svg"),
-                    linear-gradient(to bottom, gray("200"), gray("white"));
+//                background: url("../img/home-menu-bg-overlay.svg"),
+//                    linear-gradient(to bottom, gray("200"), gray("white"));
                 background-position: center;
                 background-size: cover;
             }
@@ -746,4 +746,8 @@ html .o_web_client .o_action_manager .o_action {
             }
         }
     }
+}
+
+.o_ChatWindowHeader {
+    background-color: #875a7b;
 }
