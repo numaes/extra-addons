@@ -8,7 +8,7 @@ class ResUsers(models.Model):
 
     _inherit = 'res.users'
 
-    sidebar_visible = fields.Boolean("Show App Sidebar", default=False)
+    sidebar_visible = fields.Boolean("Show App Sidebar", default=True)
 
     def __init__(self, pool, cr):
         """ Override of __init__ to add access rights on notification_email_send
