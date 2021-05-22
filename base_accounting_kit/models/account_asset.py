@@ -624,10 +624,10 @@ class AccountAssetDepreciationLine(models.Model):
     depreciation_date = fields.Date('Depreciation Date', index=True)
     move_id = fields.Many2one('account.move', string='Depreciation Entry')
     move_check = fields.Boolean(compute='_get_move_check', string='Linked',
-                                tracking='always', store=True)
+                                tracking=True, store=True)
     move_posted_check = fields.Boolean(compute='_get_move_posted_check',
                                        string='Posted',
-                                       tracking='always', store=True)
+                                       tracking=True, store=True)
 
     @api.depends('move_id')
     def _get_move_check(self):

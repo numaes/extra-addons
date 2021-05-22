@@ -9,7 +9,7 @@ class PortalDashboard(models.Model):
     _inherit = ['mail.thread']
     _rec_name = 'partner_id'
 
-    partner_id = fields.Many2one('res.partner', string='Partner', tracking='onchange', required=True)
+    partner_id = fields.Many2one('res.partner', string='Partner', tracking=True, required=True)
     url = fields.Char('URL', index=True, required=True)
     active = fields.Boolean('Active', default=True)
 

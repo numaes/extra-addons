@@ -10,7 +10,7 @@ class HelpdeskTicket(models.Model):
     allow_timesheet = fields.Boolean(
         string="Allow Timesheet", related="team_id.allow_timesheet",
     )
-    planned_hours = fields.Float(string="Planned Hours", tracking="onchange",)
+    planned_hours = fields.Float(string="Planned Hours", tracking=True,)
     progress = fields.Float(
         compute="_compute_progress_hours",
         group_operator="avg",
