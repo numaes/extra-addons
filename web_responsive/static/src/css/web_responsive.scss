@@ -163,7 +163,7 @@ $chatter_zone_width: 35%;
         opacity: 0;
         visibility: hidden;
         transition: visibility 100ms ease, opacity 100ms ease;
-        background: url("../img/home-menu-bg-overlay.svg"),
+        background: url(../img/home-menu-bg-overlay.jpg),
             linear-gradient(
                 to bottom,
                 $o-brand-odoo,
@@ -306,8 +306,7 @@ $chatter_zone_width: 35%;
                 overflow-y: hidden;
                 overflow-x: scroll;
                 overflow: auto;
-                background: url("../img/home-menu-bg-overlay.svg"),
-                    linear-gradient(to bottom, gray("200"), gray("white"));
+                background: linear-gradient(to bottom, #6cb2f7, #091b2d);
                 background-position: center;
                 background-size: cover;
             }
