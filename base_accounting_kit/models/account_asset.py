@@ -168,7 +168,7 @@ class AccountAssetAsset(models.Model):
     method_progress_factor = fields.Float(string='Degressive Factor',
                                           readonly=True, default=0.3, states={
             'draft': [('readonly', False)]})
-    value_residual = fields.Float(compute='_amount_residual', method=True,
+    value_residual = fields.Float(compute='_amount_residual',
                                   digits=0, string='Residual Value')
     method_time = fields.Selection(
         [('number', 'Number of Entries'), ('end', 'Ending Date')],
@@ -312,7 +312,6 @@ class AccountAssetAsset(models.Model):
 
     def compute_depreciation_board(self):
         self.ensure_one()
-
         posted_depreciation_line_ids = self.depreciation_line_ids.filtered(
             lambda x: x.move_check).sorted(key=lambda l: l.depreciation_date)
         unposted_depreciation_line_ids = self.depreciation_line_ids.filtered(
@@ -359,8 +358,8 @@ class AccountAssetAsset(models.Model):
                 # if we already have some previous validated entries, starting date isn't 1st January but last entry + method period
                 if posted_depreciation_line_ids and \
                         posted_depreciation_line_ids[-1].depreciation_date:
-                    last_depreciation_date = datetime.strptime(
-                        posted_depreciation_line_ids[-1].depreciation_date,
+                    last_depreciation_date = datetime.strptime(str(
+                        posted_depreciation_line_ids[-1].depreciation_date),
                         DF).date()
                     depreciation_date = last_depreciation_date + relativedelta(
                         months=+self.method_period)
@@ -623,11 +622,9 @@ class AccountAssetDepreciationLine(models.Model):
                                      required=True)
     depreciation_date = fields.Date('Depreciation Date', index=True)
     move_id = fields.Many2one('account.move', string='Depreciation Entry')
-    move_check = fields.Boolean(compute='_get_move_check', string='Linked',
-                                tracking=True, store=True)
+    move_check = fields.Boolean(compute='_get_move_check', string='Linked', store=True)
     move_posted_check = fields.Boolean(compute='_get_move_posted_check',
-                                       string='Posted',
-                                       tracking=True, store=True)
+                                       string='Posted', store=True)
 
     @api.depends('move_id')
     def _get_move_check(self):

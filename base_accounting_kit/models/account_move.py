@@ -35,8 +35,7 @@ class AccountMove(models.Model):
 
     asset_depreciation_ids = fields.One2many('account.asset.depreciation.line',
                                              'move_id',
-                                             string='Assets Depreciation Lines',
-                                             ondelete="restrict")
+                                             string='Assets Depreciation Lines')
 
     def button_cancel(self):
         for move in self:
@@ -140,9 +139,9 @@ class AccountInvoiceLine(models.Model):
 
     @api.onchange('asset_category_id')
     def onchange_asset_category_id(self):
-        if self.move_id.move_type == 'out_invoice' and self.asset_category_id:
+        if self.move_id == 'out_invoice' and self.asset_category_id:
             self.account_id = self.asset_category_id.account_asset_id.id
-        elif self.move_id.move_type == 'in_invoice' and self.asset_category_id:
+        elif self.move_id == 'in_invoice' and self.asset_category_id:
             self.account_id = self.asset_category_id.account_asset_id.id
 
     @api.onchange('product_uom_id')
@@ -155,17 +154,17 @@ class AccountInvoiceLine(models.Model):
     def _onchange_product_id(self):
         vals = super(AccountInvoiceLine, self)._onchange_product_id()
         if self.product_id:
-            if self.move_id.move_type == 'out_invoice':
+            if self.move_id == 'out_invoice':
                 self.asset_category_id = self.product_id.product_tmpl_id.deferred_revenue_category_id
-            elif self.move_id.move_type == 'in_invoice':
+            elif self.move_id == 'in_invoice':
                 self.asset_category_id = self.product_id.product_tmpl_id.asset_category_id
         return vals
 
     def _set_additional_fields(self, invoice):
         if not self.asset_category_id:
-            if invoice.move_type == 'out_invoice':
+            if invoice.type == 'out_invoice':
                 self.asset_category_id = self.product_id.product_tmpl_id.deferred_revenue_category_id.id
-            elif invoice.move_type == 'in_invoice':
+            elif invoice.type == 'in_invoice':
                 self.asset_category_id = self.product_id.product_tmpl_id.asset_category_id.id
             self.onchange_asset_category_id()
         super(AccountInvoiceLine, self)._set_additional_fields(invoice)
