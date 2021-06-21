@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: Roboto;
-    src: url(/backend_theme_v14/static/src/font/Roboto-Regular.ttf)
+    src: url(/backend_theme_v14/static/src/font/Roboto-Regular.ttf);
 }
 
 
@@ -28,7 +28,9 @@ body {
 }
 
 .o_main_navbar {
-    background-color : $brand-primary;
+    background-color : $brand-primary !important;
+    //agregado
+  border-bottom: $brand-primary;
 }
 
 .o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar > button:hover, .o_main_navbar > button:focus {
@@ -82,6 +84,8 @@ html .o_web_client {
 
 .btn {
     border-radius: 0px;
+//agregado
+  text-transform: uppercase;
 }
 
 .btn-primary {
@@ -157,6 +161,8 @@ oe_highlight {
 
 .badge {
     border: 1px solid $brand-secondary;
+// agregado
+    background-color: $brand-secondary !important;
 }
 
 // Calendar
@@ -280,14 +286,17 @@ textarea, select, .o_form_view.o_form_editable .o_form_field_many2manytags,
 
 .o_field_widget {
     &.o_field_many2one .o_external_button {
-        color: $brand-secondary
+        color: $brand-secondary;
     }
 }
 
 .o_required_modifier {
     &.o_input, .o_input {
-        background-color: lighten($brand-primary, 35%) ! important;
-    }
+//    background-color: lighten($brand-primary, 35%) !important;
+// agregado
+    background-color: transparent !important;
+    border-bottom: 2px solid #875a7b !important;
+}
 }
 
 .input-group-text {
@@ -383,7 +392,7 @@ textarea, select, .o_form_view.o_form_editable .o_form_field_many2manytags,
     background-size: cover;
     height: calc(100vh);
     max-height: calc(100vh);
-    border-top: $o-navbar-height solid transparent;
+    border-top: $o-navbar-height solid $brand-primary;
     top: 0 !important;
 }
 
@@ -423,6 +432,10 @@ textarea, select, .o_form_view.o_form_editable .o_form_field_many2manytags,
     transform: translateY(-1px);
 }
 
+.search-results {
+    background: transparent !important;
+  }
+  
 .dropdown-item.o_app {
     background: transparent;
 }
@@ -436,3 +449,11 @@ textarea, select, .o_form_view.o_form_editable .o_form_field_many2manytags,
 .o_thread_window .o_thread_window_header {
 	background-color: $brand-primary;
 }
+
+// No bubble tooltips
+.o_tooltip {
+    &.o_animated {
+      display: none;
+    }
+}
+  
