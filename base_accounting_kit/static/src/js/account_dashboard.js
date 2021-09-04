@@ -553,7 +553,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                         data: {
                             labels: labels,
                             datasets: [{
-                                    label: 'Income', // Name the series
+                                    label: _t('Income'), // Name the series
                                     data: income, // Specify the data values array
                                     backgroundColor: '#66aecf',
                                     borderColor: '#66aecf',
@@ -563,7 +563,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Expense', // Name the series
+                                    label: _t('Expense'), // Name the series
                                     data: expense, // Specify the data values array
                                     backgroundColor: '#6993d6',
                                     borderColor: '#6993d6',
@@ -573,7 +573,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Profit/Loss', // Name the series
+                                    label: _t('Profit/Loss'), // Name the series
                                     data: profit, // Specify the data values array
                                     backgroundColor: '#0bd465',
                                     borderColor: '#0bd465',
@@ -631,7 +631,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                         data: {
                             labels: labels,
                             datasets: [{
-                                    label: 'Income', // Name the series
+                                    label: _t('Income'), // Name the series
                                     data: income, // Specify the data values array
                                     backgroundColor: '#66aecf',
                                     borderColor: '#66aecf',
@@ -641,7 +641,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Expense', // Name the series
+                                    label: _t('Expense'), // Name the series
                                     data: expense, // Specify the data values array
                                     backgroundColor: '#6993d6',
                                     borderColor: '#6993d6',
@@ -651,7 +651,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Profit/Loss', // Name the series
+                                    label: _('Profit/Loss'), // Name the series
                                     data: profit, // Specify the data values array
                                     backgroundColor: '#0bd465',
                                     borderColor: '#0bd465',
@@ -712,7 +712,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                         data: {
                             labels: labels,
                             datasets: [{
-                                    label: 'Income', // Name the series
+                                    label: _t('Income'), // Name the series
                                     data: income, // Specify the data values array
                                     backgroundColor: '#66aecf',
                                     borderColor: '#66aecf',
@@ -722,7 +722,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Expense', // Name the series
+                                    label: _t('Expense'), // Name the series
                                     data: expense, // Specify the data values array
                                     backgroundColor: '#6993d6',
                                     borderColor: '#6993d6',
@@ -732,7 +732,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Profit/Loss', // Name the series
+                                    label: _t('Profit/Loss'), // Name the series
                                     data: profit, // Specify the data values array
                                     backgroundColor: '#0bd465',
                                     borderColor: '#0bd465',
@@ -956,7 +956,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                         data: {
                             labels: labels,
                             datasets: [{
-                                    label: 'Income', // Name the series
+                                    label: _t('Income'), // Name the series
                                     data: income, // Specify the data values array
                                     backgroundColor: '#66aecf',
                                     borderColor: '#66aecf',
@@ -966,7 +966,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Expense', // Name the series
+                                    label: _t('Expense'), // Name the series
                                     data: expense, // Specify the data values array
                                     backgroundColor: '#6993d6',
                                     borderColor: '#6993d6',
@@ -976,7 +976,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                     fill: false
                                 },
                                 {
-                                    label: 'Profit/Loss', // Name the series
+                                    label: _t('Profit/Loss'), // Name the series
                                     data: profit, // Specify the data values array
                                     backgroundColor: '#0bd465',
                                     borderColor: '#0bd465',
@@ -1198,7 +1198,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                 data: {
                                     labels: labels,
                                     datasets: [{
-                                            label: 'Income', // Name the series
+                                            label: _t('Income'), // Name the series
                                             data: income, // Specify the data values array
                                             backgroundColor: '#66aecf',
                                             borderColor: '#66aecf',
@@ -1208,7 +1208,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                             fill: false
                                         },
                                         {
-                                            label: 'Expense', // Name the series
+                                            label: _t('Expense'), // Name the series
                                             data: expense, // Specify the data values array
                                             backgroundColor: '#6993d6',
                                             borderColor: '#6993d6',
@@ -1218,7 +1218,7 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                                             fill: false
                                         },
                                         {
-                                            label: 'Profit/Loss', // Name the series
+                                            label: _t('Profit/Loss'), // Name the series
                                             data: profit, // Specify the data values array
                                             backgroundColor: '#0bd465',
                                             borderColor: '#0bd465',
