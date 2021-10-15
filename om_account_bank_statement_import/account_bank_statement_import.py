@@ -44,7 +44,7 @@ class AccountBankStatementImport(models.TransientModel):
             if not journal:
                 # The active_id is passed in context so the wizard can call import_file again once the journal is created
                 return self.with_context(active_id=self.ids[0])._journal_creation_wizard(currency, account_number)
-            if not journal.default_debit_account_id or not journal.default_credit_account_id:
+            if not journal.payment_debit_account_id or not journal.payment_credit_account_id:
                 raise UserError(_('You have to set a Default Debit Account and a Default Credit Account for the journal: %s') % (journal.name,))
             # Prepare statement data to be used for bank statements creation
             stmts_vals = self._complete_stmts_vals(stmts_vals, journal, account_number)
@@ -205,7 +205,7 @@ class AccountBankStatementImport(models.TransientModel):
                     if identifying_string:
                         partner_bank = self.env['res.partner.bank'].search([('acc_number', '=', identifying_string)], limit=1)
                         if partner_bank:
-                            line_vals['bank_account_id'] = partner_bank.id
+                            # line_vals['bank_account_id'] = partner_bank.id
                             line_vals['partner_id'] = partner_bank.partner_id.id
         return stmts_vals
 

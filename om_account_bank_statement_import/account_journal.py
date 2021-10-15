@@ -15,9 +15,10 @@ class AccountJournal(models.Model):
         rslt = super(AccountJournal, self).__get_bank_statements_available_sources()
         formats_list = self._get_bank_statements_available_import_formats()
         if formats_list:
-            formats_list.sort()
-            import_formats_str = ', '.join(formats_list)
-            rslt.append(("file_import", _("Import") + "(" + import_formats_str + ")"))
+            # formats_list.sort()
+            # import_formats_str = ', '.join(formats_list)
+            # rslt.append(("file_import", _("Import") + "(" + import_formats_str + ")"))
+            rslt.append(("file_import", _("Import") + ".csv"))
         return rslt
 
     def import_statement(self):
