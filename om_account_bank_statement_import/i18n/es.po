@@ -49,13 +49,12 @@ msgstr "%d transacciones han sido ya importadas y serán ignoradas."
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:0
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
-msgstr "1 transacción ha sido ya importada y será ignorada."
+msgstr "Una transacción ha sido ya importada y será ignorada."
 
 #. module: account_bank_statement_import
 #: model:ir.model.constraint,message:account_bank_statement_import.constraint_account_bank_statement_line_unique_import_id
 msgid "A bank account transactions can be imported only once !"
-msgstr ""
-"Las transacciones de una cuenta bancaria puede importarse sólo una vez"
+msgstr "Las transacciones de una cuenta bancaria puede importarse sólo una vez"
 
 #. module: account_bank_statement_import
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_import_journal_creation__company_partner_id
