@@ -22,7 +22,7 @@ msgstr ""
 #: code:addons/om_hr_payroll/models/hr_salary_rule.py:41
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (copia)"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_payslip_state
@@ -40,7 +40,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip_details
 msgid "<strong>Address</strong>"
-msgstr ""
+msgstr "<strong>Dirección</strong>"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip
@@ -511,7 +511,7 @@ msgstr "Nombre mostrado"
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "Done"
-msgstr ""
+msgstr "Realizado"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
@@ -528,7 +528,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "Draft"
-msgstr ""
+msgstr "Borrador"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
@@ -546,7 +546,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_employee_id
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Employee"
-msgstr ""
+msgstr "Empleado"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_contract
