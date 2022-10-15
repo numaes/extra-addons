@@ -521,7 +521,7 @@ msgstr ""
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "Done Slip"
-msgstr ""
+msgstr "Liquidación Realizada"
 
 #. module: om_hr_payroll
 #: selection:hr.payslip,state:0 selection:hr.payslip.run,state:0
@@ -533,12 +533,12 @@ msgstr "Borrador"
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
 msgid "Draft Payslip Batches"
-msgstr ""
+msgstr "Liquidaciones Borrador"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "Draft Slip"
-msgstr ""
+msgstr "Liquidación Borrador"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_employee
@@ -551,24 +551,24 @@ msgstr "Empleado"
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_contract
 msgid "Employee Contract"
-msgstr ""
+msgstr "Contrato Empleado"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_employee_grade_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payroll_structure_list_view
 msgid "Employee Function"
-msgstr ""
+msgstr "Función Empleado"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_view_hr_payslip_form
 #: model:ir.ui.menu,name:om_hr_payroll.menu_department_tree
 msgid "Employee Payslips"
-msgstr ""
+msgstr "Liquidaciones Empleado"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_contract_advantage_template
 msgid "Employee's Advantage on Contract"
-msgstr ""
+msgstr "Ventajas Empleado sobre Contrato"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_employees_employee_ids
@@ -576,13 +576,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_line_filter
 msgid "Employees"
-msgstr ""
+msgstr "Empleados"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/models/hr_salary_rule.py:36
 #, python-format
 msgid "Error ! You cannot create a recursive Salary Structure."
-msgstr ""
+msgstr "Error: No puede crear una regla salarial recursiva"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_payslip_line_register_id
@@ -596,19 +596,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_amount_fix
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_amount_fix
 msgid "Fixed Amount"
-msgstr ""
+msgstr "Importe fijo"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_payslip_line_amount_percentage
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_salary_rule_amount_percentage
 msgid "For example, enter 50.0 to apply a percentage of 50%"
-msgstr ""
+msgstr "Por ejemplo, ingrese 50.0 para aplicar un 50%"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/report/report_contribution_register.py:34
 #, python-format
 msgid "Form content is missing, this report cannot be printed."
-msgstr ""
+msgstr "Contenido desaparecido, no puedo imprimir el reporte"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_res_config_settings_module_l10n_fr_hr_payroll
@@ -623,18 +623,18 @@ msgstr ""
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_by_employees
 msgid "Generate"
-msgstr ""
+msgstr "Generar"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_hr_payslip_by_employees
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_form
 msgid "Generate Payslips"
-msgstr ""
+msgstr "Genberar Liquidaciones"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_payslip_employees
 msgid "Generate payslips for all selected employees"
-msgstr ""
+msgstr "Generar Liquidaciones para todos los empleados seleccionados"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
@@ -667,7 +667,7 @@ msgstr "ID (identificación)"
 msgid ""
 "If its checked, indicates that all payslips generated from here are refund "
 "payslips."
-msgstr ""
+msgstr "Si esta tildado, indica que todas las liquidaciones generadas son Nota de Crédito"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_payslip_line_active
@@ -691,24 +691,24 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_salary_rule_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Input Data"
-msgstr ""
+msgstr "Ingrese Dato"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_input_ids
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_input_ids
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_salary_rule_form
 msgid "Inputs"
-msgstr ""
+msgstr "Entradas"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_note
 msgid "Internal Note"
-msgstr ""
+msgstr "Nota Interna"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_view_kanban
 msgid "Is a Blocking Reason?"
-msgstr ""
+msgstr "Es razón de bloqueo?"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_salary_rule_quantity
@@ -810,23 +810,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_condition_range_max
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_condition_range_max
 msgid "Maximum Range"
-msgstr ""
+msgstr "Rango máximo"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_condition_range_min
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_condition_range_min
 msgid "Minimum Range"
-msgstr ""
+msgstr "Rango mínimo"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Misceláneas"
 
 #. module: om_hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Monthly"
-msgstr ""
+msgstr "Mensualmente"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_contract_advantage_template_name
@@ -840,38 +840,38 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip_details
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/models/hr_payslip.py:197
 #, python-format
 msgid "Normal Working Days paid at 100%"
-msgstr ""
+msgstr "Días normales trabajados al 100%"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_salary_rule_category_form
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_worked_days_number_of_days
 msgid "Number of Days"
-msgstr ""
+msgstr "Número de días"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_worked_days_number_of_hours
 msgid "Number of Hours"
-msgstr ""
+msgstr "Número de horas"
 
 #. module: om_hr_payroll
 #: model:res.groups,name:om_hr_payroll.group_hr_payroll_user
 msgid "Officer"
-msgstr ""
+msgstr "Oficina"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Other Inputs"
-msgstr ""
+msgstr "Otras Entradas"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payroll_structure_parent_id
@@ -898,12 +898,12 @@ msgstr "Empresa"
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip_details
 msgid "Pay Slip"
-msgstr ""
+msgstr "Pago Liquidacion"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "PaySlip Batch"
-msgstr ""
+msgstr "Lote Liquidaciones"
 
 #. module: om_hr_payroll
 #: model:ir.actions.report,name:om_hr_payroll.payslip_details_report
@@ -913,95 +913,95 @@ msgstr ""
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_payslip_lines_contribution_register
 msgid "PaySlip Lines"
-msgstr ""
+msgstr "Líneas de liquidacion"
 
 #. module: om_hr_payroll
 #: model:ir.actions.report,name:om_hr_payroll.action_contribution_register
 msgid "PaySlip Lines By Conribution Register"
-msgstr ""
+msgstr "Líneas de liquidacion para Registro contribución"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_contributionregister
 msgid "PaySlip Lines by Contribution Register"
-msgstr ""
+msgstr "Líneas de liquidacion para Registro contribución"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_payslip_lines_contribution_register
 msgid "PaySlip Lines by Contribution Registers"
-msgstr ""
+msgstr "Líneas de liquidacion para Registro contribución"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_contributionregister
 msgid "PaySlip Name"
-msgstr ""
+msgstr "Nombre Liquidación"
 
 #. module: om_hr_payroll
 #: model:ir.ui.menu,name:om_hr_payroll.menu_hr_payroll_root
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.res_config_settings_view_form
 msgid "Payroll"
-msgstr ""
+msgstr "Liquidación"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.res_config_settings_view_form
 msgid "Payroll Entries"
-msgstr ""
+msgstr "Entradas liquidacion"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.res_config_settings_view_form
 msgid "Payroll Rules"
-msgstr ""
+msgstr "Reglas Liquidación"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payroll_structure_filter
 msgid "Payroll Structures"
-msgstr ""
+msgstr "Estructura Liquidación"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.res_config_settings_view_form
 msgid "Payroll rules that apply to your country"
-msgstr ""
+msgstr "Reglas de liquidación que aplican a su país"
 
 #. module: om_hr_payroll
 #: model:ir.actions.report,name:om_hr_payroll.action_report_payslip
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Payslip"
-msgstr ""
+msgstr "Liquidación"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/models/hr_payslip.py:84
 #, python-format
 msgid "Payslip 'Date From' must be before 'Date To'."
-msgstr ""
+msgstr "Fecha desde debe ser menor que Fecha hasta"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_payslip_run_id
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
 msgid "Payslip Batches"
-msgstr ""
+msgstr "Lote Liquidación"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.act_payslip_lines
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_payslip_count
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Payslip Computation Details"
-msgstr ""
+msgstr "Detalle Cálculo Liquidación"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_payslip_input
 msgid "Payslip Input"
-msgstr ""
+msgstr "Entrada Liquidación"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_input_line_ids
 msgid "Payslip Inputs"
-msgstr ""
+msgstr "Entradas Liquidacion"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_payslip_line
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_line_form
 msgid "Payslip Line"
-msgstr ""
+msgstr "Línea Liquidación"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.act_contribution_reg_payslip_lines
@@ -1009,28 +1009,28 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_line_filter
 msgid "Payslip Lines"
-msgstr ""
+msgstr "Líneas Liquidación"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip_details
 msgid "Payslip Lines by Contribution Register"
-msgstr ""
+msgstr "Líneas Liquidación por Registro Contribución"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_name
 msgid "Payslip Name"
-msgstr ""
+msgstr "Nombre Liquidación"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_payslip_run
 msgid "Payslip Run"
-msgstr ""
+msgstr "Procesamiento Liquidacion"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_payslip_worked_days
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_worked_days_line_ids
 msgid "Payslip Worked Days"
-msgstr ""
+msgstr "Días trabajados"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.act_hr_employee_payslip_list
@@ -1042,7 +1042,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_tree
 msgid "Payslips"
-msgstr ""
+msgstr "Liquidaciones"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_hr_payslip_run_tree
@@ -1050,12 +1050,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_tree
 msgid "Payslips Batches"
-msgstr ""
+msgstr "Lote Liquidaciones"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_by_employees
 msgid "Payslips by Employees"
-msgstr ""
+msgstr "Liquidaciones por empleado"
 
 #. module: om_hr_payroll
 #: selection:hr.payslip.line,amount_select:0
@@ -1063,19 +1063,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_amount_percentage
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_amount_percentage
 msgid "Percentage (%)"
-msgstr ""
+msgstr "Porcentaje (%)"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_amount_percentage_base
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_amount_percentage_base
 msgid "Percentage based on"
-msgstr ""
+msgstr "Porcentaje basado en"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Period"
-msgstr ""
+msgstr "Período"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.res_config_settings_view_form
@@ -1093,19 +1093,19 @@ msgstr "Imprimir"
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_amount_python_compute
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_amount_python_compute
 msgid "Python Code"
-msgstr ""
+msgstr "Código Python"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_condition_python
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_condition_python
 msgid "Python Condition"
-msgstr ""
+msgstr "Condición Python"
 
 #. module: om_hr_payroll
 #: selection:hr.payslip.line,condition_select:0
 #: selection:hr.salary.rule,condition_select:0
 msgid "Python Expression"
-msgstr ""
+msgstr "Expresión Python"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_quantity
@@ -1116,30 +1116,30 @@ msgstr "Cantidad"
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_contributionregister
 msgid "Quantity/Rate"
-msgstr ""
+msgstr "Cantidad/Rate"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip_details
 msgid "Quantity/rate"
-msgstr ""
+msgstr "Cantidad/Rate"
 
 #. module: om_hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Quarterly"
-msgstr ""
+msgstr "Cuatrimestral"
 
 #. module: om_hr_payroll
 #: selection:hr.payslip.line,condition_select:0
 #: selection:hr.salary.rule,condition_select:0
 msgid "Range"
-msgstr ""
+msgstr "Rango"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_condition_range
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_salary_rule_condition_range
 msgid "Range Based on"
-msgstr ""
+msgstr "Rango basado en"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_rate
@@ -1150,43 +1150,43 @@ msgstr ""
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payroll_structure_code
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_number
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Refund"
-msgstr ""
+msgstr "Nota Crédito"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/models/hr_payslip.py:104
 #, python-format
 msgid "Refund: "
-msgstr ""
+msgstr "Nota Crédito: "
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_contribution_register_register_line_ids
 msgid "Register Line"
-msgstr ""
+msgstr "Línea registro"
 
 #. module: om_hr_payroll
 #: selection:hr.payslip,state:0
 msgid "Rejected"
-msgstr ""
+msgstr "Rechazado"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_line_salary_rule_id
 msgid "Rule"
-msgstr ""
+msgstr "Regla"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_salary_rule_category_form
 msgid "Salary Categories"
-msgstr ""
+msgstr "Categorías Salariales"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Salary Computation"
-msgstr ""
+msgstr "Cómputo salarial"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_hr_salary_rule_category
@@ -1195,26 +1195,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_salary_rule_category_tree_view
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_salary_rule_category_filter
 msgid "Salary Rule Categories"
-msgstr ""
+msgstr "Categorías Relas Salariales"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_hr_salary_rule_category_tree_view
 #: model:ir.ui.menu,name:om_hr_payroll.menu_hr_salary_rule_category_tree_view
 msgid "Salary Rule Categories Hierarchy"
-msgstr ""
+msgstr "Herencia Categorías Reglas Salariales"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_salary_rule_category
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.report_payslip_details
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_line_filter
 msgid "Salary Rule Category"
-msgstr ""
+msgstr "Categoría Regla Salarial"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_rule_input
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_rule_input_input_id
 msgid "Salary Rule Input"
-msgstr ""
+msgstr "Entrada Regla Salarial"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_salary_rule_form
@@ -1226,14 +1226,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_employee_grade_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_rule_filter
 msgid "Salary Rules"
-msgstr ""
+msgstr "Reglas Salariales"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/models/hr_payslip.py:396
 #: code:addons/om_hr_payroll/models/hr_payslip.py:446
 #, python-format
 msgid "Salary Slip of %s for %s"
-msgstr ""
+msgstr "Liquidación de %s para %s"
 
 #. module: om_hr_payroll
 #: model:ir.model,name:om_hr_payroll.model_hr_payroll_structure
@@ -1242,38 +1242,38 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_line_tree
 msgid "Salary Structure"
-msgstr ""
+msgstr "Estructura Salarial"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_view_hr_payroll_structure_list_form
 #: model:ir.ui.menu,name:om_hr_payroll.menu_hr_payroll_structure_view
 msgid "Salary Structures"
-msgstr ""
+msgstr "Estructuras Salariales"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_contract_schedule_pay
 msgid "Scheduled Pay"
-msgstr ""
+msgstr "Pago programado"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_filter
 msgid "Search Payslip Batches"
-msgstr ""
+msgstr "Búsqueda lote Liquidacion"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_line_filter
 msgid "Search Payslip Lines"
-msgstr ""
+msgstr "Búsqueda Líneas Liquidación"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "Search Payslips"
-msgstr ""
+msgstr "Buscar Liquidaciones"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_rule_filter
 msgid "Search Salary Rule"
-msgstr ""
+msgstr "Buscar Regla Salarial"
 
 #. module: om_hr_payroll
 #: selection:hr.contract,schedule_pay:0
@@ -1292,18 +1292,18 @@ msgstr "Secuencia"
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.hr_payslip_run_form
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Set to Draft"
-msgstr ""
+msgstr "Volver a Borrador"
 
 #. module: om_hr_payroll
 #: model:ir.actions.act_window,name:om_hr_payroll.action_hr_payroll_configuration
 #: model:ir.ui.menu,name:om_hr_payroll.menu_hr_payroll_global_settings
 msgid "Settings"
-msgstr ""
+msgstr "Configuraciones"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_filter
 msgid "States"
-msgstr ""
+msgstr "Estados"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_run_state
@@ -1314,7 +1314,7 @@ msgstr "Estado"
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_payslip_struct_id
 msgid "Structure"
-msgstr ""
+msgstr "Estructura"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,help:om_hr_payroll.field_hr_payslip_line_code
@@ -1382,7 +1382,7 @@ msgstr "Total"
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Total Working Days"
-msgstr ""
+msgstr "Total días trabajados"
 
 #. module: om_hr_payroll
 #: model:ir.model.fields,field_description:om_hr_payroll.field_hr_contract_advantage_template_upper_bound
@@ -1409,27 +1409,27 @@ msgstr ""
 #. module: om_hr_payroll
 #: selection:hr.payslip,state:0
 msgid "Waiting"
-msgstr ""
+msgstr "Esperando"
 
 #. module: om_hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Weekly"
-msgstr ""
+msgstr "Semanalmente"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Worked Day"
-msgstr ""
+msgstr "Día trabajado"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Worked Days"
-msgstr ""
+msgstr "Días trabajados"
 
 #. module: om_hr_payroll
 #: model_terms:ir.ui.view,arch_db:om_hr_payroll.view_hr_payslip_form
 msgid "Worked Days & Inputs"
-msgstr ""
+msgstr "Días trabajados & entradas"
 
 #. module: om_hr_payroll
 #: code:addons/om_hr_payroll/models/hr_salary_rule.py:198
