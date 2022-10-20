@@ -1,4 +1,3 @@
-import ast
 from odoo import api, fields, models
 from odoo.tools.safe_eval import safe_eval
 
@@ -21,7 +20,9 @@ class HelpdeskTeam(models.Model):
         default=lambda self: self.env.company,
     )
     user_id = fields.Many2one(
-        comodel_name="res.users", string="Team Leader", check_company=True,
+        comodel_name="res.users",
+        string="Team Leader",
+        check_company=True,
     )
     alias_id = fields.Many2one(
         comodel_name="mail.alias",
@@ -35,14 +36,11 @@ class HelpdeskTeam(models.Model):
     )
     color = fields.Integer(string="Color Index", default=0)
     ticket_ids = fields.One2many(
-        comodel_name="helpdesk.ticket", inverse_name="team_id", string="Tickets",
+        comodel_name="helpdesk.ticket",
+        inverse_name="team_id",
+        string="Tickets",
     )
-    todo_ticket_ids = fields.One2many(
-        related="ticket_ids",
-        domain="[('closed', '=', False)]",
-        string="Todo tickets",
-        readonly=True,
-    )
+
     todo_ticket_count = fields.Integer(
         string="Number of tickets", compute="_compute_todo_tickets"
     )
@@ -56,48 +54,42 @@ class HelpdeskTeam(models.Model):
         string="Number of tickets in high priority", compute="_compute_todo_tickets"
     )
 
-    # ------------------------------------------------------------
-    # ORM
-    # ------------------------------------------------------------
-
-    def write(self, vals):
-        result = super(HelpdeskTeam, self).write(vals)
-        if 'use_leads' in vals or 'use_opportunities' in vals:
-            for team in self:
-                alias_vals = team._alias_get_creation_values()
-                team.write({
-                    'alias_name': alias_vals.get('alias_name', team.alias_name),
-                    'alias_defaults': alias_vals.get('alias_defaults'),
-                })
-        return result
-
-    # ------------------------------------------------------------
-    # MESSAGING
-    # ------------------------------------------------------------
-
-    def _alias_get_creation_values(self):
-        values = super(HelpdeskTeam, self)._alias_get_creation_values()
-        values['alias_model_id'] = self.env['ir.model']._get('helpdesk.ticket.team').id
-        if self.id:
-            values['alias_name'] = False
-            values['alias_defaults'] = defaults = ast.literal_eval(self.alias_defaults or "{}")
-            defaults['team_id'] = self.id
-        return values
-
     @api.depends("ticket_ids", "ticket_ids.stage_id")
     def _compute_todo_tickets(self):
-        for record in self:
-            record.todo_ticket_ids = record.ticket_ids.filtered(
-                lambda ticket: not ticket.closed
+        ticket_model = self.env["helpdesk.ticket"]
+        fetch_data = ticket_model.read_group(
+            [("team_id", "in", self.ids), ("closed", "=", False)],
+            ["team_id", "user_id", "unattended", "priority"],
+            ["team_id", "user_id", "unattended", "priority"],
+            lazy=False,
+        )
+        result = [
+            [
+                data["team_id"][0],
+                data["user_id"] and data["user_id"][0],
+                data["unattended"],
+                data["priority"],
+                data["__count"],
+            ]
+            for data in fetch_data
+        ]
+        for team in self:
+            team.todo_ticket_count = sum([r[4] for r in result if r[0] == team.id])
+            team.todo_ticket_count_unassigned = sum(
+                [r[4] for r in result if r[0] == team.id and not r[1]]
             )
-            record.todo_ticket_count = len(record.todo_ticket_ids)
-            record.todo_ticket_count_unassigned = len(
-                record.todo_ticket_ids.filtered(lambda ticket: not ticket.user_id)
+            team.todo_ticket_count_unattended = sum(
+                [r[4] for r in result if r[0] == team.id and r[2]]
             )
-            record.todo_ticket_count_unattended = len(
-                record.todo_ticket_ids.filtered(lambda ticket: ticket.unattended)
-            )
-            record.todo_ticket_count_high_priority = len(
-                record.todo_ticket_ids.filtered(lambda ticket: ticket.priority == "3")
+            team.todo_ticket_count_high_priority = sum(
+                [r[4] for r in result if r[0] == team.id and r[3] == "3"]
             )
 
+    def _alias_get_creation_values(self):
+        values = super()._alias_get_creation_values()
+        values["alias_model_id"] = self.env.ref(
+            "helpdesk_mgmt.model_helpdesk_ticket"
+        ).id
+        values["alias_defaults"] = defaults = safe_eval(self.alias_defaults or "{}")
+        defaults["team_id"] = self.id
+        return values

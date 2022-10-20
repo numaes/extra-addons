@@ -7,9 +7,20 @@ class TestHelpdeskTicketTeam(common.SavepointCase):
         super(TestHelpdeskTicketTeam, cls).setUpClass()
         helpdesk_ticket = cls.env["helpdesk.ticket"]
         helpdesk_ticket_team = cls.env["helpdesk.ticket.team"]
+        mail_alias = cls.env["mail.alias"]
         cls.user_demo = cls.env.ref("base.user_demo")
         cls.stage_closed = cls.env.ref("helpdesk_mgmt.helpdesk_ticket_stage_done")
-        cls.team_id = helpdesk_ticket_team.create({"name": "Team 1"})
+        cls.mail_alias_id = mail_alias.create(
+            {
+                "alias_name": "Test Mail Alias",
+                "alias_model_id": cls.env["ir.model"]
+                .search([("model", "=", "helpdesk.ticket")])
+                .id,
+            }
+        )
+        cls.team_id = helpdesk_ticket_team.create(
+            {"name": "Team 1", "alias_id": cls.mail_alias_id.id}
+        )
         cls.helpdesk_ticket_1 = helpdesk_ticket.create(
             {
                 "name": "Ticket 1",
@@ -66,4 +77,34 @@ class TestHelpdeskTicketTeam(common.SavepointCase):
             self.team_id.todo_ticket_count,
             1,
             "Helpdesk Ticket: Helpdesk ticket team should " "have one ticket to do.",
+        )
+
+    def test_helpdesk_ticket_team_from_category(self):
+        self.assertEqual(
+            self.team_id.todo_ticket_count,
+            2,
+        )
+        category = self.env.ref("helpdesk_mgmt.helpdesk_category_1")
+        self.env["helpdesk.ticket"].create(
+            {
+                "name": "Ticket 1",
+                "description": "Description",
+                "category_id": category.id,
+            }
+        )
+        self.assertEqual(
+            self.team_id.todo_ticket_count,
+            2,
+        )
+        category.default_team_id = self.team_id
+        self.env["helpdesk.ticket"].create(
+            {
+                "name": "Ticket 1",
+                "description": "Description",
+                "category_id": category.id,
+            }
+        )
+        self.assertEqual(
+            self.team_id.todo_ticket_count,
+            3,
         )

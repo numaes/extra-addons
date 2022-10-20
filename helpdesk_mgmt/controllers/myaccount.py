@@ -1,31 +1,24 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import _, http
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 
 from odoo.addons.portal.controllers.portal import CustomerPortal, pager as portal_pager
 
 
 class CustomerPortalHelpdesk(CustomerPortal):
-    def _prepare_portal_layout_values(self):
-        values = super()._prepare_portal_layout_values()
-        partner = request.env.user.partner_id
-        ticket_count = request.env["helpdesk.ticket"].search_count(
-            [("partner_id", "child_of", partner.id)]
-        )
-        values["ticket_count"] = ticket_count
+    def _prepare_home_portal_values(self, counters):
+        values = super()._prepare_home_portal_values(counters)
+        if "ticket_count" in counters:
+            helpdesk_model = request.env["helpdesk.ticket"]
+            ticket_count = (
+                helpdesk_model.search_count([])
+                if helpdesk_model.check_access_rights("read", raise_exception=False)
+                else 0
+            )
+            values["ticket_count"] = ticket_count
         return values
-
-    def _helpdesk_ticket_check_access(self, ticket_id):
-        ticket = request.env["helpdesk.ticket"].browse([ticket_id])
-        ticket_sudo = ticket.sudo()
-        try:
-            ticket.check_access_rights("read")
-            ticket.check_access_rule("read")
-        except AccessError:
-            raise
-        return ticket_sudo
 
     @http.route(
         ["/my/tickets", "/my/tickets/page/<int:page>"],
@@ -38,8 +31,11 @@ class CustomerPortalHelpdesk(CustomerPortal):
     ):
         values = self._prepare_portal_layout_values()
         HelpdesTicket = request.env["helpdesk.ticket"]
-        partner = request.env.user.partner_id
-        domain = [("partner_id", "child_of", partner.id)]
+        # Avoid error if the user does not have access.
+        if not HelpdesTicket.check_access_rights("read", raise_exception=False):
+            return request.redirect("/my")
+
+        domain = []
 
         searchbar_sortings = {
             "date": {"label": _("Newest"), "order": "create_date desc"},
@@ -100,11 +96,15 @@ class CustomerPortalHelpdesk(CustomerPortal):
         )
         return request.render("helpdesk_mgmt.portal_my_tickets", values)
 
-    @http.route(["/my/ticket/<int:ticket_id>"], type="http", website=True)
-    def portal_my_ticket(self, ticket_id=None, **kw):
+    @http.route(
+        ["/my/ticket/<int:ticket_id>"], type="http", auth="public", website=True
+    )
+    def portal_my_ticket(self, ticket_id=None, access_token=None, **kw):
         try:
-            ticket_sudo = self._helpdesk_ticket_check_access(ticket_id)
-        except AccessError:
+            ticket_sudo = self._document_check_access(
+                "helpdesk.ticket", ticket_id, access_token=access_token
+            )
+        except (AccessError, MissingError):
             return request.redirect("/my")
         values = self._ticket_get_page_view_values(ticket_sudo, **kw)
         return request.render("helpdesk_mgmt.portal_helpdesk_ticket_page", values)

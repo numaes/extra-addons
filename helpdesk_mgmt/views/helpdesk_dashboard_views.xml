@@ -7,7 +7,6 @@
             <kanban class="oe_background_grey o_kanban_dashboard" create="0">
                 <field name="name" />
                 <field name="color" />
-                <field name="todo_ticket_ids" />
                 <field name="todo_ticket_count" />
                 <field name="todo_ticket_count_unassigned" />
                 <field name="todo_ticket_count_unattended" />
@@ -27,7 +26,11 @@
                                     </div>
                                 </div>
                                 <div class="o_kanban_manage_button_section">
-                                    <a class="o_kanban_manage_toggle_button" href="#">
+                                    <a
+                                        class="o_kanban_manage_toggle_button"
+                                        href="#"
+                                        title="Toggle dropdown"
+                                    >
                                         <i class="fa fa-ellipsis-v" />
                                     </a>
                                 </div>

@@ -60,17 +60,17 @@ msgstr "ID"
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type____last_update
 msgid "Last Modified on"
-msgstr "Última Modificação em"
+msgstr "??ltima Modifica????o em"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__write_uid
 msgid "Last Updated by"
-msgstr "Última Atualização por"
+msgstr "??ltima Atualiza????o por"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__write_date
 msgid "Last Updated on"
-msgstr "Última Atualização em"
+msgstr "??ltima Atualiza????o em"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__name
@@ -96,7 +96,7 @@ msgstr "Tipos de Chamado"
 #: model:ir.model.fields,help:helpdesk_type.field_helpdesk_ticket_team__type_ids
 msgid "Ticket Types the team will use. This team's tickets will only be able to use those types."
 msgstr ""
-"Tipos de chamado que a equipe usará. Os chamados dessa equipe só poderão "
+"Tipos de chamado que a equipe usar??. Os chamados dessa equipe s?? poder??o "
 "usar esses tipos."
 
 #. module: helpdesk_type

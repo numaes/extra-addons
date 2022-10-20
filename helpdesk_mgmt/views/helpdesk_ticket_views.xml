@@ -17,7 +17,11 @@
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
             <search>
-                <field name="number" />
+                <field
+                    string="Ticket"
+                    name="number"
+                    filter_domain="['|',('number', 'ilike', self),('name', 'ilike', self)]"
+                />
                 <field name="partner_id" />
                 <field name="user_id" />
                 <field name="name" />
@@ -147,7 +151,7 @@
                         <group>
                             <field name="active" invisible="1" />
                             <field name="team_id" options='{"always_reload": True}' />
-                            <field name="user_ids" invisible="1" readonly="1" />
+                            <field name="user_ids" readonly="1" invisible="1" />
                             <field
                                 name="user_id"
                                 domain="[('share', '=', False)]"
@@ -250,6 +254,7 @@
                                     role="button"
                                     data-toggle="dropdown"
                                     href="#"
+                                    title="Toggle dropdown"
                                 >
                                     <span class="fa fa-ellipsis-v" aria-hidden="true" />
                                 </a>
