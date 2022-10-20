@@ -21,7 +21,6 @@ odoo.define("web_responsive", function (require) {
     const PatchableAttachmentViewer = patchMixin(AttachmentViewer);
     const ControlPanel = require("web.ControlPanel");
     const SearchPanel = require("web/static/src/js/views/search_panel.js");
-    /* global owl */
     const {QWeb, Context} = owl;
     const {useState, useContext} = owl.hooks;
 
@@ -214,22 +213,10 @@ odoo.define("web_responsive", function (require) {
                 this.$search_results.empty();
                 return;
             }
-            /*
             var results = fuzzy.filter(query, _.keys(this._searchableMenus), {
                 pre: "<b>",
                 post: "</b>",
             });
-            */
-            var results = [];
-            const menu_entries = Object.keys(this._searchableMenus);
-            const normalized_query = query.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            for (var i = 0; i < menu_entries.length; i++) {
-                var menu_entry = menu_entries[i]
-                var normalized_entry = menu_entry.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                if (normalized_entry.includes(normalized_query)) {
-                    results.push({'string': menu_entry, 'original': menu_entry})
-                }
-            }
             this.$search_container.toggleClass("has-results", Boolean(results.length));
             this.$search_results.html(
                 core.qweb.render("web_responsive.MenuSearchResults", {
@@ -610,9 +597,10 @@ odoo.define("web_responsive", function (require) {
                     } else {
                         let values = [];
                         if (filter.groups) {
-                            values = [
-                                ...filter.groups.values().map((g) => g.values),
-                            ].flat();
+                            values = Array.from(
+                                filter.groups.values(),
+                                (g) => g.values
+                            ).flat();
                         }
                         if (filter.values) {
                             values = [...filter.values.values()];
