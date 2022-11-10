@@ -146,3 +146,46 @@ class AccountMove(models.Model):
                     self.is_warning = True
         else:
             self.is_warning = False
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    has_due = fields.Boolean()
+    is_warning = fields.Boolean()
+    due_amount = fields.Float(related='partner_id.due_amount')
+    usage_dest_id = fields.Selection(related='location_dest_id.usage', readonly=True)
+
+    def button_validate(self):
+        """To check the selected customers due amount is exceed than
+        blocking stage"""
+        for rec in self:
+            rec.check_due()
+            if rec.partner_id.active_limit and rec.usage_dest_id in ['customer'] \
+                    and rec.partner_id.enable_credit_limit:
+                if rec.due_amount >= rec.partner_id.blocking_stage:
+                    if rec.partner_id.blocking_stage != 0:
+                        self.env.cr.commit()
+                        raise UserError(_(
+                            "%s is in  Blocking Stage and "
+                            "has a due amount of %s %s to pay") % (
+                                            rec.partner_id.name, rec.due_amount,
+                                            rec.currency_id.symbol))
+        return super(StockPicking, self).button_validate()
+
+    @api.onchange('partner_id')
+    def check_due(self):
+        """To show the due amount and warning stage"""
+        if self.partner_id and self.partner_id.due_amount > 0 \
+                and self.partner_id.active_limit \
+                and self.partner_id.enable_credit_limit:
+            self.has_due = True
+        else:
+            self.has_due = False
+        if self.partner_id and self.partner_id.active_limit \
+                and self.partner_id.enable_credit_limit:
+            if self.due_amount >= self.partner_id.warning_stage:
+                if self.partner_id.warning_stage != 0:
+                    self.is_warning = True
+        else:
+            self.is_warning = False

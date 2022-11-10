@@ -66,5 +66,30 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="stock_picking_form_inherited" model="ir.ui.view">
+            <field name="name">Stock Picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="has_due" invisible="1"/>
+                    <field name="is_warning" invisible="1"/>
+                    <field name="usage_dest_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//header" position="after">
+                    <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;"
+                         attrs="{'invisible':['|',('has_due','=',False),('usage_dest_id','not in',('customer'))]}">
+                        This Customer's due amount is <strong><field name="due_amount"/></strong>.
+                    </div>
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']" position="after">
+                    <div role="alert" class="alert alert-danger" style="height: 40px; width: 350px; margin-bottom:0px;"
+                         attrs="{'invisible':['|',('is_warning','=',False),('usage_dest_id','not in',('customer'))]}">
+                        This customer's <strong>warning limit</strong> has been crossed.
+                    </div>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
