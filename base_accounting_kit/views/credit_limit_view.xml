@@ -76,11 +76,16 @@
                     <field name="has_due" invisible="1"/>
                     <field name="is_warning" invisible="1"/>
                     <field name="usage_dest_id" invisible="1"/>
+                    <field name="parent_id" invisible="1"/>
                 </xpath>
                 <xpath expr="//header" position="after">
                     <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;"
-                         attrs="{'invisible':['|',('has_due','=',False),('usage_dest_id','not in',('customer'))]}">
+                         attrs="{'invisible':['|','|',('has_due','=',False),('parent_id','!=',False),('usage_dest_id','not in',('customer'))]}">
                         This Customer's due amount is <strong><field name="due_amount"/></strong>.
+                    </div>
+                    <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;"
+                         attrs="{'invisible':['|','|',('has_due','=',False),('parent_id','=',False),('usage_dest_id','not in',('customer'))]}">
+                        This Customer's due amount is <strong><field name="due_amount_parent"/></strong>.
                     </div>
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="after">
