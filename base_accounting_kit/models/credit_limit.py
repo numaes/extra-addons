@@ -179,9 +179,9 @@ class StockPicking(models.Model):
     @api.onchange('partner_id')
     def check_due(self):
         """To show the due amount and warning stage"""
-        partner_id = self
-        if self.parent_id:
-            partner_id = self.parent_id
+        partner_id = self.partner_id
+        if partner_id.parent_id:
+            partner_id = partner_id.parent_id
         if partner_id and partner_id.due_amount > 0 \
                 and partner_id.active_limit \
                 and partner_id.enable_credit_limit:
