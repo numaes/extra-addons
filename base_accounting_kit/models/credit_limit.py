@@ -153,7 +153,7 @@ class StockPicking(models.Model):
 
     has_due = fields.Boolean()
     is_warning = fields.Boolean()
-    parent_id = fields.Float(related='partner_id.parent_id')
+    parent_id = fields.Many2one('res.partner', related='partner_id.parent_id')
     due_amount = fields.Float(related='partner_id.due_amount')
     due_amount_parent = fields.Float(related='partner_id.parent_id.due_amount')
     usage_dest_id = fields.Selection(related='location_dest_id.usage', readonly=True)
