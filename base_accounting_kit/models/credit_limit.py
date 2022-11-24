@@ -185,13 +185,13 @@ class StockPicking(models.Model):
         if partner_id and partner_id.due_amount > 0 \
                 and partner_id.active_limit \
                 and partner_id.enable_credit_limit:
-            partner_id.has_due = True
+            self.has_due = True
         else:
-            partner_id.has_due = False
+            self.has_due = False
         if partner_id and partner_id.active_limit \
                 and partner_id.enable_credit_limit:
             if partner_id.due_amount >= partner_id.warning_stage:
                 if partner_id.warning_stage != 0:
-                    partner_id.is_warning = True
+                    self.is_warning = True
         else:
-            partner_id.is_warning = False
+            self.is_warning = False
