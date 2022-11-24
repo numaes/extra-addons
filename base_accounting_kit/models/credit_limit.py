@@ -179,16 +179,19 @@ class StockPicking(models.Model):
     @api.onchange('partner_id')
     def check_due(self):
         """To show the due amount and warning stage"""
-        if self.partner_id and self.partner_id.due_amount > 0 \
-                and self.partner_id.active_limit \
-                and self.partner_id.enable_credit_limit:
-            self.has_due = True
+        partner_id = self
+        if self.parent_id:
+            partner_id = self.parent_id
+        if partner_id and partner_id.due_amount > 0 \
+                and partner_id.active_limit \
+                and partner_id.enable_credit_limit:
+            partner_id.has_due = True
         else:
-            self.has_due = False
-        if self.partner_id and self.partner_id.active_limit \
-                and self.partner_id.enable_credit_limit:
-            if self.due_amount >= self.partner_id.warning_stage:
-                if self.partner_id.warning_stage != 0:
-                    self.is_warning = True
+            partner_id.has_due = False
+        if partner_id and partner_id.active_limit \
+                and partner_id.enable_credit_limit:
+            if partner_id.due_amount >= partner_id.warning_stage:
+                if partner_id.warning_stage != 0:
+                    partner_id.is_warning = True
         else:
-            self.is_warning = False
+            partner_id.is_warning = False
