@@ -161,15 +161,18 @@ class StockPicking(models.Model):
         blocking stage"""
         for rec in self:
             rec.check_due()
-            if rec.partner_id.active_limit and rec.usage_dest_id in ['customer'] \
-                    and rec.partner_id.enable_credit_limit:
-                if rec.due_amount >= rec.partner_id.blocking_stage:
-                    if rec.partner_id.blocking_stage != 0:
+            partner_id = rec.partner_id
+            if rec.partner_id.parent_id:
+                partner_id = rec.partner_id.parent_id
+            if partner_id.active_limit and rec.usage_dest_id in ['customer'] \
+                    and partner_id.enable_credit_limit:
+                if rec.due_amount >= partner_id.blocking_stage:
+                    if partner_id.blocking_stage != 0:
                         self.env.cr.commit()
                         raise UserError(_(
                             "%s is in  Blocking Stage and "
                             "has a due amount of %s %s to pay") % (
-                                            rec.partner_id.name, rec.due_amount,
+                                            partner_id.name, rec.due_amount,
                                             rec.currency_id.symbol))
         return super(StockPicking, self).button_validate()
 
