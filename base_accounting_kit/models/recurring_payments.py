@@ -164,7 +164,7 @@ class RecurringPayments(models.Model):
             }
             move_id = self.env['account.move'].create(vals)
             if tmpl_id.journal_state == 'posted':
-                move_id.post()
+                move_id.action_post()
 
 
     class GetAllRecurringEntries(models.TransientModel):

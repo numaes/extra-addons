@@ -49,6 +49,7 @@ class ResPartner(models.Model):
         for rec in self:
             if not rec.id:
                 continue
+            rec._credit_debit_get()
             rec.due_amount = rec.credit - rec.debit
 
     def _compute_enable_credit_limit(self):
@@ -80,6 +81,8 @@ class SaleOrder(models.Model):
         blocking stage"""
         if self.partner_id.active_limit \
                 and self.partner_id.enable_credit_limit:
+            #self.partner_id._credit_debit_get()
+            self.partner_id.compute_due_amount()
             if self.due_amount >= self.partner_id.blocking_stage:
                 if self.partner_id.blocking_stage != 0:
                     raise UserError(_(

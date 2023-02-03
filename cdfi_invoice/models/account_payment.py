@@ -287,8 +287,8 @@ class AccountPayment(models.Model):
                        'saldo_pendiente': saldo_pendiente_total, 'saldo_restante':saldo_pendiente_total - monto_pagado_asignar})
         return res
     
-    def post(self):
-        res = super(AccountPayment, self).post()
+    def action_post(self):
+        res = super(AccountPayment, self).action_post()
         for rec in self:
             rec.add_resitual_amounts()
             #rec._onchange_payment_date()

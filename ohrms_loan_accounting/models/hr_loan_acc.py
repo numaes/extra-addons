@@ -71,7 +71,7 @@ class HrLoanAcc(models.Model):
                     'line_ids': [(0, 0, debit_vals), (0, 0, credit_vals)]
                 }
                 move = self.env['account.move'].create(vals)
-                move.post()
+                move.action_post()
             self.write({'state': 'approve'})
         return True
 
@@ -117,7 +117,7 @@ class HrLoanAcc(models.Model):
                 'line_ids': [(0, 0, debit_vals), (0, 0, credit_vals)]
             }
             move = self.env['account.move'].create(vals)
-            move.post()
+            move.action_post()
         self.write({'state': 'approve'})
         return True
 
@@ -163,7 +163,7 @@ class HrLoanLineAcc(models.Model):
                 'line_ids': [(0, 0, debit_vals), (0, 0, credit_vals)]
             }
             move = self.env['account.move'].create(vals)
-            move.post()
+            move.action_post()
         return True
 
 

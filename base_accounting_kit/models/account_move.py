@@ -43,9 +43,9 @@ class AccountMove(models.Model):
                 line.move_posted_check = False
         return super(AccountMove, self).button_cancel()
 
-    def post(self):
+    def action_post(self):
         self.mapped('asset_depreciation_ids').post_lines_and_close_asset()
-        return super(AccountMove, self).post()
+        return super(AccountMove, self).action_post()
 
     @api.model
     def _refund_cleanup_lines(self, lines):

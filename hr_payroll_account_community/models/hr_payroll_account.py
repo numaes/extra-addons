@@ -145,7 +145,7 @@ class HrPayslip(models.Model):
             if not move.line_ids:
                 raise UserError(_("As you installed the payroll accounting module you have to choose Debit and Credit"
                                   " account for at least one salary rule in the choosen Salary Structure."))
-            move.post()
+            move.action_post()
         return res
 
 
