@@ -54,6 +54,8 @@ class HrPayslip(models.Model):
         res = super(HrPayslip, self).action_payslip_done()
 
         for slip in self:
+            if slip.move_id:
+                continue
             line_ids = []
             debit_sum = 0.0
             credit_sum = 0.0
@@ -138,10 +140,12 @@ class HrPayslip(models.Model):
                     'credit': 0.0,
                 })
                 line_ids.append(adjust_debit)
-            move_dict['line_ids'] = line_ids
-            move = self.env['account.move'].create(move_dict)
-            slip.write({'move_id': move.id, 'date': date})
-            move.action_post()
+
+            if not line_ids == []:
+                move_dict['line_ids'] = line_ids
+                move = self.env['account.move'].create(move_dict)
+                slip.write({'move_id': move.id, 'date': date})
+                move.action_post()
         return res
 
 
