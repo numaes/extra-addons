@@ -84,6 +84,7 @@
                         string="Confirm"
                         name="action_payslip_done"
                         type="object"
+                        confirm="Está usted seguro de Confirmar?"
                         states="verify"
                         class="oe_highlight"
                     />
