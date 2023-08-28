@@ -28,7 +28,7 @@ class HrContract(models.Model):
             result[attachment.res_id] |= attachment
 
         for employee in self:
-            employee.document_ids = result[employee.id]
+            employee.document_ids = result.get(employee.id, False)
             employee.documents_count = len(employee.document_ids)
 
     def action_get_attachment_tree_view(self):
