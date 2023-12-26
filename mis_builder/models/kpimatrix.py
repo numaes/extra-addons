@@ -234,6 +234,8 @@ class KpiMatrix:
         cell_tuple = []
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
+        if not col.iter_subcols():
+            _logger.info('Error')
         for val, drilldown_arg, subcol in zip(
             vals, drilldown_args, col.iter_subcols(), strict=True
         ):
