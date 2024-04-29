@@ -9,7 +9,6 @@ from odoo.exceptions import ValidationError
 
 
 class IrMailServer(models.Model):
-
     _inherit = "ir.mail_server"
 
     smtp_from = fields.Char(
@@ -45,7 +44,7 @@ class IrMailServer(models.Model):
         if self.smtp_from:
             match = re.match(
                 r"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\."
-                r"[a-z]{2,4})$",
+                r"[a-z]{2,63})$",
                 self.smtp_from,
             )
             if match is None:
@@ -56,7 +55,7 @@ class IrMailServer(models.Model):
             r"(([\da-zA-Z])([_\w-]{,62})\.){,127}(([\da-zA-Z])"
             r"[_\w-]{,61})?([\da-zA-Z]\.((xn\-\-[a-zA-Z\d]+)|([a-zA-Z\d]{2,})))"
         )
-        domain_regex = "{}$".format(domain_regex)
+        domain_regex = f"{domain_regex}$"
         valid_domain_name_regex = re.compile(domain_regex, re.IGNORECASE)
         domain_name = domain_name.lower().strip()
         return True if re.match(valid_domain_name_regex, domain_name) else False
@@ -66,6 +65,34 @@ class IrMailServer(models.Model):
         res = domain_whitelist_string.split(",") if domain_whitelist_string else []
         res = [item.strip() for item in res]
         return res
+
+    def _prepare_email_message(self, message, smtp_session):
+        smtp_from, smtp_to_list, message = super()._prepare_email_message(
+            message, smtp_session
+        )
+        name_from = self._context.get("name_from")
+        email_from = self._context.get("email_from")
+        email_domain = self._context.get("email_domain")
+        mail_server = self.browse(self._context.get("mail_server_id"))
+        domain_whitelist = mail_server.domain_whitelist or tools.config.get(
+            "smtp_domain_whitelist"
+        )
+        domain_whitelist = self._get_domain_whitelist(domain_whitelist)
+        # Replace the From only if needed
+        if mail_server.smtp_from and (
+            not domain_whitelist or email_domain not in domain_whitelist
+        ):
+            email_from = formataddr((name_from, mail_server.smtp_from))
+            message.replace_header("From", email_from)
+            smtp_from = email_from
+            if not self._get_default_bounce_address():
+                # then, bounce handling is disabled and we want
+                # Return-Path = From
+                if "Return-Path" in message:
+                    message.replace_header("Return-Path", email_from)
+                else:
+                    message.add_header("Return-Path", email_from)
+        return smtp_from, smtp_to_list, message
 
     @api.model
     def send_email(
@@ -78,43 +105,18 @@ class IrMailServer(models.Model):
             email_from = split_from[-1].replace(">", "")
         else:
             name_from, email_from = parseaddr(message["From"])
-
         email_domain = email_from.split("@")[1]
-
         # Replicate logic from core to get mail server
         # Get proper mail server to use
         if not smtp_server and not mail_server_id:
             mail_server_id = self._get_mail_sever(email_domain)
-
-        # If not mail sever defined use smtp_from defined in odoo config
-        if mail_server_id:
-            mail_server = self.sudo().browse(mail_server_id)
-            domain_whitelist = mail_server.domain_whitelist
-            smtp_from = mail_server.smtp_from
-        else:
-            domain_whitelist = tools.config.get("smtp_domain_whitelist")
-            smtp_from = tools.config.get("smtp_from")
-
-        domain_whitelist = self._get_domain_whitelist(domain_whitelist)
-
-        # Replace the From only if needed
-        if smtp_from and (not domain_whitelist or email_domain not in domain_whitelist):
-            email_from = formataddr((name_from, smtp_from))
-            message.replace_header("From", email_from)
-            bounce_alias = (
-                self.env["ir.config_parameter"].sudo().get_param("mail.bounce.alias")
-            )
-            if not bounce_alias:
-                # then, bounce handling is disabled and we want
-                # Return-Path = From
-                if "Return-Path" in message:
-                    message.replace_header("Return-Path", email_from)
-                else:
-                    message.add_header("Return-Path", email_from)
-
-        return super(IrMailServer, self).send_email(
-            message, mail_server_id, smtp_server, *args, **kwargs
+        self = self.with_context(
+            name_from=name_from,
+            email_from=email_from,
+            email_domain=email_domain,
+            mail_server_id=mail_server_id,
         )
+        return super().send_email(message, mail_server_id, smtp_server, *args, **kwargs)
 
     @tools.ormcache("email_domain")
     def _get_mail_sever(self, email_domain):
@@ -132,15 +134,15 @@ class IrMailServer(models.Model):
             mail_server_id = self.sudo().search([], order="sequence", limit=1).id
         return mail_server_id
 
-    @api.model
-    def create(self, values):
-        self.clear_caches()
-        return super().create(values)
+    @api.model_create_multi
+    def create(self, vals_list):
+        self.env.registry.clear_cache()
+        return super().create(vals_list)
 
     def write(self, values):
-        self.clear_caches()
+        self.env.registry.clear_cache()
         return super().write(values)
 
     def unlink(self):
-        self.clear_caches()
+        self.env.registry.clear_cache()
         return super().unlink()

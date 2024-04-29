@@ -18,7 +18,7 @@
             <field name="activity_type_id" position="before">
                 <field
                     name="related_model_instance"
-                    attrs="{'invisible': [('related_model_instance','=', False)]}"
+                    invisible="not related_model_instance"
                 />
             </field>
         </field>
@@ -57,7 +57,8 @@
                         class="centre oe_link"
                         nolabel="1"
                     >
-                        <h1><field name="res_name" /></h1>
+                        <field name="res_name" invisible="1" />
+                        <h1><field name="related_model_instance" /></h1>
                     </button>
                     <field name="activity_category" invisible="1" />
                     <field name="res_model" invisible="1" />
@@ -77,25 +78,24 @@
                         <group>
                             <field
                                 name="date_deadline"
-                                attrs="{'invisible': [('activity_category', '=', 'meeting')]}"
+                                invisible="activity_category == 'meeting'"
                             />
                             <field
                                 name="calendar_event_id_start"
                                 string="Start meeting"
-                                attrs="{'invisible': [('calendar_event_id','=', False)]}"
+                                invisible="not calendar_event_id"
                             />
                             <field
                                 name="duration"
                                 widget="float_time"
-                                attrs="{'invisible': ['|',('duration', '=', False),
-                                   ('calendar_event_id','=', False)]}"
+                                invisible="not duration or not calendar_event_id"
                             />
                             <field name="user_id" options="{'no_open': True}" />
 
                         </group>
                     </group>
                     <group
-                        attrs="{'invisible': ['|',('calendar_event_id','=', False),('calendar_event_id_partner_ids','=', False)]}"
+                        invisible="not calendar_event_id or not calendar_event_id_partner_ids"
                     >
                         <field name="calendar_event_id_partner_ids" mode="kanban" />
                     </group>
@@ -195,17 +195,13 @@
                                                 t-if="record.activity_category.raw_value!='meeting'"
                                             >
                                                 <span t-attf-class="text-danger">
-                                                    <field
-                                                        name="date_deadline"
-                                                        t-options='{"widget": "date"}'
-                                                    />
+                                                    <field name="date_deadline" />
                                                 </span>
                                             </t>
                                             <t t-else="">
                                                 <span t-attf-class="text-danger">
                                                     <field
                                                         name="calendar_event_id_start"
-                                                        t-options='{"widget": "date"}'
                                                     />
                                                 </span>
                                             </t>
@@ -219,23 +215,17 @@
                                                 t-if="record.activity_category.raw_value!='meeting'"
                                             >
                                                 <span>
-                                                    <field
-                                                        name="date_deadline"
-                                                        t-options='{"widget": "date"}'
-                                                    />
+                                                    <field name="date_deadline" />
                                                 </span>
                                             </t>
                                             <t t-else="">
-                                                <field
-                                                    name="calendar_event_id_start"
-                                                    t-options='{"widget": "date"}'
-                                                />
+                                                <field name="calendar_event_id_start" />
                                             </t>
                                         </t>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
                                         <img
-                                            t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)"
+                                            t-att-src="kanban_image('res.users', 'avatar_128', record.user_id.raw_value)"
                                             t-att-title="record.user_id.value"
                                             t-att-alt="record.user_id.value"
                                             width="24"
@@ -261,7 +251,7 @@
         <field name="priority" eval="2" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <xpath expr='//field[@name="res_model_id"]' position='before'>
+            <xpath expr='//field[@name="res_model"]' position='before'>
                 <field name="user_id" />
                 <field name="res_name" string="Origin" />
             </xpath>
@@ -328,8 +318,9 @@ Menus
     <menuitem
         id="board_menu_activities"
         name="Activities"
-        parent="base.menu_board_root"
+        parent="spreadsheet_dashboard.spreadsheet_dashboard_menu_root"
         action="open_boards_activities"
+        groups="group_show_mail_activity_board"
         sequence="1"
     />
 

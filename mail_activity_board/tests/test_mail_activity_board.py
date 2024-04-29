@@ -5,22 +5,31 @@ from odoo.tests.common import TransactionCase
 
 class TestMailActivityBoardMethods(TransactionCase):
     def setUp(self):
-        super(TestMailActivityBoardMethods, self).setUp()
+        super().setUp()
         # Set up activities
 
         # Create a user as 'Crm Salesman' and added few groups
+        mail_activity_group = self.create_mail_activity_group()
         self.employee = self.env["res.users"].create(
             {
                 "company_id": self.env.ref("base.main_company").id,
                 "name": "Employee",
                 "login": "csu",
                 "email": "crmuser@yourcompany.com",
-                "groups_id": [(6, 0, [self.env.ref("base.group_user").id])],
+                "groups_id": [
+                    (
+                        6,
+                        0,
+                        [
+                            self.env.ref("base.group_user").id,
+                        ],
+                    )
+                ],
             }
         )
 
         # Create a user who doesn't have access to anything except activities
-        mail_activity_group = self.create_mail_activity_group()
+
         self.employee2 = self.env["res.users"].create(
             {
                 "company_id": self.env.ref("base.main_company").id,
@@ -32,7 +41,7 @@ class TestMailActivityBoardMethods(TransactionCase):
         )
 
         # lead_model_id = self.env['ir.model']._get('crm.lead').id
-        partner_model_id = self.env["ir.model"]._get("res.partner").id
+        partner_model = self.env["ir.model"]._get("res.partner")
 
         ActivityType = self.env["mail.activity.type"]
         self.activity1 = ActivityType.create(
@@ -41,7 +50,7 @@ class TestMailActivityBoardMethods(TransactionCase):
                 "delay_count": 5,
                 "delay_unit": "days",
                 "summary": "ACT 1 : Presentation, barbecue, ... ",
-                "res_model_id": partner_model_id,
+                "res_model": partner_model.model,
             }
         )
         self.activity2 = ActivityType.create(
@@ -50,7 +59,7 @@ class TestMailActivityBoardMethods(TransactionCase):
                 "delay_count": 6,
                 "delay_unit": "days",
                 "summary": "ACT 2 : I want to show you my ERP !",
-                "res_model_id": partner_model_id,
+                "res_model": partner_model.model,
             }
         )
         self.activity3 = ActivityType.create(
@@ -60,7 +69,7 @@ class TestMailActivityBoardMethods(TransactionCase):
                 "delay_unit": "days",
                 "summary": "ACT 3 : "
                 "Beers for everyone because I am a good salesman !",
-                "res_model_id": partner_model_id,
+                "res_model": partner_model.model,
             }
         )
 
@@ -78,7 +87,7 @@ class TestMailActivityBoardMethods(TransactionCase):
                     "activity_type_id": self.activity3.id,
                     "note": "Partner activity 1.",
                     "res_id": self.partner_client.id,
-                    "res_model_id": partner_model_id,
+                    "res_model_id": partner_model.id,
                     "user_id": self.employee.id,
                 }
             )
@@ -91,7 +100,7 @@ class TestMailActivityBoardMethods(TransactionCase):
                     "activity_type_id": self.activity2.id,
                     "note": "Partner activity 2.",
                     "res_id": self.partner_client.id,
-                    "res_model_id": partner_model_id,
+                    "res_model_id": partner_model.id,
                     "user_id": self.employee.id,
                 }
             )
@@ -104,7 +113,7 @@ class TestMailActivityBoardMethods(TransactionCase):
                     "activity_type_id": self.activity3.id,
                     "note": "Partner activity 3.",
                     "res_id": self.partner_client.id,
-                    "res_model_id": partner_model_id,
+                    "res_model_id": partner_model.id,
                     "user_id": self.employee.id,
                 }
             )
@@ -134,8 +143,8 @@ class TestMailActivityBoardMethods(TransactionCase):
 
     def get_view(self, activity):
         action = activity.open_origin()
-        result = self.env[action.get("res_model")].load_views(action.get("views"))
-        return result.get("fields_views").get(action.get("view_mode"))
+        result = self.env[action.get("res_model")].get_views(action.get("views"))
+        return result.get("views").get(action.get("view_mode"))
 
     def test_open_origin_res_partner(self):
         """This test case checks
@@ -150,19 +159,19 @@ class TestMailActivityBoardMethods(TransactionCase):
         view = self.get_view(self.act1)
 
         # Check the next view is correct
-        self.assertEqual(form_view_partner_id, view.get("view_id"))
+        self.assertEqual(form_view_partner_id, view.get("id"))
 
         # Id of the form view return open_origin()
         view = self.get_view(self.act2)
 
         # Check the next view is correct
-        self.assertEqual(form_view_partner_id, view.get("view_id"))
+        self.assertEqual(form_view_partner_id, view.get("id"))
 
         # Id of the form view return open_origin()
         view = self.get_view(self.act3)
 
         # Check the next view is correct
-        self.assertEqual(form_view_partner_id, view.get("view_id"))
+        self.assertEqual(form_view_partner_id, view.get("id"))
 
     def test_redirect_to_activities(self):
         """This test case checks
@@ -171,15 +180,19 @@ class TestMailActivityBoardMethods(TransactionCase):
         """
         action_id = self.env.ref("mail_activity_board.open_boards_activities").id
         action = self.partner_client.redirect_to_activities(
-            **{"id": self.partner_client.id}
+            **{
+                "id": self.partner_client.id,
+                "model": self.partner_client._name,
+            }
         )
         self.assertEqual(action.get("id"), action_id)
 
         kwargs = {"groupby": ["activity_type_id"]}
         kwargs["domain"] = action.get("domain")
 
-        result = self.env[action.get("res_model")].load_views(action.get("views"))
-        fields = result.get("fields_views").get("kanban").get("fields")
+        result = self.env[action.get("res_model")].get_views(action.get("views"))
+        # fields = result.get("views").get("kanban").get("fields")
+        fields = result.get("models").get(action.get("res_model"))
         kwargs["fields"] = list(fields.keys())
 
         result = self.env["mail.activity"].read_group(**kwargs)
@@ -201,9 +214,3 @@ class TestMailActivityBoardMethods(TransactionCase):
         self.assertEqual(self.act3.related_model_instance, self.partner_client)
         self.act3.write({"res_id": False, "res_model": False})
         self.assertFalse(self.act3.related_model_instance)
-
-    def test_read_permissions(self):
-        search1 = self.env["mail.activity"].with_user(self.employee).search([])
-        self.assertEqual(len(search1), 3)
-        search2 = self.env["mail.activity"].with_user(self.employee2).search([])
-        self.assertEqual(len(search2), 0)

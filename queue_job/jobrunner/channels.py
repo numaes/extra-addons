@@ -7,14 +7,14 @@ from heapq import heappop, heappush
 from weakref import WeakValueDictionary
 
 from ..exception import ChannelNotFound
-from ..job import DONE, ENQUEUED, FAILED, PENDING, STARTED
+from ..job import CANCELLED, DONE, ENQUEUED, FAILED, PENDING, STARTED, WAIT_DEPENDENCIES
 
-NOT_DONE = (PENDING, ENQUEUED, STARTED, FAILED)
+NOT_DONE = (WAIT_DEPENDENCIES, PENDING, ENQUEUED, STARTED, FAILED)
 
 _logger = logging.getLogger(__name__)
 
 
-class PriorityQueue(object):
+class PriorityQueue:
     """A priority queue that supports removing arbitrary objects.
 
     Adding an object already in the queue is a no op.
@@ -123,7 +123,7 @@ class SafeSet(set):
 
 
 @total_ordering
-class ChannelJob(object):
+class ChannelJob:
     """A channel job is attached to a channel and holds the properties of a
     job that are necessary to prioritise them.
 
@@ -225,7 +225,7 @@ class ChannelJob(object):
         return self.sorting_key() < other.sorting_key()
 
 
-class ChannelQueue(object):
+class ChannelQueue:
     """A channel queue is a priority queue for jobs.
 
     Jobs with an eta are set aside until their eta is past due, at
@@ -354,7 +354,7 @@ class ChannelQueue(object):
         return wakeup_time
 
 
-class Channel(object):
+class Channel:
     """A channel for jobs, with a maximum capacity.
 
     When jobs are created by queue_job modules, they may be associated
@@ -504,7 +504,7 @@ class Channel(object):
             _logger.debug("job %s marked running in channel %s", job.uuid, self)
 
     def set_failed(self, job):
-        """Mark the job as failed. """
+        """Mark the job as failed."""
         if job not in self._failed:
             self._queue.remove(job)
             self._running.remove(job)
@@ -601,7 +601,7 @@ def split_strip(s, sep, maxsplit=-1):
     return [x.strip() for x in s.split(sep, maxsplit)]
 
 
-class ChannelManager(object):
+class ChannelManager:
     """High level interface for channels
 
     This class handles:
@@ -866,18 +866,18 @@ class ChannelManager(object):
             name = config_items[0]
             if not name:
                 raise ValueError(
-                    "Invalid channel config %s: missing channel name" % config_string
+                    f"Invalid channel config {config_string}: missing channel name"
                 )
             config["name"] = name
             if len(config_items) > 1:
                 capacity = config_items[1]
                 try:
                     config["capacity"] = int(capacity)
-                except Exception:
+                except Exception as ex:
                     raise ValueError(
-                        "Invalid channel config %s: "
-                        "invalid capacity %s" % (config_string, capacity)
-                    )
+                        f"Invalid channel config {config_string}: "
+                        f"invalid capacity {capacity}"
+                    ) from ex
                 for config_item in config_items[2:]:
                     kv = split_strip(config_item, "=")
                     if len(kv) == 1:
@@ -886,13 +886,13 @@ class ChannelManager(object):
                         k, v = kv
                     else:
                         raise ValueError(
-                            "Invalid channel config %s: "
-                            "incorrect config item %s" % (config_string, config_item)
+                            f"Invalid channel config {config_string}: "
+                            f"incorrect config item {config_item}"
                         )
                     if k in config:
                         raise ValueError(
-                            "Invalid channel config %s: "
-                            "duplicate key %s" % (config_string, k)
+                            f"Invalid channel config {config_string}: "
+                            f"duplicate key {k}"
                         )
                     config[k] = v
             else:
@@ -942,7 +942,9 @@ class ChannelManager(object):
         _logger.info("Configured channel: %s", channel)
         return channel
 
-    def get_channel_by_name(self, channel_name, autocreate=False):
+    def get_channel_by_name(
+        self, channel_name, autocreate=False, parent_fallback=False
+    ):
         """Return a Channel object by its name.
 
         If it does not exist and autocreate is True, it is created
@@ -980,6 +982,9 @@ class ChannelManager(object):
         >>> c = cm.get_channel_by_name('sub')
         >>> c.fullname
         'root.sub'
+        >>> c = cm.get_channel_by_name('root.sub.not.configured', parent_fallback=True)
+        >>> c.fullname
+        'root.sub.sub.not.configured'
         """
         if not channel_name or channel_name == self._root_channel.name:
             return self._root_channel
@@ -987,9 +992,26 @@ class ChannelManager(object):
             channel_name = self._root_channel.name + "." + channel_name
         if channel_name in self._channels_by_name:
             return self._channels_by_name[channel_name]
-        if not autocreate:
+        if not autocreate and not parent_fallback:
             raise ChannelNotFound("Channel %s not found" % channel_name)
         parent = self._root_channel
+        if parent_fallback:
+            # Look for first direct parent w/ config.
+            # Eg: `root.edi.foo.baz` will falback on `root.edi.foo`
+            # or `root.edi` or `root` in sequence
+            parent_name = channel_name
+            while True:
+                parent_name = parent_name.rsplit(".", 1)[:-1][0]
+                if parent_name == self._root_channel.name:
+                    break
+                if parent_name in self._channels_by_name:
+                    parent = self._channels_by_name[parent_name]
+                    _logger.debug(
+                        "%s has no specific configuration: using %s",
+                        channel_name,
+                        parent_name,
+                    )
+                    break
         for subchannel_name in channel_name.split(".")[1:]:
             subchannel = parent.get_subchannel_by_name(subchannel_name)
             if not subchannel:
@@ -1001,13 +1023,7 @@ class ChannelManager(object):
     def notify(
         self, db_name, channel_name, uuid, seq, date_created, priority, eta, state
     ):
-        try:
-            channel = self.get_channel_by_name(channel_name)
-        except ChannelNotFound:
-            _logger.warning(
-                "unknown channel %s, using root channel for job %s", channel_name, uuid
-            )
-            channel = self._root_channel
+        channel = self.get_channel_by_name(channel_name, parent_fallback=True)
         job = self._jobs_by_uuid.get(uuid)
         if job:
             # db_name is invariant
@@ -1030,7 +1046,7 @@ class ChannelManager(object):
             job = ChannelJob(db_name, channel, uuid, seq, date_created, priority, eta)
             self._jobs_by_uuid[uuid] = job
         # state transitions
-        if not state or state == DONE:
+        if not state or state in (DONE, CANCELLED):
             job.channel.set_done(job)
         elif state == PENDING:
             job.channel.set_pending(job)
@@ -1038,6 +1054,9 @@ class ChannelManager(object):
             job.channel.set_running(job)
         elif state == FAILED:
             job.channel.set_failed(job)
+        elif state == WAIT_DEPENDENCIES:
+            # wait until all parent jobs are done
+            pass
         else:
             _logger.error("unexpected state %s for job %s", state, job)
 

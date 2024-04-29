@@ -8,10 +8,11 @@ from odoo import _, api, exceptions, fields, models
 class QueueJobChannel(models.Model):
     _name = "queue.job.channel"
     _description = "Job Channels"
+    _rec_name = "complete_name"
 
     name = fields.Char()
     complete_name = fields.Char(
-        compute="_compute_complete_name", store=True, readonly=True
+        compute="_compute_complete_name", store=True, readonly=True, recursive=True
     )
     parent_id = fields.Many2one(
         comodel_name="queue.job.channel", string="Parent Channel", ondelete="restrict"
@@ -86,9 +87,3 @@ class QueueJobChannel(models.Model):
             if channel.name == "root":
                 raise exceptions.UserError(_("Cannot remove the root channel"))
         return super().unlink()
-
-    def name_get(self):
-        result = []
-        for record in self:
-            result.append((record.id, record.complete_name))
-        return result

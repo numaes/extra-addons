@@ -1,4 +1,4 @@
-# Copyright 2018 ForgeFlow S.L.
+# Copyright 2018-22 ForgeFlow S.L.
 # Copyright 2021 Sodexis
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import api, fields, models
@@ -17,10 +17,10 @@ class MailActivityTeam(models.Model):
                 domain.append(("user_id", "in", team.member_ids.ids))
             if team.res_model_ids:
                 domain.append(("res_model_id", "in", team.res_model_ids.ids))
-            team.count_missing_activities = activity_model.search(domain, count=True)
+            team.count_missing_activities = activity_model.search_count(domain)
 
-    name = fields.Char(string="Name", required=True, translate=True)
-    active = fields.Boolean(string="Active", default=True)
+    name = fields.Char(required=True, translate=True)
+    active = fields.Boolean(default=True)
     res_model_ids = fields.Many2many(
         comodel_name="ir.model",
         string="Used models",

@@ -1,5 +1,5 @@
-# Copyright 2018-2019 Alexandre Díaz
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2023 Taras Shabaranskyi
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from odoo import fields, models
 
@@ -7,21 +7,20 @@ from odoo import fields, models
 class ResUsers(models.Model):
     _inherit = "res.users"
 
-    chatter_position = fields.Selection(
-        [("normal", "Normal"), ("sided", "Sided")],
-        string="Chatter Position",
-        default="sided",
+    apps_menu_search_type = fields.Selection(
+        [
+            ("canonical", "Canonical"),
+            ("fuse", "Fuse"),
+            ("command_palette", "Command Palette"),
+        ],
+        default="canonical",
+        required=True,
     )
-
-    def __init__(self, pool, cr):
-        """Override of __init__ to add access rights.
-        Access rights are disabled by default, but allowed on some specific
-        fields defined in self.SELF_{READ/WRITE}ABLE_FIELDS.
-        """
-        super().__init__(pool, cr)
-        # duplicate list to avoid modifying the original reference
-        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
-        type(self).SELF_WRITEABLE_FIELDS.extend(["chatter_position"])
-        # duplicate list to avoid modifying the original reference
-        type(self).SELF_READABLE_FIELDS = list(self.SELF_READABLE_FIELDS)
-        type(self).SELF_READABLE_FIELDS.extend(["chatter_position"])
+    apps_menu_theme = fields.Selection(
+        [
+            ("milk", "Milk"),
+            ("community", "Community"),
+        ],
+        default="milk",
+        required=True,
+    )

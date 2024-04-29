@@ -18,6 +18,20 @@ class MailActivityMixin(models.AbstractModel):
         for rec in self:
             rec.activity_team_user_ids = rec.activity_ids.mapped("team_id.member_ids")
 
+    def _search_my_activity_date_deadline(self, operator, operand):
+        if not self._context.get("team_activities", False):
+            return super()._search_my_activity_date_deadline(operator, operand)
+        activity_ids = self.env["mail.activity"]._search(
+            [
+                ("date_deadline", operator, operand),
+                ("res_model", "=", self._name),
+                "|",
+                ("user_id", "=", self.env.user.id),
+                ("team_id", "in", self.env.user.activity_team_ids.ids),
+            ]
+        )
+        return [("activity_ids", "in", activity_ids)]
+
     @api.model
     def _search_activity_team_user_ids(self, operator, operand):
         return [("activity_ids.team_id.member_ids", operator, operand)]
@@ -30,6 +44,8 @@ class MailActivityMixin(models.AbstractModel):
         user-team missmatch. We can hook onto `act_values` dict as it's passed
         to the create activity method.
         """
+        if self.env.context.get("force_activity_team"):
+            act_values["team_id"] = self.env.context["force_activity_team"].id
         if "team_id" not in act_values:
             if act_type_xmlid:
                 activity_type = self.sudo().env.ref(act_type_xmlid)
@@ -64,5 +80,21 @@ class MailActivityMixin(models.AbstractModel):
             date_deadline=date_deadline,
             summary=summary,
             note=note,
-            **act_values
+            **act_values,
         )
+
+    @api.depends(
+        "activity_ids.date_deadline", "activity_ids.user_id", "activity_ids.team_id"
+    )
+    @api.depends_context("uid")
+    def _compute_my_activity_date_deadline(self):
+        for record in self:
+            record.my_activity_date_deadline = next(
+                (
+                    activity.date_deadline
+                    for activity in record.activity_ids
+                    if activity.user_id.id == record.env.uid
+                    or activity.team_id.id in record.env.user.activity_team_ids.ids
+                ),
+                False,
+            )

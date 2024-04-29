@@ -44,7 +44,6 @@ msgstr "Creado el"
 
 #. module: mail_notification_custom_subject
 #: model:ir.model.fields,field_description:mail_notification_custom_subject.field_mail_message_custom_subject__display_name
-#: model:ir.model.fields,field_description:mail_notification_custom_subject.field_mail_thread__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -55,13 +54,11 @@ msgstr "Hilo de correo electrónico"
 
 #. module: mail_notification_custom_subject
 #: model:ir.model.fields,field_description:mail_notification_custom_subject.field_mail_message_custom_subject__id
-#: model:ir.model.fields,field_description:mail_notification_custom_subject.field_mail_thread__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mail_notification_custom_subject
 #: model:ir.model.fields,field_description:mail_notification_custom_subject.field_mail_message_custom_subject____last_update
-#: model:ir.model.fields,field_description:mail_notification_custom_subject.field_mail_thread____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
 

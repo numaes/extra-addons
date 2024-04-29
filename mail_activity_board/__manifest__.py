@@ -4,14 +4,20 @@
 {
     "name": "Mail Activity Board",
     "summary": "Add Activity Boards",
-    "version": "14.0.1.1.1",
+    "version": "17.0.1.0.1",
     "development_status": "Beta",
     "category": "Social Network",
     "website": "https://github.com/OCA/social",
-    "author": "SDi, David Juaneda, Sodexis, ACSONE SA/NV, Odoo Community Association (OCA)",
+    "author": "SDi, David Juaneda, Sodexis, ACSONE SA/NV,"
+    " Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["calendar", "board"],
-    "data": ["views/templates.xml", "views/mail_activity_view.xml"],
-    "qweb": ["static/src/components/chatter_topbar/chatter_topbar.xml"],
+    "depends": ["calendar", "spreadsheet_dashboard"],
+    "data": ["security/groups.xml", "views/mail_activity_view.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "mail_activity_board/static/src/components/chatter/chatter.esm.js",
+            "mail_activity_board/static/src/components/chatter/chatter.xml",
+        ],
+    },
 }

@@ -79,13 +79,11 @@ class ResPartner(models.Model):
             mm_vals["email"] = vals["email"]
         if vals.get("title"):
             mm_vals["title_id"] = vals["title"]
-        if vals.get("parent_id"):
-            parent = self.browse(vals.get("parent_id"))
-            mm_vals["company_name"] = parent.commercial_company_name
+        if vals.get("company_id"):
+            company = self.env["res.company"].browse(vals.get("company_id"))
+            mm_vals["company_name"] = company.name
         if vals.get("country_id"):
             mm_vals["country_id"] = vals["country_id"]
-        if vals.get("category_id"):
-            mm_vals["tag_ids"] = vals["category_id"]
         if mm_vals:
             # Using sudo because ACLs shouldn't produce data inconsistency
             self.env["mailing.contact"].sudo().search(

@@ -1,20 +1,23 @@
-# Copyright 2018 ForgeFlow, S.L.
+# Copyright 2018-22 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from datetime import date
+
 from odoo.exceptions import ValidationError
-from odoo.tests.common import Form, SavepointCase
+from odoo.tests.common import Form, TransactionCase
 
 
-class TestMailActivityTeam(SavepointCase):
+class TestMailActivityTeam(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        self = cls
-        self.env["mail.activity.team"].search([]).unlink()
-
-        self.employee = self.env["res.users"].create(
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        # Start from a clean slate
+        cls.env["mail.activity.team"].search([]).unlink()
+        # Create Users
+        cls.employee = cls.env["res.users"].create(
             {
-                "company_id": self.env.ref("base.main_company").id,
+                "company_id": cls.env.ref("base.main_company").id,
                 "name": "Employee",
                 "login": "csu",
                 "email": "crmuser@yourcompany.com",
@@ -23,113 +26,97 @@ class TestMailActivityTeam(SavepointCase):
                         6,
                         0,
                         [
-                            self.env.ref("base.group_user").id,
-                            self.env.ref("base.group_partner_manager").id,
+                            cls.env.ref("base.group_user").id,
+                            cls.env.ref("base.group_partner_manager").id,
                         ],
                     )
                 ],
             }
         )
-
-        self.employee2 = self.env["res.users"].create(
+        cls.employee2 = cls.env["res.users"].create(
             {
-                "company_id": self.env.ref("base.main_company").id,
+                "company_id": cls.env.ref("base.main_company").id,
                 "name": "Employee 2",
                 "login": "csu2",
                 "email": "crmuser2@yourcompany.com",
-                "groups_id": [(6, 0, [self.env.ref("base.group_user").id])],
+                "groups_id": [(6, 0, [cls.env.ref("base.group_user").id])],
             }
         )
-
-        self.partner_ir_model = self.env["ir.model"]._get("res.partner")
-
-        activity_type_model = self.env["mail.activity.type"]
-        self.activity1 = activity_type_model.create(
+        cls.employee3 = cls.env["res.users"].create(
+            {
+                "company_id": cls.env.ref("base.main_company").id,
+                "name": "Employee 3",
+                "login": "csu3",
+                "email": "crmuser3@yourcompany.com",
+                "groups_id": [(6, 0, [cls.env.ref("base.group_user").id])],
+            }
+        )
+        # Create Activity Types
+        cls.activity1 = cls.env["mail.activity.type"].create(
             {
                 "name": "Initial Contact",
                 "delay_count": 5,
                 "delay_unit": "days",
                 "summary": "ACT 1 : Presentation, barbecue, ... ",
-                "res_model_id": self.partner_ir_model.id,
+                "res_model": "res.partner",
             }
         )
-        self.activity2 = activity_type_model.create(
+        cls.activity2 = cls.env["mail.activity.type"].create(
             {
                 "name": "Call for Demo",
                 "delay_count": 6,
                 "delay_unit": "days",
                 "summary": "ACT 2 : I want to show you my ERP !",
-                "res_model_id": self.partner_ir_model.id,
+                "res_model": "res.partner",
             }
         )
-
-        self.partner_client = self.env.ref("base.res_partner_1")
-
-        self.act1 = (
-            self.env["mail.activity"]
-            .with_user(self.employee)
+        # Create Teams and Activities
+        cls.partner_client = cls.env.ref("base.res_partner_1")
+        cls.partner_ir_model = cls.env["ir.model"]._get("res.partner")
+        cls.act1 = (
+            cls.env["mail.activity"]
+            .with_user(cls.employee)
             .create(
                 {
-                    "activity_type_id": self.activity1.id,
+                    "activity_type_id": cls.activity1.id,
                     "note": "Partner activity 1.",
-                    "res_id": self.partner_client.id,
-                    "res_model_id": self.partner_ir_model.id,
-                    "user_id": self.employee.id,
+                    "res_id": cls.partner_client.id,
+                    "res_model_id": cls.partner_ir_model.id,
+                    "user_id": cls.employee.id,
                 }
             )
         )
-
-        self.team1 = (
-            self.env["mail.activity.team"]
-            .sudo()
-            .create(
-                {
-                    "name": "Team 1",
-                    "res_model_ids": [(6, 0, [self.partner_ir_model.id])],
-                    "member_ids": [(6, 0, [self.employee.id])],
-                }
-            )
-        )
-
-        self.team2 = (
-            self.env["mail.activity.team"]
-            .sudo()
-            .create(
-                {
-                    "name": "Team 2",
-                    "res_model_ids": [(6, 0, [self.partner_ir_model.id])],
-                    "member_ids": [(6, 0, [self.employee.id, self.employee2.id])],
-                }
-            )
-        )
-
-        self.act2 = (
-            self.env["mail.activity"]
-            .with_user(self.employee)
-            .create(
-                {
-                    "activity_type_id": self.activity2.id,
-                    "note": "Partner activity 2.",
-                    "res_id": self.partner_client.id,
-                    "res_model_id": self.partner_ir_model.id,
-                    "user_id": self.employee.id,
-                }
-            )
-        )
-
-        self.employee3 = self.env["res.users"].create(
+        cls.team1 = cls.env["mail.activity.team"].create(
             {
-                "company_id": self.env.ref("base.main_company").id,
-                "name": "Employee 3",
-                "login": "csu3",
-                "email": "crmuser3@yourcompany.com",
-                "groups_id": [(6, 0, [self.env.ref("base.group_user").id])],
+                "name": "Team 1",
+                "res_model_ids": [(6, 0, [cls.partner_ir_model.id])],
+                "member_ids": [(6, 0, [cls.employee.id])],
             }
+        )
+        cls.team2 = cls.env["mail.activity.team"].create(
+            {
+                "name": "Team 2",
+                "res_model_ids": [(6, 0, [cls.partner_ir_model.id])],
+                "member_ids": [(6, 0, [cls.employee.id, cls.employee2.id])],
+            }
+        )
+        cls.act2 = (
+            cls.env["mail.activity"]
+            .with_user(cls.employee)
+            .create(
+                {
+                    "activity_type_id": cls.activity2.id,
+                    "note": "Partner activity 2.",
+                    "res_id": cls.partner_client.id,
+                    "res_model_id": cls.partner_ir_model.id,
+                    "user_id": cls.employee.id,
+                }
+            )
         )
 
     def test_activity_members(self):
         self.team1.member_ids |= self.employee2
-        self.partner_client.refresh()
+        self.partner_client.invalidate_recordset()
         self.assertIn(self.employee2, self.partner_client.activity_team_user_ids)
         self.assertIn(self.employee, self.partner_client.activity_team_user_ids)
         self.assertEqual(
@@ -170,9 +157,11 @@ class TestMailActivityTeam(SavepointCase):
         self.assertEqual(
             self.act2.team_id, self.team1, "Error: Activity 2 should have Team 1."
         )
-        with Form(self.act2) as form:
-            form.user_id = self.employee2
-            self.assertEqual(form.team_id, self.team2)
+        with self.assertRaises(
+            AssertionError, msg="can't write on invisible field user_id"
+        ):
+            with Form(self.act2) as form:
+                form.user_id = self.employee2
 
     def test_activity_onchanges_user_no_team(self):
         self.assertEqual(
@@ -274,7 +263,7 @@ class TestMailActivityTeam(SavepointCase):
         res = (
             self.env["res.users"]
             .with_user(self.employee.id)
-            .with_context({"team_activities": True})
+            .with_context(**{"team_activities": True})
             .systray_get_activities()
         )
         self.assertEqual(res[0]["total_count"], 0)
@@ -284,11 +273,11 @@ class TestMailActivityTeam(SavepointCase):
         activity = partner_record.activity_schedule(
             activity_type_id=self.activity2.id, user_id=self.employee2.id
         )
-        activity.flush()
+        activity.flush_recordset()
         res = (
             self.env["res.users"]
             .with_user(self.employee.id)
-            .with_context({"team_activities": True})
+            .with_context(**{"team_activities": True})
             .systray_get_activities()
         )
         self.assertEqual(res[0]["total_count"], 1)
@@ -300,16 +289,52 @@ class TestMailActivityTeam(SavepointCase):
         self.activity1.write(
             {
                 "default_team_id": self.team1.id,
-                "default_next_type_id": self.activity2.id,
-                "force_next": True,
+                "triggered_next_type_id": self.activity2.id,
             }
         )
         self.activity2.default_team_id = self.team2
         self.team2.member_ids = self.employee2
         partner_record = self.employee.partner_id.with_user(self.employee.id)
         activity = partner_record.activity_schedule(activity_type_id=self.activity1.id)
-        activity.flush()
+        activity.flush_recordset()
         _messages, next_activities = activity._action_done()
         self.assertTrue(next_activities)
         self.assertEqual(next_activities.team_id, self.team2)
         self.assertEqual(next_activities.user_id, self.employee2)
+
+    def test_schedule_activity_from_server_action(self):
+        partner = self.env["res.partner"].create({"name": "Test Partner"})
+        action = self.env["ir.actions.server"].create(
+            {
+                "name": "Test Server Action",
+                "model_id": self.partner_ir_model.id,
+                "state": "next_activity",
+                "activity_type_id": self.activity1.id,
+                "activity_user_type": "specific",
+                "activity_user_id": self.employee.id,
+                "activity_team_id": self.team1.id,
+            }
+        )
+        action.with_context(active_model=partner._name, active_ids=partner.ids).run()
+        self.assertEqual(partner.activity_ids[-1].team_id, self.team1)
+        action.activity_team_id = self.team2
+        action.with_context(active_model=partner._name, active_ids=partner.ids).run()
+        self.assertEqual(partner.activity_ids[-1].team_id, self.team2)
+
+    def test_my_activity_date_deadline(self):
+        today = date.today()
+        self.act2.write(
+            {
+                "user_id": False,
+                "team_id": self.team1.id,
+                "date_deadline": today,
+            }
+        )
+        partner = (
+            self.env["res.partner"]
+            .with_context(team_activities=True)
+            .with_user(self.employee.id)
+            .search([("my_activity_date_deadline", "=", today)])
+        )
+        self.assertEqual(partner, self.partner_client)
+        self.assertEqual(partner.my_activity_date_deadline, today)
