@@ -14,6 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_all_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_all
+msgid "All Fields Restrictions"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
 #: model:ir.model,name:web_field_required_invisible_manager.model_base
 msgid "Base"
 msgstr ""
@@ -66,6 +72,7 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__display_name
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__display_name
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -90,8 +97,8 @@ msgid "Field Readonly"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
-#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
-msgid "Fields"
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_config
+msgid "Fields Restrictions"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
@@ -102,12 +109,25 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__id
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__id
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view__id
 msgid "ID"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.cfr_all_view_form
+msgid "Invisible Field Rule"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_invisible_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_invisible
+msgid "Invisible Fields"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction____last_update
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model____last_update
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -127,6 +147,21 @@ msgid "Make field invisible or required"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_model_id
+msgid "Model (readonly)"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_model_id
+msgid "Model (required)"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__invisible_model_id
+msgid "Model (visibility)"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__model_name
 msgid "Model Name"
 msgstr ""
@@ -142,7 +177,17 @@ msgid "Readonly Field"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
-#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.cfr_all_view_form
+msgid "Readonly Field Rule"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_readonly_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_readonly
+msgid "Readonly Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required
 msgid "Required"
 msgstr ""
@@ -153,21 +198,27 @@ msgid "Required Field"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.cfr_all_view_form
+msgid "Required Field Rule"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_field_manager_required_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_required
+msgid "Required Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
+msgid "Required by Default"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model,name:web_field_required_invisible_manager.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__visibility_field_id
 msgid "Visibility Field"
-msgstr ""
-
-#. module: web_field_required_invisible_manager
-#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__invisible_model_id
-msgid "invisible_model_id"
-msgstr ""
-
-#. module: web_field_required_invisible_manager
-#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_model_id
-msgid "readonly_model_id"
-msgstr ""
-
-#. module: web_field_required_invisible_manager
-#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_model_id
-msgid "required_model_id"
 msgstr ""
