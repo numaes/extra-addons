@@ -17,7 +17,7 @@ class DateRangeType(models.Model):
     def _default_company(self):
         return self.env.company
 
-    name = fields.Char(required=True, translate=True)
+    name = fields.Char(string='Type Name', required=True, translate=True)
     allow_overlap = fields.Boolean(
         help="If set, date ranges of same type must not overlap.", default=False
     )

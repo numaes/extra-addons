@@ -15,7 +15,7 @@ class DateRange(models.Model):
     def _default_company(self):
         return self.env.company
 
-    name = fields.Char(required=True, translate=True)
+    name = fields.Char(string="Name", required=True, translate=True)
     date_start = fields.Date(string="Start date", required=True)
     date_end = fields.Date(string="End date", required=True)
     type_id = fields.Many2one(
