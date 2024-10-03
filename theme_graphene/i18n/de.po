@@ -3,15 +3,16 @@
 # 	* theme_graphene
 # 
 # Translators:
-# Wil Odoo, 2023
+# Martin Trigaux, 2021
+# Larissa Manderfeld, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-28 12:22+0000\n"
-"PO-Revision-Date: 2023-10-27 15:39+0000\n"
-"Last-Translator: Wil Odoo, 2023\n"
+"POT-Creation-Date: 2021-12-13 07:05+0000\n"
+"PO-Revision-Date: 2021-12-13 07:13+0000\n"
+"Last-Translator: Larissa Manderfeld, 2023\n"
 "Language-Team: German (https://app.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,9 +31,29 @@ msgid "<b>50,000+ companies</b> run our software."
 msgstr "<b>50,000+ Unternehmen</b> nutzen unsere Software."
 
 #. module: theme_graphene
+#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
+msgid "<b>Add to Cart</b>"
+msgstr ""
+
+#. module: theme_graphene
+#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
+msgid "<b>Get Delivered</b>"
+msgstr ""
+
+#. module: theme_graphene
+#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
+msgid "<b>Pay</b>"
+msgstr ""
+
+#. module: theme_graphene
+#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
+msgid "<b>Sign In</b>"
+msgstr ""
+
+#. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_cover
-msgid "<b>Making the difference.</b>"
-msgstr "<b>Den Unterschied machen.</b>"
+msgid "<font style=\"font-size: 62px;\"><b>Making the difference</b></font>"
+msgstr ""
 
 #. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_company_team
@@ -93,11 +114,6 @@ msgid "Access to all modules and features"
 msgstr "Zugriff auf alle Module und Funktionen"
 
 #. module: theme_graphene
-#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
-msgid "Add to Cart"
-msgstr "In den Warenkorb"
-
-#. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_company_team
 msgid "Aline Turner, <small><b>CTO</b></small>"
 msgstr "Aline Turner, <small><b>CTO</b></small>"
@@ -105,22 +121,27 @@ msgstr "Aline Turner, <small><b>CTO</b></small>"
 #. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_cover
 msgid "Contact us"
-msgstr "Kontaktieren Sie uns"
+msgstr "Kontakt"
 
 #. module: theme_graphene
-#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
-msgid "Get Delivered"
-msgstr "Geliefert werden"
+#: model:ir.model.fields,field_description:theme_graphene.field_theme_utils__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
 
 #. module: theme_graphene
-#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_picture
-msgid "Grow with Us"
-msgstr "Wachsen Sie mit uns"
+#: model:ir.model.fields,field_description:theme_graphene.field_theme_utils__id
+msgid "ID"
+msgstr "ID"
 
 #. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_company_team
 msgid "Iris Joe, <small><b>CFO</b></small>"
 msgstr "Iris Joe, <small><b>CFO</b></small>"
+
+#. module: theme_graphene
+#: model:ir.model.fields,field_description:theme_graphene.field_theme_utils____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
 
 #. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_company_team
@@ -144,11 +165,6 @@ msgstr ""
 "machen es zu einem Vergnügen, mit uns zu arbeiten."
 
 #. module: theme_graphene
-#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
-msgid "Pay"
-msgstr "Bezahlen"
-
-#. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_three_columns
 msgid "Powerful API"
 msgstr "Leistungsstarke API"
@@ -164,24 +180,9 @@ msgstr ""
 "funktioniert"
 
 #. module: theme_graphene
-#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_picture
-msgid ""
-"Put your people at the heart of your marketing with tools that help you get "
-"to know your audience <br/>and see who you should be talking to."
-msgstr ""
-"Stellen Sie Ihre Mitarbeiter in den Mittelpunkt Ihres Marketings mit Tools, "
-"die Ihnen helfen, Ihr Publikum kennenzulernen und zu erkennen, <br/>mit wem "
-"Sie sprechen sollten."
-
-#. module: theme_graphene
-#: model_terms:theme.ir.ui.view,arch:theme_graphene.s_process_steps
-msgid "Sign In"
-msgstr "Anmelden"
-
-#. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_comparisons
 msgid "Start Now"
-msgstr "Jetzt starten"
+msgstr "Jetzt loslegen"
 
 #. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_three_columns
@@ -200,7 +201,7 @@ msgstr ""
 #. module: theme_graphene
 #: model:ir.model,name:theme_graphene.model_theme_utils
 msgid "Theme Utils"
-msgstr "Designwerkzeuge"
+msgstr "Thema-Werkzeuge"
 
 #. module: theme_graphene
 #: model_terms:theme.ir.ui.view,arch:theme_graphene.s_company_team
