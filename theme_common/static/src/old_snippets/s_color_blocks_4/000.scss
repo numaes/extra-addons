@@ -12,7 +12,7 @@
     [class*="col-lg-"] {
         padding: 64px 20px;
     }
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(md) {
         [class*="col-lg-"] {
             flex: 1 1 100%;
         }

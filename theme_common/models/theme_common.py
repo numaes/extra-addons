@@ -6,10 +6,9 @@ class ThemeCommon(models.AbstractModel):
 
     def _theme_common_post_copy(self, mod):
         # Reset all default color when switching themes
-        self.disable_asset('theme_common.option_colors_02_variables')
-        self.disable_asset('theme_common.option_colors_03_variables')
-        self.disable_asset('theme_common.option_colors_04_variables')
-        self.disable_asset('theme_common.option_colors_05_variables')
-        self.disable_asset('theme_common.option_colors_06_variables')
-        self.disable_asset('theme_common.option_colors_07_variables')
-        self.disable_asset('theme_common.option_colors_08_variables')
+        for nb in range(2, 9):
+            self.disable_view('theme_common.option_colors_%02d_variables' % nb)
+
+        # For compatibility
+        # self.enable_view('theme_common.compatibility-saas-11-4-variables')
+        # self.enable_view('theme_common.compatibility-saas-11-4')
