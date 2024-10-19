@@ -15,7 +15,7 @@ odoo.define("backend_theme_v14.sidebar-toggle", function (require) {
       args: [[id], ["sidebar_visible"]],
     })
     .then(function (res) {
-      base.ready().done(function () {
+      base.ready().then(function () {
         var dbfield = res[0];
         var toggle = dbfield.sidebar_visible;
         if (toggle === true) {

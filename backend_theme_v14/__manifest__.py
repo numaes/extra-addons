@@ -20,7 +20,7 @@
     "depends": [
         'web',
         'web_responsive',
-
+        'web_editor',
     ],
     "data": [
         'views/assets.xml',
