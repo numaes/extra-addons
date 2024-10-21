@@ -8,14 +8,17 @@
 
 <odoo>
     <data>
-		<template id="assets_backend" name="Openworx Backend Theme" inherit_id="web.assets_backend">
-		<xpath expr=".">
+        <template id="assets_backend" name="Openworx Backend Theme" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <!-- Estilos -->
                 <link rel="stylesheet" href="/backend_theme_v14/static/src/scss/colors.scss"/>
                 <link rel="stylesheet" href="/backend_theme_v14/static/src/scss/style.scss"/>
-				<link rel="stylesheet" href="/backend_theme_v14/static/src/scss/sidebar.scss"/>
-				<script type="application/javascript" src="/backend_theme_v14/static/src/js/sidebar.js"/>
-				<script type="application/javascript" src="/backend_theme_v14/static/src/js/sidebar-toggle.js"/>
-			</xpath>
-		</template>
+                <link rel="stylesheet" href="/backend_theme_v14/static/src/scss/sidebar.scss"/>
+
+                <!-- Scripts del tema -->
+                <script type="application/javascript" src="/backend_theme_v14/static/src/js/sidebar.js"/>
+                <script type="application/javascript" src="/backend_theme_v14/static/src/js/sidebar-toggle.js"/>
+            </xpath>
+        </template>
     </data>
 </odoo>

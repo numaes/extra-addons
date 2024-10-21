@@ -1,13 +1,10 @@
-/* Copyright 2017 Openworx.
- * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-
 odoo.define("backend_theme_v14.sidebar-toggle", function (require) {
   "use strict";
 
-  var base = require("web_editor.base");
   var session = require("web.session");
   var rpc = require("web.rpc");
   var id = session.uid;
+
   rpc
     .query({
       model: "res.users",
@@ -15,14 +12,14 @@ odoo.define("backend_theme_v14.sidebar-toggle", function (require) {
       args: [[id], ["sidebar_visible"]],
     })
     .then(function (res) {
-      base.ready().then(function () {
-        var dbfield = res[0];
-        var toggle = dbfield.sidebar_visible;
-        if (toggle === true) {
-          $("#app-sidebar").removeClass("toggle-sidebar");
-        } else {
-          $("#app-sidebar").addClass("toggle-sidebar");
-        }
-      });
+      var dbfield = res[0];
+      // Si la base de datos no tiene el valor sidebar_visible, la barra estará cerrada por defecto
+      var toggle = dbfield.sidebar_visible !== undefined ? dbfield.sidebar_visible : false;
+
+      if (toggle === false) {
+        $("#app-sidebar").removeClass("toggle-sidebar");
+      } else {
+        $("#app-sidebar").addClass("toggle-sidebar"); // Esto asegurará que esté cerrada por defecto
+      }
     });
 });
