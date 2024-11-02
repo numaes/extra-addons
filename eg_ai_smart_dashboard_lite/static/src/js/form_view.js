@@ -4,19 +4,21 @@ import {registry} from '@web/core/registry';
 import {formView} from '@web/views/form/form_view';
 import {FormController} from '@web/views/form/form_controller';
 import {FormRenderer} from '@web/views/form/form_renderer';
-import { renderToString } from "@web/core/utils/render"
+import { qweb as QWeb } from 'web.core';
 import {Component,onWillStart,onMounted,useEffect,useRef,onRendered,useState,toRaw} from "@odoo/owl";
+import ajax from 'web.ajax';
+import { buildQuery } from "web.rpc";
 import { useService } from "@web/core/utils/hooks";
-import { rpc } from "@web/core/network/rpc";
+
 
 export class DashboardItemFormController extends FormController {
 	setup() {
 		super.setup();
-		this.orm = useService("orm");
+		this.rpc = useService('rpc');
 		onRendered(() => {
 			this._render_chart();
 		});
-		onMounted(async() => {
+		onMounted(() => {
 			this._render_chart();
 		});
 	}
@@ -38,6 +40,15 @@ export class DashboardItemFormController extends FormController {
 		 }
 
         if (item_id){
+//            $("#plate-color").spectrum({
+//					color: "#fff"
+//				});
+//				$("#background-Color").spectrum({
+//					color: "#fff"
+//				});
+//				$("#grid-color").spectrum({
+//					color: "#fff"
+//				});
 				 if (['kpi','tiles'].includes(this.model.root.data.chart_type)){
                         self.generate_kpi_or_tiles(this.model.root.data, item_id, chartDom)
                     }else if (this.model.root.data.chart_type == 'list') {
@@ -45,6 +56,14 @@ export class DashboardItemFormController extends FormController {
 				} else {
 					self._getChartData(this.model.root.data, item_id, chartDom);
 				}
+
+//            ajax.jsonRpc("/custom_dashboard/get_dashboard_items_data", 'call', {
+//				'dashboard_item_id': item_id,
+//				'data':this.model.root.data
+//			})
+//			.then(function(res) {
+//
+//			});
         }
 
 
@@ -59,12 +78,12 @@ export class DashboardItemFormController extends FormController {
 		    chartDom[0].innerHTML = "";
 		}
 		if (!dict_data.chart_data){
-            const rpcQuery = this.orm.call(
-                'eg.custom.dashboard.item',
-                'compute_chart_chart',
-                [dashboard_item_id],
-            )
-            const result = await rpc(rpcQuery.route, rpcQuery.params);
+            const rpcQuery = buildQuery({
+                model: 'eg.custom.dashboard.item',
+                method: 'compute_chart_chart',
+                args: [dashboard_item_id],
+            })
+            const result = await this.rpc(rpcQuery.route, rpcQuery.params);
             dict_data.chart_data=result
 		}
         var dataset = JSON.parse(dict_data.chart_data)
@@ -73,11 +92,13 @@ export class DashboardItemFormController extends FormController {
             'icon_bgcolor':dict_data.icon_bgcolor,
             'icon_color':dict_data.icon_color,
             'tile_kpi_theme':dict_data.tile_kpi_theme,
+//            'title_font': dict_data.title_font,
             'background_color':dict_data.chart_background_color,
             'text_color': dict_data.chart_fore_color,
             'tile_image_type': dict_data.tile_image_type,
             'tile_icon': dict_data.tile_icon,
             'title':  dict_data.name,
+//            'image_url': image_src,
             'id': dict_data.id,
             'tile_unit': dict_data.tile_unit || '',
         }
@@ -93,11 +114,9 @@ export class DashboardItemFormController extends FormController {
 
              render_data['value']=dataset.total
         }
-        var $chartContainer = window.$(
-                        renderToString(template_id, render_data)
-                    );
-         chartDom.append($chartContainer);
-
+//        var $chartContainer = $(QWeb.render(template_id, render_data));
+//        this.$el.append(qweb.render('accountTypeSelection', {widget: this}));
+        chartDom.append(QWeb.render(template_id, render_data));
 	}
 
 	_getChartData(dict_data, dashboard_item_id, chartDom) {
@@ -108,12 +127,12 @@ export class DashboardItemFormController extends FormController {
 	async generate_chart_options(dict_data, dashboard_item_id, chartDom) {
 		var fields = dict_data
 		if (!dict_data.chart_data){
-            const rpcQuery = this.orm.call(
-                'eg.custom.dashboard.item',
-                'compute_chart_chart',
-                [dashboard_item_id],
-            )
-            const result = await rpc(rpcQuery.route, rpcQuery.params);
+            const rpcQuery = buildQuery({
+                model: 'eg.custom.dashboard.item',
+                method: 'compute_chart_chart',
+                args: [dashboard_item_id],
+            })
+            const result = await this.rpc(rpcQuery.route, rpcQuery.params);
             dict_data.chart_data=result
 		}
 		var dataset = JSON.parse(fields.chart_data)
@@ -123,6 +142,10 @@ export class DashboardItemFormController extends FormController {
 		} else {
 			var myChart = echarts.init(chartDom[0]);
 		}
+//		myChart.on('mouseover', {item_id: dashboard_item_id}, function (params) {
+//            console.log(params);
+//        });
+
 		var optionechart = {
 			toolbox: {
 				show: fields.tool_box_show,
@@ -246,6 +269,7 @@ export class DashboardItemFormController extends FormController {
 			optionechart['yAxis'] = {
 
 					type: 'category',
+//                    boundaryGap: false,
     				data: dataset.model_label_list,
 
 				},
@@ -313,6 +337,7 @@ export class DashboardItemFormController extends FormController {
 			optionechart['xAxis'] = {
 
 					type: 'category',
+//                    boundaryGap: false,
     				data: dataset.model_label_list,
 				},
 			optionechart['yAxis'] = {
@@ -336,6 +361,7 @@ export class DashboardItemFormController extends FormController {
 				},
 			optionechart['xAxis'] = {
 					type: 'category',
+//                    boundaryGap: false,
     				data: dataset.model_label_list,
 				},
 			optionechart['yAxis'] = {
@@ -357,7 +383,17 @@ export class DashboardItemFormController extends FormController {
 
 }
 
+//// TODO KBA: to remove in master
+//export class EmployeeFormRenderer extends FormRenderer {
+//    setup() {
+//        super.setup();
+//
+//    }
+//
+//}
+
 registry.category('views').add('eg_custom_dashboard_item_form_view', {
 	...formView,
 	Controller: DashboardItemFormController,
+	//    Renderer: EmployeeFormRenderer,
 });

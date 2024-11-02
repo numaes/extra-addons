@@ -3,7 +3,8 @@
     'version': '18.0',
     'category': 'Productivity',
     'summery': 'Smart Dashboard',
-    'author': '',
+    'author': 'INKERP',
+    'website': 'http://www.inkerp.com',
     'depends': ['base', 'web'],
     'data': [
         'security/custom_dashboard_security.xml',
@@ -57,9 +58,10 @@
             'eg_ai_smart_dashboard_lite/static/lib/js/css/sweetalert.css',
         ],
     },
-    'images': ['static/description/banner.png'],
+    'images': ['static/description/banner.gif'],
     'license': "OPL-1",
     'installable': True,
     'application': True,
     'auto_install': False,
+    
 }
