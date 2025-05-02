@@ -27,6 +27,11 @@ msgid "<em class=\"font-weight-normal text-muted\">Tickets in stage:</em>"
 msgstr ""
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_new_button
+msgid "<i class=\"fa fa-plus\"/> New"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:mail.template,body_html:helpdesk_mgmt.assignment_email_template
 msgid ""
 "<p>Hello <t t-out=\"object.user_id.name\"/>,</p>\n"
@@ -688,6 +693,11 @@ msgid "Folded in Kanban"
 msgstr "Kanban nézetben behajtott"
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_home
+msgid "Follow and comments your helpdesk tickets"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__message_follower_ids
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__message_follower_ids
 msgid "Followers"
@@ -901,6 +911,11 @@ msgid "Is Follower"
 msgstr "Követő"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,help:helpdesk_mgmt.field_helpdesk_ticket__duration_tracking
+msgid "JSON that maps ids from a many2one field to seconds spent"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__kanban_state
 msgid "Kanban State"
 msgstr "Kanban állapot"
@@ -1012,12 +1027,6 @@ msgstr "Név"
 #: model:helpdesk.ticket.stage,name:helpdesk_mgmt.helpdesk_ticket_stage_new
 msgid "New"
 msgstr "Új"
-
-#. module: helpdesk_mgmt
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_home
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_tickets
-msgid "New Ticket"
-msgstr "Új eset"
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.res_config_settings_view_form
@@ -1215,6 +1224,12 @@ msgid "Priority tickets"
 msgstr ""
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__rating_ids
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields.selection,name:helpdesk_mgmt.selection__helpdesk_ticket__kanban_state__done
 msgid "Ready for next stage"
 msgstr "Kész a következő állapotra"
@@ -1395,6 +1410,11 @@ msgstr ""
 "Késésben: A határidő lejárt.\n"
 "Mai: A határidő ma van.\n"
 "Tervezett: Jövőben tevékenységek."
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__duration_tracking
+msgid "Status time"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_create_ticket
@@ -1666,6 +1686,9 @@ msgid ""
 "{{object.company_id.name}} Ticket Assignment (Ref {{object.number or 'n/"
 "a' }})"
 msgstr ""
+
+#~ msgid "New Ticket"
+#~ msgstr "Új eset"
 
 #~ msgid "<span>View</span>"
 #~ msgstr "<span>Nézet</span>"

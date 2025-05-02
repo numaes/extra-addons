@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-19 12:06+0000\n"
+"PO-Revision-Date: 2025-04-28 09:24+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_list
@@ -26,6 +26,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_list
 msgid "<em class=\"font-weight-normal text-muted\">Tickets in stage:</em>"
 msgstr "<em class=\"font-weight-normal text-muted\">Ticket nella fase:</em>"
+
+#. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_new_button
+msgid "<i class=\"fa fa-plus\"/> New"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #: model:mail.template,body_html:helpdesk_mgmt.assignment_email_template
@@ -169,23 +174,22 @@ msgid ""
 "            "
 msgstr ""
 "<table border=\"0\" width=\"100%\" cellpadding=\"0\" bgcolor=\"#ededed\" "
-"style=\"padding: 20px; background-color: #ededed; border-collapse:separate;\""
-">\n"
+"style=\"padding: 20px; background-color: #ededed; border-collapse:separate;"
+"\">\n"
 "                    <tbody>\n"
 "                        <!-- HEADER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table width=\"590\" border=\"0\" "
 "cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-"
 "color: rgb(135,90,123); padding: 20px; border-collapse:separate;\">\n"
 "                                    <tr>\n"
-"                                        <td valign=\"middle\" align=\"right\""
-">\n"
-"                                            <img t-att-src=\"'/"
-"logo.png?company=%s' % object.company_id.id\" style=\"padding: 0px; margin: "
-"0px; height: auto; width: 80px;\" t-att-alt=\"'%s' % object.company_id.name\""
-"/>\n"
+"                                        <td valign=\"middle\" "
+"align=\"right\">\n"
+"                                            <img t-att-src=\"'/logo.png?"
+"company=%s' % object.company_id.id\" style=\"padding: 0px; margin: 0px; "
+"height: auto; width: 80px;\" t-att-alt=\"'%s' % object.company_id.name\"/>\n"
 "                                        </td>\n"
 "                                    </tr>\n"
 "                                </table>\n"
@@ -193,16 +197,16 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- CONTENT -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table width=\"590\" border=\"0\" "
 "cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px; background-"
 "color: rgb(255, 255, 255); padding: 20px; border-collapse:separate;\">\n"
 "                                    <tbody>\n"
-"                              <td valign=\"top\" style=\"font-"
-"family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
-"                                <p>Salve<t t-out=\"object.user_id.name\""
-"/>,</p>\n"
+"                              <td valign=\"top\" style=\"font-family:Arial,"
+"Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
+"                                <p>Salve<t t-out=\"object.user_id.name\"/>,</"
+"p>\n"
 "                                <p>Il ticket \"<t t-out=\"object."
 "display_name\"></t>\" è stato chiuso.</p>\n"
 "                                        </td>\n"
@@ -212,8 +216,8 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- FOOTER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table width=\"590\" border=\"0\" "
 "cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-"
 "color: rgb(135,90,123); padding: 20px; border-collapse:separate;\">\n"
@@ -324,23 +328,22 @@ msgid ""
 "            "
 msgstr ""
 "<table border=\"0\" width=\"100%\" cellpadding=\"0\" bgcolor=\"#ededed\" "
-"style=\"padding: 20px; background-color: #ededed; border-collapse:separate;\""
-">\n"
+"style=\"padding: 20px; background-color: #ededed; border-collapse:separate;"
+"\">\n"
 "                    <tbody>\n"
 "                        <!-- HEADER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table width=\"590\" border=\"0\" "
 "cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-"
 "color: rgb(135,90,123); padding: 20px; border-collapse:separate;\">\n"
 "                                    <tr>\n"
-"                                        <td valign=\"middle\" align=\"right\""
-">\n"
-"                                            <img t-att-src=\"'/"
-"logo.png?company=%s' % object.company_id.id\" style=\"padding: 0px; margin: "
-"0px; height: auto; width: 80px;\" t-att-alt=\"'%s' % object.company_id.name\""
-"/>\n"
+"                                        <td valign=\"middle\" "
+"align=\"right\">\n"
+"                                            <img t-att-src=\"'/logo.png?"
+"company=%s' % object.company_id.id\" style=\"padding: 0px; margin: 0px; "
+"height: auto; width: 80px;\" t-att-alt=\"'%s' % object.company_id.name\"/>\n"
 "                                        </td>\n"
 "                                    </tr>\n"
 "                                </table>\n"
@@ -348,18 +351,18 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- CONTENT -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table width=\"590\" border=\"0\" "
 "cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px; background-"
 "color: rgb(255, 255, 255); padding: 20px; border-collapse:separate;\">\n"
 "                                    <tbody>\n"
 "                                        <td valign=\"top\" style=\"font-"
 "family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
-"                                            <p>Salve<t t-out=\"object.user_id"
-".name\"/>,</p>\n"
-"                                            </p><p>La fase del ticket \"<t "
-"t-out=\"object.display_name\"/>\" è cambiata a <t t-out=\"object.stage_id."
+"                                            <p>Salve<t t-out=\"object."
+"user_id.name\"/>,</p>\n"
+"                                            </p><p>La fase del ticket \"<t t-"
+"out=\"object.display_name\"/>\" è cambiata a <t t-out=\"object.stage_id."
 "name\"/>.</p>\n"
 "                                        </td>\n"
 "                                    </tbody>\n"
@@ -368,8 +371,8 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- FOOTER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table width=\"590\" border=\"0\" "
 "cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-"
 "color: rgb(135,90,123); padding: 20px; border-collapse:separate;\">\n"
@@ -848,6 +851,11 @@ msgid "Folded in Kanban"
 msgstr "Minimizzato nel Kanban"
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_home
+msgid "Follow and comments your helpdesk tickets"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__message_follower_ids
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__message_follower_ids
 msgid "Followers"
@@ -1065,6 +1073,11 @@ msgid "Is Follower"
 msgstr "Segue"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,help:helpdesk_mgmt.field_helpdesk_ticket__duration_tracking
+msgid "JSON that maps ids from a many2one field to seconds spent"
+msgstr "JSON che mappa gli ID tra un campo many2one ai secondi impiegati"
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__kanban_state
 msgid "Kanban State"
 msgstr "Stato Kanban"
@@ -1176,12 +1189,6 @@ msgstr "Nome"
 #: model:helpdesk.ticket.stage,name:helpdesk_mgmt.helpdesk_ticket_stage_new
 msgid "New"
 msgstr "Nuovo"
-
-#. module: helpdesk_mgmt
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_home
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_tickets
-msgid "New Ticket"
-msgstr "Nuovo Ticket"
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.res_config_settings_view_form
@@ -1378,6 +1385,12 @@ msgid "Priority tickets"
 msgstr "Ticket prioritari"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__rating_ids
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__rating_ids
+msgid "Ratings"
+msgstr "Valutazioni"
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields.selection,name:helpdesk_mgmt.selection__helpdesk_ticket__kanban_state__done
 msgid "Ready for next stage"
 msgstr "Pronto per la prossima fase"
@@ -1557,6 +1570,11 @@ msgstr ""
 "Scaduto: la data richiesta è trascorsa\n"
 "Oggi: la data attività è oggi\n"
 "Pianificato: attività future."
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__duration_tracking
+msgid "Status time"
+msgstr "Ora stato"
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_create_ticket
@@ -1832,6 +1850,9 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Assegnazione ticket (Rif. {{object.number or 'n/"
 "a' }})"
+
+#~ msgid "New Ticket"
+#~ msgstr "Nuovo Ticket"
 
 #~ msgid ""
 #~ "<p>Hello <t t-out=\"object.user_id.name\"></t>,</p>\n"
@@ -2168,9 +2189,6 @@ msgstr ""
 
 #~ msgid "Next Activity Calendar Event"
 #~ msgstr "Evento calendario attività successiva"
-
-#~ msgid "Ratings"
-#~ msgstr "Valutazioni"
 
 #, python-format
 #~ msgid "%s file exceed the maximum file size of %s."

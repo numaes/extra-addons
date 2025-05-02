@@ -29,6 +29,11 @@ msgid "<em class=\"font-weight-normal text-muted\">Tickets in stage:</em>"
 msgstr "<em class=\"font-weight-normal text-muted\">Tickets in Stufe:</em>"
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_new_button
+msgid "<i class=\"fa fa-plus\"/> New"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:mail.template,body_html:helpdesk_mgmt.assignment_email_template
 msgid ""
 "<p>Hello <t t-out=\"object.user_id.name\"/>,</p>\n"
@@ -696,6 +701,11 @@ msgid "Folded in Kanban"
 msgstr "Eingeklappt in Kanban"
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_home
+msgid "Follow and comments your helpdesk tickets"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__message_follower_ids
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__message_follower_ids
 msgid "Followers"
@@ -917,6 +927,11 @@ msgid "Is Follower"
 msgstr "Ist ein Follower"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,help:helpdesk_mgmt.field_helpdesk_ticket__duration_tracking
+msgid "JSON that maps ids from a many2one field to seconds spent"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__kanban_state
 msgid "Kanban State"
 msgstr "Kanbanstufe"
@@ -1028,12 +1043,6 @@ msgstr ""
 #: model:helpdesk.ticket.stage,name:helpdesk_mgmt.helpdesk_ticket_stage_new
 msgid "New"
 msgstr "Neu"
-
-#. module: helpdesk_mgmt
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_home
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_tickets
-msgid "New Ticket"
-msgstr "Neues Ticket"
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.res_config_settings_view_form
@@ -1231,6 +1240,12 @@ msgid "Priority tickets"
 msgstr "Prioritäten-Tickets"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__rating_ids
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields.selection,name:helpdesk_mgmt.selection__helpdesk_ticket__kanban_state__done
 msgid "Ready for next stage"
 msgstr "Bereit für die nächste Stufe"
@@ -1411,6 +1426,11 @@ msgstr ""
 "Überfällig: Das Fälligkeitsdatum ist bereits überschritten\n"
 "Heute: Aktivitätsdatum ist heute\n"
 "Geplant: Zukünftige Aktivitäten."
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__duration_tracking
+msgid "Status time"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_create_ticket
@@ -1685,6 +1705,9 @@ msgid ""
 "a' }})"
 msgstr ""
 "{{object.company_id.name}} Ticketzuweisung (Ref {{object.number or 'n/a' }})"
+
+#~ msgid "New Ticket"
+#~ msgstr "Neues Ticket"
 
 #~ msgid "<small class=\"text-right\">Stage:</small>"
 #~ msgstr "<small class=\"text-right\">Stufe:</small>"
