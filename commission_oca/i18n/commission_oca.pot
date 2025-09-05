@@ -404,7 +404,6 @@ msgstr ""
 
 #. module: commission_oca
 #: model:ir.model.fields,help:commission_oca.field_commission_settlement__message_has_error
-#: model:ir.model.fields,help:commission_oca.field_commission_settlement__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -565,11 +564,6 @@ msgstr ""
 #. module: commission_oca
 #: model:ir.model.fields,field_description:commission_oca.field_commission_settlement__activity_user_id
 msgid "Responsible User"
-msgstr ""
-
-#. module: commission_oca
-#: model:ir.model.fields,field_description:commission_oca.field_commission_settlement__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: commission_oca
@@ -801,6 +795,7 @@ msgstr ""
 #. module: commission_oca
 #: model:ir.model.constraint,message:commission_oca.constraint_account_invoice_line_agent_unique_agent
 #: model:ir.model.constraint,message:commission_oca.constraint_commission_line_mixin_unique_agent
+#: model:ir.model.constraint,message:commission_oca.constraint_sale_order_line_agent_unique_agent
 msgid "You can only add one time each agent."
 msgstr ""
 

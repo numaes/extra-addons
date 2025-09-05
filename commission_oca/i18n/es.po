@@ -414,7 +414,6 @@ msgstr "Si está marcada, nuevos mensajes requieren su atención."
 
 #. module: commission_oca
 #: model:ir.model.fields,help:commission_oca.field_commission_settlement__message_has_error
-#: model:ir.model.fields,help:commission_oca.field_commission_settlement__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -579,11 +578,6 @@ msgstr "Definición de tarifas"
 #: model:ir.model.fields,field_description:commission_oca.field_commission_settlement__activity_user_id
 msgid "Responsible User"
 msgstr "Usuario Responsable"
-
-#. module: commission_oca
-#: model:ir.model.fields,field_description:commission_oca.field_commission_settlement__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error en la entrega de sms"
 
 #. module: commission_oca
 #: model:ir.model.fields.selection,name:commission_oca.selection__commission__amount_base_type__gross_amount
@@ -839,6 +833,7 @@ msgstr "Asistente para liquidación de comisiones"
 #. module: commission_oca
 #: model:ir.model.constraint,message:commission_oca.constraint_account_invoice_line_agent_unique_agent
 #: model:ir.model.constraint,message:commission_oca.constraint_commission_line_mixin_unique_agent
+#: model:ir.model.constraint,message:commission_oca.constraint_sale_order_line_agent_unique_agent
 msgid "You can only add one time each agent."
 msgstr "Sólo puede añadir una vez cada agente."
 
@@ -846,6 +841,9 @@ msgstr "Sólo puede añadir una vez cada agente."
 #: model_terms:ir.ui.view,arch_db:commission_oca.view_settled_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de sms"
 
 #~ msgid "Last Modified on"
 #~ msgstr "??ltima Modificaci??n el"
