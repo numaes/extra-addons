@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ts_website_order_attachments.access_line_attachment,access_line_attachment,ts_website_order_attachments.model_line_attachment,base.group_public,1,0,0,0
+ts_website_order_attachments.access_line_attachment_user,access_line_attachment_user,ts_website_order_attachments.model_line_attachment,base.group_user,1,1,1,1

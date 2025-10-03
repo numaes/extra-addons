@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_post']" position="before">
+                <button name="action_refresh_currency_rate" 
+                        string="Refresh Rate" 
+                        type="object"
+                        class="btn-primary"
+                        attrs="{
+                            'invisible': [
+                                '|',
+                                ('state','!=','draft'),
+                                ('currency_id','=',company_id.currency_id)
+                            ]
+                        }"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

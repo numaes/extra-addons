@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="ts_debug_switch.group_debug_switch" model="res.groups.privilege">
+        <field name="name">Debug Tool</field>
+        <field name="description">User access for debug switch</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="ts_debug_switch.group_debug_switch_access" model="res.groups">
+        <field name="name">Show Debug Switch</field>
+        <field name="privilege_id" ref="ts_debug_switch.group_debug_switch" />
+        <field name="user_ids" eval="[(4, ref('base.group_user'))]" />
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="employee_survey_invite_view_form">
+            <field name="name">survey.invite.form</field>
+            <field name="model">survey.invite</field>
+            <field name="inherit_id" ref="survey.survey_invite_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='survey_start_url']" position="after">
+                    <field name="send_to" widget="radio" invisible="context.get('survey_resent_token') or survey_access_mode == 'public'"  />
+                </xpath>
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="invisible">send_to != 'specific'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='emails']" position="attributes">
+                    <attribute name="invisible">send_to != 'specific'</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <template id="retake_survey_button_name" inherit_id="survey.survey_button_retake">
+            <xpath expr="//span[1]" position="replace">
+                <span>Number of attempts left</span>
+            </xpath>
+        </template>
+    </data>
+</odoo>

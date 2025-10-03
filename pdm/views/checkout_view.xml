@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record model="ir.ui.view" id="plm_checkout_form">
+        <field name="name">plm.checkout.form</field>
+        <field name="model">plm.checkout</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Checked-Out Document" create="false" edit="false">
+	            <sheet>
+	                <group col="4" colspan="4">
+		                <group col="2" colspan="2">
+	                    	<separator string="Check-Out Data" colspan="2"/>
+	                    	<separator  colspan="2"/>
+		                    <field name="userid" select="1" />
+		                    <field name="hostname" select="1"/>
+		                    <field name="hostpws" select="1" />
+		                    <field name="documentid" select="1" />
+		                    <field name="create_date" select="1" />
+		                </group>
+		                <group col="2" colspan="2">
+		                    <field
+		                        name="preview"
+		                        widget="image"
+		                        readonly="1"
+		                        nolabel="1"
+		                        colspan="2"
+		                        img_height="400"
+		                        img_width="800"/>
+		                </group>
+	                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="plm_checkout_search">
+        <field name="name">plm.checkout.search</field>
+        <field name="model">plm.checkout</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search string="Checked-Out Document">
+				<filter name="lastmonth" string="Last Month" separator="1"
+				        domain="[('create_date','&lt;=', datetime.date.today().strftime('%%Y-%%m-%%d')),('create_date','&gt;=',(datetime.date.today()-relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
+				        help="Checked-Out last month"/>
+               	<filter name="latestweek" string="Latest 7 Days" separator="1"
+                       	domain="[('create_date','&lt;=', (datetime.date.today()).strftime('%%Y-%%m-%%d')),('create_date','&gt;=',(datetime.date.today()-datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d'))]"
+                      	help="Checked-Out latest 7 Days"/>
+             	<filter name="yesterday" string="Yesterday" separator="1"
+                     	domain="[('create_date','&lt;=', (datetime.date.today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d')),('create_date','&gt;=',(datetime.date.today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))]"
+                		help="Checked-Out yesterday"/>
+            	<filter name="today" string="Today" separator="1"
+                     	domain="[('create_date','&lt;=', datetime.date.today().strftime('%%Y-%%m-%%d')),('create_date','&gt;=',datetime.date.today().strftime('%%Y-%%m-%%d'))]"
+                     	help="Checked-Out today"/>
+                <newline/>
+               	<separator orientation="vertical"/>
+            	<field name="documentid"/>
+            	<field name="hostname"/>
+               	<separator orientation="vertical"/>
+                <field name="userid" nolabel="1">
+ 					<filter name="userid" string="Created by me" icon="terp-personal" domain="[('userid', '=', uid)]"/>
+                </field>
+                <filter name="byhost"  string="Hostname" domain="[]" context="{'group_by':'hostname'}"/>
+                <filter name="bymonth" string="Date" 	 domain="[]" context="{'group_by':'create_date'}"/>
+                <filter name="byuser"  string="Creator"  domain="[]" context="{'group_by':'userid'}"/>
+            </search>
+     	</field>
+    </record>
+
+    <record model="ir.ui.view" id="plm_checkout_tree">
+        <field name="name">plm.checkout.tree</field>
+        <field name="model">plm.checkout</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <list string="Documents in Check-Out" create="false" >
+                <field name="userid" select="1"/>
+                <field name="hostname" select="1"/>
+                <field name="hostpws" select="1"/>
+                <field name="documentid" select="1"/>
+                <field name="create_date" select="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_plm_checkout">
+        <field name="name">Checked-Out List Documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">plm.checkout</field>
+        <field name="view_mode">list,form</field>
+        <field eval="False" name="filter"/>
+        <field name="view_id" ref="plm_checkout_tree"/>
+        <field name="search_view_id" ref="plm_checkout_search"/>
+    </record>
+
+</data>
+</odoo>
+

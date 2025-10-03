@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="cart_lines_inherit" inherit_id="website_sale.cart_lines" name="Website Order Attachment">
+        <xpath expr="//div[@id=&quot;cart_products&quot;]/div" position="after">
+            <!-- <section class="mt-2 s_website_form" data-vcss="001" data-snippet="s_website_form">-->
+            <section class="mt-2">
+                <t t-call="ts_website_order_attachments.cart_attachments"/>
+            </section>
+        </xpath>
+    </template>
+
+    <template id="cart_attachments" name="Add Attachment">
+        <t t-set="step_specific_values" t-value="website._get_checkout_step_values()"/>
+        <form action="/shop/add_attachments" class="modal-content o_mark_required s_website_form_no_recaptcha" data-mark="*" data-model_name="sale.order" enctype="multipart/form-data" id="add_sale_attachment" method="POST">
+            <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+            <input name="order" t-att-value="website_sale_order.id" type="hidden"/>
+            <input name="main_button_href" t-att-value="step_specific_values.get('next_website_checkout_step_href')" type="hidden"/>
+            <div class="" t-as="line" t-foreach="website_sale_order.website_order_line">
+                <t t-set="pval_ids" t-value="line.product_no_variant_attribute_value_ids.filtered(lambda l: l.attribute_id.is_file_upload_allowed)"/>
+                <t t-if="pval_ids">
+                    <div class="card m-2">
+                        <span class="card-body">
+                            <div class="">
+                                <span class="d-inline align-top h6 fw-bold">
+                                    <t t-out="line.name_short"/>
+                                </span>
+                            </div>
+                            <div class="border-bottom m-1"/>
+                            <t t-set="line_pval" t-value="line.line_attachment_ids"/>
+                            <t t-as="pval" t-foreach="line.product_no_variant_attribute_value_ids">
+                                <t t-set="match" t-value="line_pval.filtered(lambda x: x.ptav_id.id == int(pval.id))"/>
+                                <div class="s_website_form_rows row m-2">
+                                    <label class="s_website_form_label col-form-label col-sm-auto" for="sale3" style="width: 200px">
+                                        <span class="s_website_form_label_content">
+                                            <t t-out="pval.name"/>
+                                        </span>
+                                    </label>
+                                    <div class="s_website_form_field s_website_form_custom col-sm" data-name="Field" data-type="binary">
+                                        <t t-if="match">
+                                            <div class="div-attached-files">
+                                                <div border="0" class="" t-att-id="match.id">
+                                                    <table class="table-borderless">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td scope="col" style="width:800px;">
+                                                                    <t t-esc="match.attachment_id.description"/>
+                                                                </td>
+                                                                <td scope="col">
+                                                                    <button class="btn btn-secondary fa fa-trash-o" id="btn_remove_file" title="Remove file"/>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <input autocomplete="off" class="form-control s_website_form_input pta_attachment o_mark_required" data-show-caption="true" required="True" t-att-id="'attachment_%s_%s' % (line.id, pval.name)" t-att-name="'attachment_%s_%s_%s_%s' % (line.id, pval.id, line.name_short, pval.name)" t-ref="uploadFileInput" type="file"/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                        </span>
+                    </div>
+                </t>
+            </div>
+            <t t-if="pval_ids">
+                <button class="btn btn-primary mt-2 w-100" name="Upload" style="margin-top:20px;" type="submit">Upload Files And Proceed To Checkout
+                    <i class="fa fa-angle-right ms-2 fw-light"/>
+                </button>
+            </t>
+        </form>
+    </template>
+
+</odoo>

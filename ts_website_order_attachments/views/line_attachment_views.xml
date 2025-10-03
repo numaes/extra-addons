@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="line_attachment_view_kanban" model="ir.ui.view">
+        <field name="name">line.attachment.kanban</field>
+        <field name="model">line.attachment</field>
+        <field name="arch" type="xml">
+            <kanban can_open="false" create="false" edit="false" group_create="false" group_delete="false" group_edit="false" groups_draggable="false" import="false" quick_create="false" records_draggable="false">
+                <field name="attachment_id"/>
+                <field name="mimetype"/>
+                <field name="type"/>
+                <field name="file_name"/>
+                <field name="order_id" options="{'no_create': True}"/>
+                <field name="order_line_id" options="{'no_create': True}"/>
+                <templates>
+                    <t class="o_kanban_attachment flex-row" t-name="card">
+                        <aside class="o_kanban_image m-1">
+                            <t t-set="webimage" t-value="new RegExp('image.*(gif|jpeg|jpg|png|webp)').test(record.mimetype.value)"/>
+                            <t t-set="binaryPreviewable" t-value="new RegExp('(image|video|application/pdf|text)').test(record.mimetype.value) &amp;&amp; record.type.raw_value === 'binary'"/>
+                            <div t-attf-class="o_kanban_image_wrapper d-flex align-items-center justify-content-center">
+                                <div aria-label="Image is a link" class="fa fa-link fa-3x text-muted" t-if="record.type.raw_value == 'url'"/>
+                                <img alt="Document" class="o_attachment_image" height="100" t-attf-src="/web/image/#{record.attachment_id.raw_value}" t-elif="webimage" width="100"/>
+                                <div class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value" t-else=""/>
+                            </div>
+                        </aside>
+                        <main class="ms-2 p-2">
+                            <field class="fw-bold fs-5" name="file_name"/>
+                            <a class="fa fa-download mt-2" title="Download" download="" t-attf-href="/web/content/#{record.attachment_id.raw_value}?download=true"> Download </a>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="line_attachment_view_form" model="ir.ui.view">
+        <field name="name">line.attachment.form</field>
+        <field name="model">line.attachment</field>
+        <field name="arch" type="xml">
+            <form duplicate="0" string="Line Attachments">
+                <sheet>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="file_name"/>
+                        <h1>
+                            <field name="file_name" placeholder="File Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="order_id"/>
+                        <field name="order_line_id"/>
+                        <field name="ptav_id" options="{'no_open': True}"/>
+                        <field name="attachment_id"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="line_attachment_view_list" model="ir.ui.view">
+        <field name="name">line.attachment.list</field>
+        <field name="model">line.attachment</field>
+        <field name="arch" type="xml">
+            <list sample="1" string="Line Attachments">
+                <field name="order_id"/>
+                <field name="file_name"/>
+                <field name="ptav_id"/>
+                <field name="attachment_id"/>
+                <button class="fa fa-download" title="Download" name="action_download_attachment" string="" type="object"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="line_attachment_view_search" model="ir.ui.view">
+        <field name="name">line.attachment.search.view</field>
+        <field name="model">line.attachment</field>
+        <field name="arch" type="xml">
+            <search string="Line Attachments">
+                <field name="order_id" filter_domain="[('name', 'ilike', self)]" string="Order"/>
+                <separator/>
+                <group>
+                    <filter context="{'group_by':'order_id'}" name="groupby_order" string="Order"/>
+                    <filter context="{'group_by':'order_line_id'}" name="groupby_orderline" string="Order Line"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_line_attachment" model="ir.actions.act_window">
+        <field name="name">Line Attachments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">line.attachment</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{
+               'create': 0,
+               'edit': 0,
+               'delete': 0,
+               'duplicate': 0,
+               'search_default_groupby_order': 1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Line Attachments
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_line_attachment"
+        name="Line Attachments"
+        action="action_line_attachment"
+        groups="base.group_no_one"
+        parent="website_sale.menu_orders"
+        sequence="6"/>
+
+</odoo>
