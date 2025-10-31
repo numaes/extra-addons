@@ -123,7 +123,7 @@ class ReportFinancial(models.AbstractModel):
                     flag = False
                     account = self.env['account.account'].browse(account_id)
                     vals = {
-                        'name': account.code or '' + ' ' + account.name,
+                        'name': account.code + ' ' + account.name,
                         'balance': value['balance'] * float(report.sign) or 0.0,
                         'type': 'account',
                         'level': report.display_detail == 'detail_with_hierarchy' and 4,
@@ -138,7 +138,7 @@ class ReportFinancial(models.AbstractModel):
                         flag = True
                     if data['enable_filter']:
                         vals['balance_cmp'] = value['comp_bal'] * float(report.sign)
-                        if not self.env.company.currency_id.currency_id.is_zero(vals['balance_cmp']):
+                        if not self.env.company.currency_id.is_zero(vals['balance_cmp']):
                             flag = True
                     if flag:
                         sub_lines.append(vals)
