@@ -35,16 +35,22 @@
                                     <field name="sequence" widget="handle" />
                                     <field name="description" />
                                     <field name="name" />
-                                    <field name="type" />
+                                    <field name="type" optional="show" />
                                     <field
                                         name="compare_method"
                                         invisible="type == 'str'"
+                                        optional="show"
                                     />
                                     <field
                                         name="accumulation_method"
                                         invisible="type == 'str'"
+                                        optional="show"
                                     />
-                                    <field name="expression" />
+                                    <field
+                                        name="expression"
+                                        widget="code"
+                                        options="{'mode': 'python'}"
+                                    />
                                 </list>
                             </field>
                         </page>
@@ -64,12 +70,13 @@
                                         widget="many2many_tags"
                                     />
                                     <field name="field_names" />
-                                    <field name="aggregate" />
+                                    <field name="aggregate" optional="show" />
                                     <field
                                         name="date_field"
                                         domain="[('model_id', '=', model_id), ('ttype', 'in', ('date', 'datetime'))]"
                                     />
-                                    <field name="domain" />
+                                    <field name="company_field_id" />
+                                    <field name="domain" optional="show" />
                                 </list>
                             </field>
                         </page>
@@ -137,11 +144,17 @@
                                         name="subkpi_id"
                                         domain="[('report_id', '=', parent.report_id)]"
                                     />
-                                    <field name="name" />
+                                    <field
+                                        name="name"
+                                        widget="code"
+                                        options="{'mode': 'python'}"
+                                    />
                                 </list>
                             </field>
                             <field
                                 name="expression"
+                                widget="code"
+                                options="{'mode': 'python'}"
                                 colspan="2"
                                 nolabel="1"
                                 invisible="multi"
@@ -166,19 +179,24 @@
                                 <p
                                 > The following special elements are recognized in the expressions
                                     to compute accounting data: <code
-                                >{bal|crd|deb|pbal|nbal}{pieu}[account
+                                >{bal|crd|deb|pbal|nbal|fld}{pieu}(.fieldname)[account
                                     selector][journal items domain]</code>. </p>
                                 <ul>
                                     <li>
                                         <code>bal</code>, <code>crd</code>, <code
-                                    >deb</code>, <code>
-                                        pbal</code>, <code
-                                    >nbal</code> : balance, debit, credit,
-                                        positive balance, negative balance. </li>
+                                    >deb</code>, <code>pbal</code>, <code
+                                    >nbal</code>, <code
+                                    >fld</code> : balance, debit, credit,
+                                        positive balance, negative balance,
+                                        other numerical field. </li>
                                     <li>
                                         <code>p</code>, <code>i</code>, <code
                                     >e</code> : respectively variation over the period,
                                         initial balance, ending balance </li>
+                                    <li>when <code
+                                    >fld</code> is used : a field name specifier
+                                        must be provided (e.g. <code
+                                    >fldp.quantity</code></li>
                                     <li> The <b
                                     >account selector</b> is a like expression on the
                                         account code (eg <code
@@ -280,6 +298,7 @@
         <field name="view_id" ref="mis_report_view_list" />
         <field name="res_model">mis.report</field>
         <field name="view_mode">list,form</field>
+        <field name="path">mis-report-templates</field>
     </record>
     <menuitem
         id="mis_report_conf_menu"

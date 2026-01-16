@@ -7,6 +7,7 @@ import sys
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_round
 
 from .accounting_none import AccountingNone
 from .data_error import DataError
@@ -84,7 +85,6 @@ class MisReportKpiStyle(models.Model):
     }
 
     # style name
-    # TODO enforce uniqueness
     name = fields.Char(string="Style name", required=True)
 
     # color
@@ -133,6 +133,51 @@ class MisReportKpiStyle(models.Model):
     hide_always_inherit = fields.Boolean(default=True)
     hide_always = fields.Boolean(default=False)
 
+    _sql_constraints = [
+        ("style_name_uniq", "unique(name)", "Style name should be unique")
+    ]
+
+    description = fields.Html(
+        compute="_compute_description",
+        help="Describe specific values that are not inherited",
+    )
+
+    def _get_depends_compute_description(self):
+        return PROPS + [f"{prop}_inherit" for prop in PROPS]
+
+    @api.depends(lambda x: x._get_depends_compute_description())
+    def _compute_description(self):
+        for style in self:
+            descriptions = {}
+            for prop in PROPS:
+                if getattr(style, f"{prop}_inherit"):
+                    continue
+                else:
+                    value = getattr(style, prop)
+                    if prop in ["color", "background_color"]:
+                        value = (
+                            "<span style='"
+                            f"background-color: {value};"
+                            " width: 15px;"
+                            " height: 15px;"
+                            " display: inline-block;"
+                            " border: 1px black solid;"
+                            " border-radius: 5px;"
+                            "' />"
+                        )
+                    elif prop in ["font_weight", "font_style"]:
+                        value = (
+                            f"<span style='"
+                            f"{prop.replace('_', '-')} : {value};"
+                            f"'>{value}</span>"
+                        )
+                    elif prop in ["prefix", "suffix"]:
+                        value = f"'<code>{value}</code>'"
+                    descriptions[style._fields[prop].string] = value
+
+            description = " ; ".join([f"{k} : {v}" for k, v in descriptions.items()])
+            style.description = f"<div>{description}</div>"
+
     @api.model
     def merge(self, styles):
         """Merge several styles, giving priority to the last.
@@ -177,7 +222,7 @@ class MisReportKpiStyle(models.Model):
         # format number following user language
         if value is None or value is AccountingNone:
             return ""
-        value = round(value / float(divider or 1), dp or 0) or 0
+        value = float_round(value / float(divider or 1), dp or 0) or 0
         r = lang.format("%%%s.%df" % (sign, dp or 0), value, grouping=True)
         r = r.replace("-", "\N{NON-BREAKING HYPHEN}")
         if prefix:
