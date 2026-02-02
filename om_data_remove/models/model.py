@@ -7,7 +7,9 @@ _logger = logging.getLogger(__name__)
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    def remove_data(self, o, s=[]):
+    def _remove_data(self, o, s=[]):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         for line in o:
             try:
                 if not self.env['ir.model']._get(line):
@@ -38,8 +40,10 @@ class ResConfigSettings(models.TransientModel):
             except Exception as e:
                 _logger.warning('reset sequence data error: %s,%s', line, e)
         return True
-    
-    def remove_sales(self):
+
+    def _remove_sales(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'sale.order.line',
             'sale.order',
@@ -47,9 +51,11 @@ class ResConfigSettings(models.TransientModel):
         seqs = [
             'sale',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_product(self):
+    def _remove_product(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'product.product',
             'product.template',
@@ -57,17 +63,21 @@ class ResConfigSettings(models.TransientModel):
         seqs = [
             'product.product',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_product_attribute(self):
+    def _remove_product_attribute(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'product.attribute.value',
             'product.attribute',
         ]
         seqs = []
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_pos(self):
+    def _remove_pos(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'pos.payment',
             'pos.order.line',
@@ -77,7 +87,7 @@ class ResConfigSettings(models.TransientModel):
         seqs = [
             'pos.',
         ]
-        res = self.remove_data(to_removes, seqs)
+        res = self._remove_data(to_removes, seqs)
         try:
             statement = self.env['account.bank.statement'].sudo().search([])
             for s in statement:
@@ -86,7 +96,9 @@ class ResConfigSettings(models.TransientModel):
             _logger.error('reset sequence data error: %s', e)
         return res
 
-    def remove_purchase(self):
+    def _remove_purchase(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'purchase.order.line',
             'purchase.order',
@@ -96,9 +108,11 @@ class ResConfigSettings(models.TransientModel):
         seqs = [
             'purchase.',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_expense(self):
+    def _remove_expense(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'hr.expense.sheet',
             'hr.expense',
@@ -108,9 +122,11 @@ class ResConfigSettings(models.TransientModel):
         seqs = [
             'hr.expense.',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_mrp(self):
+    def _remove_mrp(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'mrp.workcenter.productivity',
             'mrp.workorder',
@@ -126,17 +142,21 @@ class ResConfigSettings(models.TransientModel):
         seqs = [
             'mrp.',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_mrp_bom(self):
+    def _remove_mrp_bom(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'mrp.bom.line',
             'mrp.bom',
         ]
         seqs = []
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_inventory(self):
+    def _remove_inventory(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'stock.quant',
             'stock.move.line',
@@ -160,9 +180,11 @@ class ResConfigSettings(models.TransientModel):
             'product.tracking.default',
             'WH/',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_account(self):
+    def _remove_account(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'payment.transaction',
             'account.bank.statement.line',
@@ -174,7 +196,7 @@ class ResConfigSettings(models.TransientModel):
             'hr.expense.sheet',
             'account.move',
         ]
-        res = self.remove_data(to_removes, [])
+        res = self._remove_data(to_removes, [])
         domain = [
             ('company_id', '=', self.env.company.id),
             '|', ('code', '=ilike', 'account.%'),
@@ -196,7 +218,9 @@ class ResConfigSettings(models.TransientModel):
             _logger.error('reset sequence data error: %s,%s', domain, e)
         return res
 
-    def remove_account_chart(self):
+    def _remove_account_chart(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         company_id = self.env.company.id
         self = self.with_context(force_company=company_id, company_id=company_id)
         to_removes = [
@@ -270,10 +294,12 @@ class ResConfigSettings(models.TransientModel):
         except Exception as e:
             pass
         seqs = []
-        res = self.remove_data(to_removes, seqs)
+        res = self._remove_data(to_removes, seqs)
         return res
 
-    def remove_project(self):
+    def _remove_project(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'account.analytic.line',
             'project.task',
@@ -281,9 +307,11 @@ class ResConfigSettings(models.TransientModel):
             'project.project',
         ]
         seqs = []
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_quality(self):
+    def _remove_quality(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'quality.check',
             'quality.alert',
@@ -292,9 +320,11 @@ class ResConfigSettings(models.TransientModel):
             'quality.check',
             'quality.alert',
         ]
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_quality_setting(self):
+    def _remove_quality_setting(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'quality.point',
             'quality.alert.stage',
@@ -303,9 +333,11 @@ class ResConfigSettings(models.TransientModel):
             'quality.reason',
             'quality.tag',
         ]
-        return self.remove_data(to_removes)
+        return self._remove_data(to_removes)
 
-    def remove_website(self):
+    def _remove_website(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'blog.tag.category',
             'blog.tag',
@@ -320,31 +352,86 @@ class ResConfigSettings(models.TransientModel):
             'website.seo.metadata',
         ]
         seqs = []
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_message(self):
+    def _remove_message(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
         to_removes = [
             'mail.message',
             'mail.followers',
             'mail.activity',
         ]
         seqs = []
-        return self.remove_data(to_removes, seqs)
+        return self._remove_data(to_removes, seqs)
 
-    def remove_all(self):
-        self.remove_account()
-        self.remove_quality()
-        self.remove_website()
-        self.remove_quality_setting()
-        self.remove_inventory()
-        self.remove_purchase()
-        self.remove_mrp()
-        self.remove_sales()
-        self.remove_project()
-        self.remove_pos()
-        self.remove_expense()
-        self.remove_account_chart()
-        self.remove_message()
+    def action_remove_all(self):
+        self._remove_all()
+
+    def action_remove_sales(self):
+        self._remove_sales()
+
+    def action_remove_pos(self):
+        self._remove_pos()
+
+    def action_remove_purchase(self):
+        self._remove_purchase()
+
+    def action_remove_expense(self):
+        self._remove_expense()
+
+    def action_remove_mrp(self):
+        self._remove_mrp()
+
+    def action_remove_mrp_bom(self):
+        self._remove_mrp_bom()
+
+    def action_remove_inventory(self):
+        self._remove_inventory()
+
+    def action_remove_account(self):
+        self._remove_account()
+
+    def action_remove_account_chart(self):
+        self._remove_account_chart()
+
+    def action_remove_project(self):
+        self._remove_project()
+
+    def action_remove_quality(self):
+        self._remove_quality()
+
+    def action_remove_quality_setting(self):
+        self._remove_quality_setting()
+
+    def action_remove_website(self):
+        self._remove_website()
+
+    def action_remove_product(self):
+        self._remove_product()
+
+    def action_remove_product_attribute(self):
+        self._remove_product_attribute()
+
+    def action_remove_message(self):
+        self._remove_message()
+
+    def _remove_all(self):
+        if not self.env.user.has_group('base.group_system'):
+            return False
+        self.action_remove_account()
+        self.action_remove_quality()
+        self.action_remove_website()
+        self.action_remove_quality_setting()
+        self.action_remove_inventory()
+        self.action_remove_purchase()
+        self.action_remove_mrp()
+        self.action_remove_sales()
+        self.action_remove_project()
+        self.action_remove_pos()
+        self.action_remove_expense()
+        self.action_remove_account_chart()
+        self.action_remove_message()
         return True
 
     def reset_cat_loc_name(self):
