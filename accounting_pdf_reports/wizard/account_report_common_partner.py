@@ -13,6 +13,10 @@ class AccountingCommonPartnerReport(models.TransientModel):
                                          ('customer_supplier', 'Receivable and Payable Accounts')
                                          ], string="Partner's", required=True, default='customer')
     partner_ids = fields.Many2many('res.partner', string='Partners')
+    l10n_ar_afip_no_register = fields.Selection([('all', 'Registrados y No Registrados'),
+                                                 ('register', 'Registrados'),
+                                                 ('no_register', 'No Registrados'),
+                                                 ], string='Tag', required=True, default='register')
 
     def pre_print_report(self, data):
         data['form'].update(self.read(['result_selection'])[0])

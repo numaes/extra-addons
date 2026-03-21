@@ -41,6 +41,9 @@ class AccountMoveLine(models.Model):
         else:
             domain += [('company_id', '=', self.env.company.id)]
 
+        if 'l10n_ar_afip_no_register' in context:
+            domain += [('l10n_ar_afip_no_register', '=', context['l10n_ar_afip_no_register'])]
+
         if context.get('reconcile_date'):
             domain += ['|', ('reconciled', '=', False), '|', ('matched_debit_ids.max_date', '>', context['reconcile_date']), ('matched_credit_ids.max_date', '>', context['reconcile_date'])]
 

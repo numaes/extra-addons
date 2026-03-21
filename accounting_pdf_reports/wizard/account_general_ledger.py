@@ -28,6 +28,14 @@ class AccountReportGeneralLedger(models.TransientModel):
         if data['form'].get('initial_balance') and not data['form'].get('date_from'):
             raise UserError(_("You must define a Start Date"))
         records = self.env[data['model']].browse(data.get('ids', []))
+        if data['form']['l10n_ar_afip_no_register'] == 'no_register':
+            data['form']['l10n_ar_afip_no_register'] = True
+            data['form']['used_context']['l10n_ar_afip_no_register'] = True
+        elif data['form']['l10n_ar_afip_no_register'] == 'register':
+            data['form']['l10n_ar_afip_no_register'] = False
+            data['form']['used_context']['l10n_ar_afip_no_register'] = False
+        else:
+            del data['form']['l10n_ar_afip_no_register']
         return records, data
 
     def _print_report(self, data):

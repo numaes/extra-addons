@@ -30,6 +30,10 @@
                             <p t-if="data['form']['target_move'] == 'all'">All Entries</p>
                             <p t-if="data['form']['target_move'] == 'posted'">All Posted Entries</p>
                         </div>
+                        <div class="col-3">
+                            <strong>Tag:</strong>
+                            <p t-if="data['form'].get('l10n_ar_afip_no_register', False)"><span t-esc="data['form']['l10n_ar_afip_no_register']"/></p>
+                        </div>
                     </div>
 
                     <table class="table table-sm table-reports">

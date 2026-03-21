@@ -11,7 +11,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
     _description = 'Aged Partner Balance Report'
 
     def _get_partner_move_lines(self, account_type, partner_ids,
-                                date_from, target_move, period_length):
+                                date_from, target_move, period_length, tag):
         # This method can receive the context key 'include_nullified_amount' {Boolean}
         # Do an invoice and a payment and unreconcile. The amount will be nullified
         # By default, the partner wouldn't appear in this report.
@@ -53,6 +53,16 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             move_state = ['posted']
         arg_list = (tuple(move_state), tuple(account_type))
 
+        if tag == 'register':
+            arg_list += ((False,),)
+            tag_where = (False,)
+        elif tag == 'no_register':
+            arg_list += ((True,),)
+            tag_where = (True,)
+        else:
+            arg_list += ((True, False),)
+            tag_where = (True, False)
+
         reconciliation_clause = '(l.reconciled IS FALSE)'
         cr.execute('SELECT debit_move_id, credit_move_id FROM account_partial_reconcile where max_date > %s', (date_from,))
         reconciled_after_date = []
@@ -69,6 +79,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                 AND (l.move_id = am.id)
                 AND (am.state IN %s)
                 AND (account_account.account_type IN %s)
+                AND (am.l10n_ar_afip_no_register IN %s)
                 AND ''' + reconciliation_clause + '''
                 AND (l.date <= %s)
                 AND l.company_id IN %s
@@ -93,11 +104,12 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                 WHERE (l.account_id = account_account.id) AND (l.move_id = am.id)
                     AND (am.state IN %s)
                     AND (account_account.account_type IN %s)
+                    AND (am.l10n_ar_afip_no_register IN %s)
                     AND (COALESCE(l.date_maturity,l.date) >= %s)\
                     AND ((l.partner_id IN %s) OR (l.partner_id IS NULL))
                 AND (l.date <= %s)
                 AND l.company_id IN %s'''
-        cr.execute(query, (tuple(move_state), tuple(account_type), date_from,
+        cr.execute(query, (tuple(move_state), tuple(account_type), tag_where, date_from,
                            tuple(partner_ids), date_from, tuple(company_ids)))
         aml_ids = cr.fetchall()
         aml_ids = aml_ids and [x[0] for x in aml_ids] or []
@@ -134,7 +146,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
         # Each history will contain: history[1] = {'<partner_id>': <partner_debit-credit>}
         history = []
         for i in range(5):
-            args_list = (tuple(move_state), tuple(account_type), tuple(partner_ids),)
+            args_list = (tuple(move_state), tuple(account_type), tag_where, tuple(partner_ids),)
             dates_query = '(COALESCE(l.date_maturity,l.date)'
 
             if periods[str(i)]['start'] and periods[str(i)]['stop']:
@@ -153,6 +165,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                     WHERE (l.account_id = account_account.id) AND (l.move_id = am.id)
                         AND (am.state IN %s)
                         AND (account_account.account_type IN %s)
+                        AND (am.l10n_ar_afip_no_register IN %s)
                         AND ((l.partner_id IN %s) OR (l.partner_id IS NULL))
                         AND ''' + dates_query + '''
                     AND (l.date <= %s)
@@ -241,6 +254,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
 
         target_move = data['form'].get('target_move', 'all')
         date_from = data['form'].get('date_from', time.strftime('%Y-%m-%d'))
+        tag = data['form'].get('l10n_ar_afip_no_register', 'all')
 
         if data['form']['result_selection'] == 'customer':
             account_type = ['asset_receivable']
@@ -250,7 +264,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             account_type = ['asset_receivable', 'liability_payable']
         partner_ids = data['form']['partner_ids']
         movelines, total, dummy = self._get_partner_move_lines(
-            account_type, partner_ids, date_from, target_move, data['form']['period_length']
+            account_type, partner_ids, date_from, target_move, data['form']['period_length'], tag
         )
         return {
             'doc_ids': self.ids,

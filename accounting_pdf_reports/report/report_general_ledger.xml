@@ -47,6 +47,11 @@
                             <t t-if="data['date_from']"><strong>Date from :</strong> <span t-esc="data['date_from']"/><br/></t>
                             <t t-if="data['date_to']"><strong>Date to :</strong> <span t-esc="data['date_to']"/></t>
                         </div>
+                        <div class="col-4">
+                            <strong>Tag:</strong>
+                            <p t-if="not data.get('l10n_ar_afip_no_register', False)"><span>Registrados</span><br/></p>
+                            <p t-if="data.get('l10n_ar_afip_no_register', True)"><span>No Registrados</span></p>
+                        </div>
                     </div>
 
                     <table class="table table-sm table-reports">

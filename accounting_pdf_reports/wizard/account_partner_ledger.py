@@ -18,6 +18,14 @@ class AccountPartnerLedger(models.TransientModel):
         data = self.pre_print_report(data)
         data['form'].update({'reconciled': self.reconciled,
                              'amount_currency': self.amount_currency})
+        if data['form']['l10n_ar_afip_no_register'] == 'no_register':
+            data['form']['l10n_ar_afip_no_register'] = True
+            data['form']['used_context']['l10n_ar_afip_no_register'] = True
+        elif data['form']['l10n_ar_afip_no_register'] == 'register':
+            data['form']['l10n_ar_afip_no_register'] = False
+            data['form']['used_context']['l10n_ar_afip_no_register'] = False
+        else:
+            del data['form']['l10n_ar_afip_no_register']
         return data
 
     def _print_report(self, data):

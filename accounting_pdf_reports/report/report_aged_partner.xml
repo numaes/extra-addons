@@ -36,6 +36,14 @@
                                 <span t-if="data['target_move'] == 'posted'">All Posted Entries</span>
                             </p>
                         </div>
+                        <div class="col-3">
+                            <strong>Tag:</strong>
+                            <p>
+                                <span t-if="data['l10n_ar_afip_no_register'] == 'all'">Registrados y No Registrados</span>
+                                <span t-if="data['l10n_ar_afip_no_register'] == 'register'">Registrados</span>
+                                <span t-if="data['l10n_ar_afip_no_register'] == 'no_register'">No Registrados</span>
+                            </p>
+                        </div>
                     </div>
 
                     <table class="table table-sm table-reports">

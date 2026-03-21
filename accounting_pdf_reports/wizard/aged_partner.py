@@ -34,6 +34,7 @@ class AccountAgedTrialBalance(models.TransientModel):
                 'start': (i != 0 and stop.strftime('%Y-%m-%d') or False),
             }
             start = stop - relativedelta(days=1)
+
         data['form'].update(res)
         return data
 

@@ -21,6 +21,10 @@ class AccountCommonReport(models.TransientModel):
     target_move = fields.Selection([('posted', 'All Posted Entries'),
                                     ('all', 'All Entries'),
                                     ], string='Target Moves', required=True, default='posted')
+    l10n_ar_afip_no_register = fields.Selection([('all', 'Registrados y No Registrados'),
+                                                 ('register', 'Registrados'),
+                                                 ('no_register', 'No Registrados'),
+                                                 ], string='Tag', required=True, default='register')
 
     @api.onchange('company_id')
     def _onchange_company_id(self):
@@ -48,7 +52,7 @@ class AccountCommonReport(models.TransientModel):
         data = {}
         data['ids'] = self.env.context.get('active_ids', [])
         data['model'] = self.env.context.get('active_model', 'ir.ui.menu')
-        data['form'] = self.read(['date_from', 'date_to', 'journal_ids', 'target_move', 'company_id'])[0]
+        data['form'] = self.read(['date_from', 'date_to', 'journal_ids', 'target_move', 'company_id', 'l10n_ar_afip_no_register'])[0]
         used_context = self._build_contexts(data)
         data['form']['used_context'] = dict(used_context, lang=get_lang(self.env).code)
         return self.with_context(discard_logo_check=True)._print_report(data)
