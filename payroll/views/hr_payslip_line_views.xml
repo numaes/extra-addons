@@ -166,7 +166,7 @@
         <field name="name">Batch Payslip Lines</field>
         <field name="res_model">hr.payslip.line</field>
         <field name="view_mode">pivot,list,form</field>
-        <field name="domain">[('payslip_run_id', 'in', active_ids)]</field>
+        <field name="domain">[('payslip_run_id', 'in', active_ids or [active_id])]</field>
         <field name="binding_model_id" ref="model_hr_payslip_run" />
     </record>
 </odoo>
