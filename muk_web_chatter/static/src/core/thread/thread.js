@@ -22,5 +22,5 @@ patch(Thread.prototype, {
 
 Thread.props = [
     ...Thread.props,
-    'showTrackingMessages',
+    'showTrackingMessages?',
 ];
