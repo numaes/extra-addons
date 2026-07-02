@@ -95,7 +95,7 @@ class AccountAsset(models.Model):
                 break
         return {
             "name": self.env._("Assets"),
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "account.asset",
             "view_id": False,
             "type": "ir.actions.act_window",
