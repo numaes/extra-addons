@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Pilar Vargas
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia
