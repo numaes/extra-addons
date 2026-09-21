@@ -55,7 +55,6 @@
                         <h1>
                             <field
                                 name="name"
-                                class="oe_inline"
                                 readonly="state in ['open', 'close', 'removed']"
                             />
                         </h1>
@@ -184,7 +183,7 @@
                                     name="compute_depreciation_board"
                                     string="Compute"
                                     icon="fa-gears"
-                                    invisible="state in ['close', 'removed']"
+                                    invisible="state != 'draft'"
                                 />
                             </div>
                             <field

@@ -9,6 +9,8 @@ from odoo.tests import tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
+from .helpers import check_all_accounts_loaded
+
 
 @tagged("post_install", "-at_install")
 class TestTrialBalanceReport(AccountTestInvoicingCommon):
@@ -38,12 +40,10 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
             {
                 "code": "001",
                 "name": "Account 001",
-                "group_id": cls.group2.id,
                 "account_type": "income_other",
             },
         )
         cls.account100 = cls.company_data["default_account_receivable"]
-        cls.account100.group_id = cls.group1.id
         cls.account110 = cls.env["account.account"].search(
             [
                 (
@@ -59,7 +59,6 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
             {
                 "code": "200",
                 "name": "Account 200",
-                "group_id": cls.group2.id,
                 "account_type": "income_other",
             },
         )
@@ -76,7 +75,6 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
             {
                 "code": "201",
                 "name": "Account 201",
-                "group_id": cls.group2.id,
                 "account_type": "income_other",
             },
         )
@@ -100,8 +98,6 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
 
     def _create_account_account(self, vals):
         item = self.env["account.account"].create(vals)
-        if "group_id" in vals:
-            item.group_id = vals["group_id"]
         return item
 
     def _add_move(
@@ -194,7 +190,7 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
                 "show_partner_details": with_partners,
             }
         )
-        data = trial_balance._prepare_report_trial_balance()
+        data = trial_balance._prepare_report_data()
         res_data = self.env[
             "report.account_financial_report.trial_balance"
         ]._get_report_values(trial_balance, data)
@@ -549,7 +545,7 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
                 "fy_start_date": self.fy_date_start,
             }
         )
-        data = trial_balance._prepare_report_trial_balance()
+        data = trial_balance._prepare_report_data()
         res_data = self.env[
             "report.account_financial_report.trial_balance"
         ]._get_report_values(trial_balance, data)
@@ -602,7 +598,7 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
                 "fy_start_date": self.fy_date_start,
             }
         )
-        data = trial_balance._prepare_report_trial_balance()
+        data = trial_balance._prepare_report_data()
         res_data = self.env[
             "report.account_financial_report.trial_balance"
         ]._get_report_values(trial_balance, data)
@@ -656,7 +652,7 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
                 "fy_start_date": self.fy_date_start,
             }
         )
-        data = trial_balance._prepare_report_trial_balance()
+        data = trial_balance._prepare_report_data()
         res_data = self.env[
             "report.account_financial_report.trial_balance"
         ]._get_report_values(trial_balance, data)
@@ -688,15 +684,23 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
         self.assertEqual(total_debit, total_credit)
 
     def test_05_all_accounts_loaded(self):
-        # Tests if all accounts which code is number are loaded
-        # when the account_code_ fields changed
+        kwargs = {
+            "date_from": self.date_start,
+            "date_to": self.date_end,
+            "show_hierarchy": False,
+        }
+        check_all_accounts_loaded(
+            self, wizard_model="trial.balance.report.wizard", **kwargs
+        )
+
+    def test_06_all_accounts_loaded_newid(self):
         all_accounts = (
             self.env["account.account"]
             .search([], order="code")
             .filtered(lambda acc: re.fullmatch(r"[0-9]+(\.[0-9]+)?", acc.code))
         )
         company = self.env.user.company_id
-        trial_balance = self.env["trial.balance.report.wizard"].create(
+        trial_balance = self.env["trial.balance.report.wizard"].new(
             {
                 "date_from": self.date_start,
                 "date_to": self.date_end,
@@ -721,3 +725,97 @@ class TestTrialBalanceReport(AccountTestInvoicingCommon):
         ]
         self.assertEqual(len(trial_balance_code_set), len(all_accounts_code_set))
         self.assertTrue(trial_balance_code_set == all_accounts_code_set)
+
+    def test_07_account_group_search_logic(self):
+        """Test the search implementation for account_ids on account.group
+        using the accounts already created in setUpClass.
+        """
+        # 1. Create a group that matches the existing receivable account prefix
+        # We take the first 3 digits of the existing account code as a prefix
+        receivable_prefix = self.account100.code[:3]
+        group_matching = self.env["account.group"].create(
+            {
+                "name": "Receivable Group",
+                "code_prefix_start": receivable_prefix,
+                "code_prefix_end": receivable_prefix,
+                "company_id": self.env.company.id,
+            }
+        )
+
+        # 2. Create a group with a prefix that definitely has no accounts
+        group_empty = self.env["account.group"].create(
+            {
+                "name": "Empty Group",
+                "code_prefix_start": "99999999",
+                "code_prefix_end": "99999999",
+                "company_id": self.env.company.id,
+            }
+        )
+
+        # 3. Test 'in' operator with the setup account
+        # This confirms the search method finds the group by its contained account ID
+        groups_in = self.env["account.group"].search(
+            [("account_ids", "in", self.account100.ids)]
+        )
+        self.assertIn(
+            group_matching, groups_in, "Group should be found via its setup account ID"
+        )
+        self.assertNotIn(
+            group_empty,
+            groups_in,
+            "Empty group should not match the receivable account",
+        )
+
+        # 4. Test 'not in' operator
+        groups_not_in = self.env["account.group"].search(
+            [("account_ids", "not in", self.account100.ids)]
+        )
+        self.assertNotIn(
+            group_matching,
+            groups_not_in,
+            "Matching group should be excluded when testing 'not in'",
+        )
+        self.assertIn(
+            group_empty,
+            groups_not_in,
+            "Empty group should be included when excluding the matching account",
+        )
+
+        # 5. Test '=' False  (Search for groups with NO accounts)
+        # This triggers the 'not value' branch of the _search_account_ids function
+        empty_groups = self.env["account.group"].search([("account_ids", "=", False)])
+        self.assertIn(
+            group_empty,
+            empty_groups,
+            "The group with prefix 999 should be considered empty",
+        )
+        self.assertNotIn(
+            group_matching,
+            empty_groups,
+            "The matching group should not appear in empty search",
+        )
+
+        # 6. Test '!=' False (Search for groups with AT LEAST one account)
+        filled_groups = self.env["account.group"].search([("account_ids", "!=", False)])
+        self.assertIn(
+            group_matching,
+            filled_groups,
+            "The matching group should be returned as 'set'",
+        )
+        self.assertNotIn(
+            group_empty,
+            filled_groups,
+            "The empty group should not be returned as 'set'",
+        )
+
+        # 7. Test 'ilike' (Contains search)
+        with self.assertRaises(NotImplementedError):
+            self.env["account.group"].search(
+                [("account_ids", "ilike", self.account100.name)]
+            )
+
+        # 8. Test 'child_of'
+        with self.assertRaises(NotImplementedError):
+            self.env["account.group"].search(
+                [("account_ids", "child_of", self.account100.id)]
+            )

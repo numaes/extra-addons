@@ -24,6 +24,7 @@
   - Alexandre D. D??az
   - V??ctor Mart??nez
   - Carolina Fernandez
+  - Eduardo Ezerouali
 - [Sygel](https://www.sygel.es):
   - Harald Panten
   - Valentin Vinagre
@@ -31,6 +32,8 @@
 - Saran Lim. \<<saranl@ecosoft.co.th>\>
 - Omar Casti??eira \<<omar@comunitea.com>\>
 - Chau Le \<<chaulb@trobz.com>\>
-
+- [Stesi Consulting](https://www.stesi.consulting):
+  - Michele Di Croce \<<dicroce.m@stesi.consulting>\>
+  
 Much of the work in this module was done at a sprint in Sorrento, Italy
 in April 2016.

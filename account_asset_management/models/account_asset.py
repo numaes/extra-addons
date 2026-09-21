@@ -442,7 +442,9 @@ class AccountAsset(models.Model):
 
     def _create_first_asset_line(self):
         self.ensure_one()
-        if self.depreciation_base and not self.depreciation_line_ids:
+        if self.depreciation_base and not self.depreciation_line_ids.filtered(
+            lambda s: s.type == "create"
+        ):
             asset_line_obj = self.env["account.asset.line"]
             line_name = self._get_depreciation_entry_name(0)
             asset_line_vals = {
@@ -1207,7 +1209,7 @@ class AccountAsset(models.Model):
                 with self.env.cr.savepoint():
                     result += depreciation.create_move()
             except Exception:
-                e = exc_info()[0]
+                e = exc_info()[1]
                 tb = "".join(format_exception(*exc_info()))
                 asset_ref = depreciation.asset_id.name
                 if depreciation.asset_id.code:

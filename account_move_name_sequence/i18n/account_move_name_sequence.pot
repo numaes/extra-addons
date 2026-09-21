@@ -64,12 +64,6 @@ msgid "Journal Entry"
 msgstr ""
 
 #. module: account_move_name_sequence
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__made_sequence_hole
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__made_sequence_hole
-msgid "Made Sequence Hole"
-msgstr ""
-
-#. module: account_move_name_sequence
 #: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__name
 #: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__name
 msgid "Number"
@@ -94,18 +88,6 @@ msgstr ""
 #: code:addons/account_move_name_sequence/models/account_journal.py:0
 #: model:ir.model,name:account_move_name_sequence.model_ir_sequence
 msgid "Sequence"
-msgstr ""
-
-#. module: account_move_name_sequence
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__sequence_number
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__sequence_number
-msgid "Sequence Number"
-msgstr ""
-
-#. module: account_move_name_sequence
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__sequence_prefix
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__sequence_prefix
-msgid "Sequence Prefix"
 msgstr ""
 
 #. module: account_move_name_sequence

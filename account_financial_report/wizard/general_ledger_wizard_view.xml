@@ -55,6 +55,7 @@
                                 <field
                                     name="account_ids"
                                     nolabel="1"
+                                    placeholder="Filtered accounts (empty for all)"
                                     widget="many2many_tags"
                                     options="{'no_create': True}"
                                     colspan="4"
@@ -90,6 +91,11 @@
                                 options="{'model': 'account.move.line', 'in_dialog': True}"
                                 context="{'skip_search_count': 1}"
                             />
+                        </page>
+                        <page name="format" string="Format">
+                            <group>
+                                <field name="label_text_limit" />
+                            </group>
                         </page>
                     </notebook>
                 </div>

@@ -183,6 +183,7 @@ class AccountMoveLine(models.Model):
         string="Asset",
         ondelete="restrict",
         check_company=True,
+        copy=False,
     )
 
     @api.depends("account_id", "asset_id")
@@ -195,7 +196,10 @@ class AccountMoveLine(models.Model):
 
     @api.onchange("asset_profile_id")
     def _onchange_asset_profile_id(self):
-        if self.asset_profile_id.account_asset_id:
+        if (
+            self.asset_profile_id.account_asset_id
+            and self.asset_profile_id.account_asset_id != self.account_id
+        ):
             self.account_id = self.asset_profile_id.account_asset_id
 
     @api.model_create_multi

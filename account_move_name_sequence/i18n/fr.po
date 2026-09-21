@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-09 00:10+0000\n"
-"Last-Translator: Alexis de Lattre <alexis@via.ecp.fr>\n"
+"PO-Revision-Date: 2026-06-11 11:46+0000\n"
+"Last-Translator: Yann Papouin <ypa@decgroupe.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_move_name_sequence
 #: model:ir.model.constraint,message:account_move_name_sequence.constraint_account_move_name_state_diagonal
@@ -22,9 +22,9 @@ msgid ""
 "A move can not be posted with name \"/\" or empty value\n"
 "Check the journal sequence, please"
 msgstr ""
-"Une pièce comptable ne peut pas être comptabilisé car elle n'a pas de numéro "
-"attribué.\n"
-"Vérifiez la configuration de la séquence sur le journal concerné."
+"Une écriture ne peut pas être enregistrée avec le nom « / » ou une valeur "
+"vide.\n"
+"Veuillez vérifier la séquence du journal."
 
 #. module: account_move_name_sequence
 #: model:ir.model.fields,help:account_move_name_sequence.field_account_journal__refund_sequence
@@ -72,12 +72,6 @@ msgid "Journal Entry"
 msgstr "Pièce comptable"
 
 #. module: account_move_name_sequence
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__made_sequence_hole
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__made_sequence_hole
-msgid "Made Sequence Hole"
-msgstr "Cause un trou dans la séquence"
-
-#. module: account_move_name_sequence
 #: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__name
 #: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__name
 msgid "Number"
@@ -107,26 +101,14 @@ msgid "Sequence"
 msgstr "Séquence"
 
 #. module: account_move_name_sequence
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__sequence_number
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__sequence_number
-msgid "Sequence Number"
-msgstr "Nombre de la séquence"
-
-#. module: account_move_name_sequence
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_bank_statement_line__sequence_prefix
-#: model:ir.model.fields,field_description:account_move_name_sequence.field_account_move__sequence_prefix
-msgid "Sequence Prefix"
-msgstr "Préfixe de la séquence"
-
-#. module: account_move_name_sequence
 #: model:account.journal,name:account_move_name_sequence.journal_cash_std_demo
 msgid "Standard Cash Journal Demo"
-msgstr ""
+msgstr "Journal de caisse standard pour démonstration"
 
 #. module: account_move_name_sequence
 #: model:account.journal,name:account_move_name_sequence.journal_sale_std_demo
 msgid "Standard Sale Journal Demo"
-msgstr ""
+msgstr "Journal des ventes standard pour démonstration"
 
 #. module: account_move_name_sequence
 #. odoo-python
@@ -142,8 +124,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_move_name_sequence/models/account_journal.py:0
 msgid ""
-"The company is not set on sequence '%(sequence)s' configured on journal "
-"'%(journal)s'."
+"The company is not set on sequence '%(sequence)s' configured on journal '%"
+"(journal)s'."
 msgstr ""
 "Aucune société n'est configurée sur la séquence '%(sequence)s' configurée "
 "sur le journal '%(journal)s'."
@@ -159,3 +141,12 @@ msgstr "Cette séquence sera utilisée pour générer les numéros des avoirs."
 msgid "This sequence will be used to generate the journal entry number."
 msgstr ""
 "Cette séquence sera utilisée pour générer les numéros des pièces comptables."
+
+#~ msgid "Made Sequence Hole"
+#~ msgstr "Cause un trou dans la séquence"
+
+#~ msgid "Sequence Number"
+#~ msgstr "Nombre de la séquence"
+
+#~ msgid "Sequence Prefix"
+#~ msgstr "Préfixe de la séquence"

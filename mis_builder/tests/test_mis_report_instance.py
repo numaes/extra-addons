@@ -6,6 +6,7 @@ from odoo.tools import test_reports
 
 from ..models.accounting_none import AccountingNone
 from ..models.mis_report import TYPE_STR, SubKPITupleLengthError, SubKPIUnknownTypeError
+from .common import try_xlsx_report
 
 
 class TestMisReportInstance(common.HttpCase):
@@ -355,6 +356,27 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
 
+        # create a duplicate of first instance with different period
+        self.report_instance_4 = self.env["mis.report.instance"].create(
+            dict(
+                name="test instance",
+                report_id=self.report.id,
+                company_id=self.env.ref("base.main_company").id,
+                period_ids=[
+                    (
+                        0,
+                        0,
+                        dict(
+                            name="p2",
+                            mode="fix",
+                            manual_date_from="2015-01-01",
+                            manual_date_to="2015-12-31",
+                        ),
+                    ),
+                ],
+            )
+        )
+
     def test_compute(self):
         matrix = self.report_instance._compute_matrix()
         for row in matrix.iter_rows():
@@ -490,6 +512,68 @@ class TestMisReportInstance(common.HttpCase):
             [[False, "list"], [False, "form"], [False, "pivot"], [False, "graph"]],
         )
 
+    def test_multicompany_account_code_display(self):
+        """Account codes should display correctly in multi-company reports.
+
+        In Odoo 18, account.code is company-dependent. When a report belongs
+        to a different company than the user's current company, account codes
+        must still display correctly in auto-expanded rows.
+        """
+        company2 = self.env["res.company"].create({"name": "Test Co 2"})
+        account = (
+            self.env["account.account"]
+            .with_company(company2)
+            .create(
+                {
+                    "name": "Test Account",
+                    "code": "999001",
+                    "account_type": "expense",
+                    "company_ids": [(6, 0, [company2.id])],
+                }
+            )
+        )
+        # Verify code is visible from company2 but not from main company
+        self.assertEqual(account.with_company(company2).code, "999001")
+        self.assertFalse(account.with_company(self.env.ref("base.main_company")).code)
+        # Create report + instance for company2
+        report = self.env["mis.report"].create({"name": "MC Test Report"})
+        self.env["mis.report.kpi"].create(
+            {
+                "report_id": report.id,
+                "name": "exp",
+                "description": "Test Expense",
+                "auto_expand_accounts": True,
+                "sequence": 1,
+                "expression_ids": [(0, 0, {"name": "balp[999%]"})],
+            }
+        )
+        instance = self.env["mis.report.instance"].create(
+            {
+                "name": "MC Test Instance",
+                "report_id": report.id,
+                "company_id": company2.id,
+                "period_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "2024",
+                            "mode": "fix",
+                            "manual_date_from": "2024-01-01",
+                            "manual_date_to": "2024-12-31",
+                        },
+                    ),
+                ],
+            }
+        )
+        matrix = instance.compute()
+        body = matrix.get("body", [])
+        has_false = any("False" in (r.get("label") or "") for r in body)
+        self.assertFalse(
+            has_false,
+            "Account codes should not show as 'False' in multi-company reports",
+        )
+
     def test_qweb(self):
         self.report_instance.print_pdf()  # get action
         test_reports.try_report(
@@ -502,19 +586,25 @@ class TestMisReportInstance(common.HttpCase):
 
     def test_xlsx(self):
         self.report_instance.export_xls()  # get action
-        with self.assertLogs("odoo.tools.test_reports", level="WARNING") as log_catcher:
-            test_reports.try_report(
-                self.env.cr,
-                self.env.uid,
-                "mis_builder.mis_report_instance_xlsx",
-                [self.report_instance.id],
-                report_type="xlsx",
-            )
-        self.assertIn(
-            'Report mis_builder.mis_report_instance_xlsx produced a "xlsx" chunk, '
-            "cannot examine it",
-            log_catcher.output[0],
+        excel_workbook = try_xlsx_report(
+            self.env.cr,
+            self.env.uid,
+            "mis_builder.mis_report_instance_xlsx",
+            [self.report_instance.id],
+            report_type="xlsx",
         )
+        self.assertEqual(len(excel_workbook.sheetnames), 1)
+
+    def test_xlsx_multiple_instances(self):
+        self.report_instance.export_xls()  # get action
+        excel_workbook = try_xlsx_report(
+            self.env.cr,
+            self.env.uid,
+            "mis_builder.mis_report_instance_xlsx",
+            [self.report_instance.id, self.report_instance_4.id],
+            report_type="xlsx",
+        )
+        self.assertEqual(len(excel_workbook.sheetnames), 2)
 
     def test_get_kpis_by_account_id(self):
         account_ids = (
