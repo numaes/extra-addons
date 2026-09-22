@@ -1,0 +1,31 @@
+<odoo noupdate="1">
+    <record model="ir.module.category" id="module_category_payroll">
+        <field name="name">Payroll</field>
+        <field name="description">Manage employee payroll</field>
+        <field name="sequence">16</field>
+    </record>
+    <!-- [20.0] `res.groups.category_id` is gone. The settings screen groups
+         permissions by `res.groups.privilege`, and the privilege is what carries
+         the `ir.module.category`. `res.groups.users` is `user_ids` now, and
+         `res.users.groups_id` is `group_ids`. -->
+    <record id="payroll_privilege" model="res.groups.privilege">
+        <field name="name">Payroll</field>
+        <field name="category_id" ref="module_category_payroll"/>
+    </record>
+    <record id="group_payroll_user" model="res.groups">
+        <field name="name">Officer</field>
+        <field name="privilege_id" ref="payroll_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user')), (4, ref('hr.group_hr_manager'))]"/>
+    </record>
+    <record id="group_payroll_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="payroll_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('payroll.group_payroll_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+    <!-- [20.0] The `base.default_user` template user is gone. The groups a new
+         user is born with are now the `implied_ids` of `base.default_user_group`. -->
+    <record id="base.default_user_group" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('payroll.group_payroll_manager'))]"/>
+    </record>
+</odoo>
