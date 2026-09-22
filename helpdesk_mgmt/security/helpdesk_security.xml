@@ -1,0 +1,32 @@
+<odoo>
+    <data noupdate="0">
+        <!-- [20.0] `res.groups.category_id` is gone. The settings screen groups
+             permissions by `res.groups.privilege`, and the privilege is what carries
+             the `ir.module.category`. `res.groups.users` is `user_ids` now. -->
+        <record id="helpdesk_privilege" model="res.groups.privilege">
+            <field name="name">Helpdesk</field>
+            <field name="category_id" ref="module_helpdesk_category"/>
+        </record>
+        <record id="group_helpdesk_user_own" model="res.groups">
+            <field name="name">User: Personal tickets</field>
+            <field name="privilege_id" ref="helpdesk_privilege"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_helpdesk_user_team" model="res.groups">
+            <field name="name">User: Team tickets</field>
+            <field name="privilege_id" ref="helpdesk_privilege"/>
+            <field name="implied_ids" eval="[(4, ref('group_helpdesk_user_own'))]"/>
+        </record>
+        <record id="group_helpdesk_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="privilege_id" ref="helpdesk_privilege"/>
+            <field name="implied_ids" eval="[(4, ref('group_helpdesk_user_team'))]"/>
+        </record>
+        <record id="group_helpdesk_manager" model="res.groups">
+            <field name="name">Helpdesk Manager</field>
+            <field name="privilege_id" ref="helpdesk_privilege"/>
+            <field name="implied_ids" eval="[(4, ref('group_helpdesk_user'))]"/>
+            <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    [20.0] The portal home no longer lets a module inject a `portal_docs_entry`
+    call into a static `<div id="portal_common_category">`: that div is gone, and
+    `portal.portal_my_home` now iterates `portal_cards`, a recordset of
+    `portal.entry`. A card is a data record, not a template patch.
+-->
+<odoo noupdate="1">
+    <record id="portal_entry_my_tickets" model="portal.entry">
+        <field name="name">Tickets</field>
+        <field name="description">Follow and comment your helpdesk tickets</field>
+        <field name="url">/my/tickets</field>
+        <field name="image" type="bytes" file="helpdesk_mgmt/static/src/img/helpdesk_icon.svg"/>
+        <field name="placeholder_count">ticket_count</field>
+        <field name="category">client_category</field>
+    </record>
+</odoo>
