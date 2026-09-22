@@ -199,23 +199,21 @@ ref('hr_salary_rule_convanceallowance1'),ref('hr_salary_rule_professionaltax1'),
             file="payroll/static/img/hr_employee_payroll-image.jpg"
         />
     </record>
-    <!-- Employee Contract -->
-    <record id="hr_contract_firstcontract1" model="hr.version">
-        <field name="name">Marketing Executive Contract</field>
+    <!-- [20.0] A contract is not a record of its own any more: `hr.contract`
+         became `hr.version`, an employee is created with one, and versions are
+         unique per employee and date — creating a second one here collided.
+         `hr.employee` `_inherits` from `hr.version`, so the contract terms
+         written on the employee land on the version it already has. -->
+    <record id="hr_employee_payroll" model="hr.employee">
         <field name="contract_date_start" eval="time.strftime('%Y-%m')+'-1'" />
         <field name="contract_date_end" eval="time.strftime('%Y')+'-12-31'" />
         <field name="struct_id" ref="payroll.structure_001" />
-        <field name="employee_id" ref="hr_employee_payroll" />
-        <field name="notes">Default contract for marketing executives</field>
         <field eval="4000.0" name="wage" />
     </record>
-    <record id="hr_contract_marc_demo" model="hr.version">
-        <field name="name">Contract For Marc Demo</field>
+    <record id="hr.employee_qdp" model="hr.employee">
         <field name="contract_date_start" eval="time.strftime('%Y-%m')+'-1'" />
         <field name="contract_date_end" eval="time.strftime('%Y')+'-12-31'" />
         <field name="struct_id" ref="payroll.structure_002" />
-        <field name="employee_id" ref="hr.employee_qdp" />
-        <field name="notes">This is Marc Demo's contract</field>
         <field eval="5000.0" name="wage" />
     </record>
 </odoo>

@@ -4,28 +4,32 @@
   Copyright 2022 Moduon Team <edu@moduon.team>
   Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 -->
+<!--
+  [20.0] `res.bank` was removed from Odoo along with `base.res_bank_1`: an
+  account now carries the bank as free text in `bank_name`.
+-->
 <odoo noupdate="1">
     <record id="ofx_partner_bank_1" model="res.partner.bank">
         <field name="account_number">BE02631118262640</field>
         <field name="partner_id" ref="base.res_partner_2" />
-        <field name="bank_id" ref="base.res_bank_1" />
+        <field name="bank_name">Bank of Demo</field>
     </record>
 
     <record id="ofx_partner_bank_2" model="res.partner.bank">
         <field name="account_number">20987654321</field>
         <field name="partner_id" ref="base.res_partner_3" />
-        <field name="bank_id" ref="base.res_bank_1" />
+        <field name="bank_name">Bank of Demo</field>
     </record>
 
     <record id="qif_partner_bank_1" model="res.partner.bank">
         <field name="account_number">21987654321</field>
         <field name="partner_id" ref="base.res_partner_4" />
-        <field name="bank_id" ref="base.res_bank_1" />
+        <field name="bank_name">Bank of Demo</field>
     </record>
 
     <record id="qif_partner_bank_2" model="res.partner.bank">
         <field name="account_number">22987654321</field>
         <field name="partner_id" ref="base.res_partner_3" />
-        <field name="bank_id" ref="base.res_bank_1" />
+        <field name="bank_name">Bank of Demo</field>
     </record>
 </odoo>
