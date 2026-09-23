@@ -103,3 +103,28 @@ msgstr "Informe de ventas pendientes de entrega"
 #: model_terms:ir.ui.view,arch_db:sunray_so_pending_delivery.view_pending_delivery_report_search
 msgid "Salesperson"
 msgstr "Vendedor"
+
+#. module: sunray_so_pending_delivery
+#: model:ir.model.fields,field_description:sunray_so_pending_delivery.field_sunray_pending_delivery_report__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: sunray_so_pending_delivery
+#: model:ir.model.fields,field_description:sunray_so_pending_delivery.field_sunray_pending_delivery_report__price_unit
+msgid "Unit Price"
+msgstr "Precio unitario"
+
+#. module: sunray_so_pending_delivery
+#: model:ir.model.fields,field_description:sunray_so_pending_delivery.field_sunray_pending_delivery_report__price_subtotal
+msgid "Subtotal (Tax Excl.)"
+msgstr "Subtotal sin impuestos"
+
+#. module: sunray_so_pending_delivery
+#: model:ir.model.fields,field_description:sunray_so_pending_delivery.field_sunray_pending_delivery_report__price_total
+msgid "Subtotal (Tax Incl.)"
+msgstr "Subtotal con impuestos"
+
+#. module: sunray_so_pending_delivery
+#: model_terms:ir.ui.view,arch_db:sunray_so_pending_delivery.view_pending_delivery_report_tree
+msgid "Total"
+msgstr "Total"

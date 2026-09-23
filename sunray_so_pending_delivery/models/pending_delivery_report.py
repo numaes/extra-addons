@@ -14,6 +14,10 @@ class PendingDeliveryReport(models.Model):
     product_uom_qty = fields.Float(string="Ordered Quantity", readonly=True)
     qty_delivered = fields.Float(string="Delivered Quantity", readonly=True)
     qty_pending = fields.Float(string="Pending Quantity", readonly=True)
+    currency_id = fields.Many2one('res.currency', string="Currency", readonly=True)
+    price_unit = fields.Float(string="Unit Price", digits='Product Price', readonly=True)
+    price_subtotal = fields.Monetary(string="Subtotal (Tax Excl.)", readonly=True)
+    price_total = fields.Monetary(string="Subtotal (Tax Incl.)", readonly=True)
     user_id = fields.Many2one('res.users', string="Salesperson", readonly=True)
     company_id = fields.Many2one('res.company', string="Company", readonly=True)
 
@@ -30,6 +34,10 @@ class PendingDeliveryReport(models.Model):
                     l.product_uom_qty as product_uom_qty,
                     l.qty_delivered as qty_delivered,
                     (l.product_uom_qty - l.qty_delivered) as qty_pending,
+                    l.currency_id as currency_id,
+                    l.price_unit as price_unit,
+                    l.price_subtotal as price_subtotal,
+                    l.price_total as price_total,
                     s.user_id as user_id,
                     l.company_id as company_id
                 FROM
