@@ -18,6 +18,7 @@ class PendingDeliveryReport(models.Model):
     price_unit = fields.Float(string="Unit Price", digits='Product Price', readonly=True)
     price_subtotal = fields.Monetary(string="Subtotal (Tax Excl.)", readonly=True)
     price_total = fields.Monetary(string="Subtotal (Tax Incl.)", readonly=True)
+    price_subtotal_pending = fields.Monetary(string="Pending Subtotal (Tax Excl.)", readonly=True)
     user_id = fields.Many2one('res.users', string="Salesperson", readonly=True)
     company_id = fields.Many2one('res.company', string="Company", readonly=True)
 
@@ -38,6 +39,9 @@ class PendingDeliveryReport(models.Model):
                     l.price_unit as price_unit,
                     l.price_subtotal as price_subtotal,
                     l.price_total as price_total,
+                    -- Prorated from the line subtotal so discounts and tax-included prices carry over
+                    l.price_subtotal * (l.product_uom_qty - l.qty_delivered)
+                        / NULLIF(l.product_uom_qty, 0) as price_subtotal_pending,
                     s.user_id as user_id,
                     l.company_id as company_id
                 FROM

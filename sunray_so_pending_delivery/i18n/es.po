@@ -115,6 +115,11 @@ msgid "Unit Price"
 msgstr "Precio unitario"
 
 #. module: sunray_so_pending_delivery
+#: model:ir.model.fields,field_description:sunray_so_pending_delivery.field_sunray_pending_delivery_report__price_subtotal_pending
+msgid "Pending Subtotal (Tax Excl.)"
+msgstr "Subtotal pendiente sin impuestos"
+
+#. module: sunray_so_pending_delivery
 #: model:ir.model.fields,field_description:sunray_so_pending_delivery.field_sunray_pending_delivery_report__price_subtotal
 msgid "Subtotal (Tax Excl.)"
 msgstr "Subtotal sin impuestos"

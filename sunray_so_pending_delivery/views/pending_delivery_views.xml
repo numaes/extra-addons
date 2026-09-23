@@ -39,6 +39,7 @@
                     <field name="price_unit" optional="show"/>
                     <field name="price_subtotal" optional="show" sum="Total"/>
                     <field name="price_total" optional="show" sum="Total"/>
+                    <field name="price_subtotal_pending" optional="show" sum="Total"/>
                     <field name="user_id" optional="show"/>
                 </list>
             </field>
