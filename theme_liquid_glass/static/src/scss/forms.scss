@@ -51,6 +51,18 @@
     }
 }
 
+// [20.0] Each field now gets a label cell whose label only shows on small screens
+// (`label.d-md-none`). On a desktop the cell is empty, and painting it as a glass
+// panel drew an empty bar above every field. Only the glass is removed: the cell keeps
+// the spacing core gives it.
+@include media-breakpoint-up(md) {
+    .o_cell.o_wrap_label:not(:has(> :not(.d-md-none))) {
+        background: transparent !important;
+        border: 0 !important;
+        padding: 0;
+    }
+}
+
 .o_notebook {
     .nav-tabs {
         @include transparent-bg;

@@ -34,7 +34,7 @@
             'muk_web_chatter/static/src/chatter/*.xml',
             (
                 'after', 
-                'mail/static/src/chatter/web_portal/chatter.js', 
+                'mail/static/src/chatter/web_portal_project/chatter.js', 
                 'muk_web_chatter/static/src/chatter/chatter.js'
             ),
             (

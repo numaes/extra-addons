@@ -1,6 +1,6 @@
 /* @odoo-module */
 
-import { useState, useRef } from '@odoo/owl';
+import { proxy, signal } from "@odoo/owl";
 import { patch } from '@web/core/utils/patch';
 import { browser } from "@web/core/browser/browser";
 import { session } from '@web/session';
@@ -10,17 +10,17 @@ import { FormRenderer } from '@web/views/form/form_renderer';
 patch(FormRenderer.prototype, {
     setup() {
         super.setup();
-        this.chatterState = useState({
+        this.chatterState = proxy({
             width: browser.localStorage.getItem('muk_web_chatter.width'),
         });
-        this.chatterContainer = useRef('chatterContainer');
+        this.chatterContainer = signal.ref();
     },
     onStartChatterResize(ev) {
         if (ev.button !== 0) {
             return;
         }
         const initialX = ev.pageX;
-        const chatterElement = this.chatterContainer.el;
+        const chatterElement = this.chatterContainer();
         const initialWidth = chatterElement.offsetWidth;
         const resizeStoppingEvents = [
             'keydown', 'mousedown', 'mouseup'

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <odoo>
-	
+
+	<!--
+		[20.0] web.webclient_bootstrap no longer sets `body_classname` with a t-set: it
+		passes it to web.layout as `body_classname.f`. The sidebar class is added there.
+	-->
 	<template id="webclient_bootstrap" name="Web Client" inherit_id="web.webclient_bootstrap">
-        <xpath expr="//t[@t-set='body_classname']" position="after">
-        	<t t-set="body_sidebar_classname" t-value="'mk_sidebar_type_' + request.env.user.sidebar_type or 'large'"/>
-            <t t-set="body_classname" t-value="'%s %s' % (body_classname, body_sidebar_classname)"/>
+        <xpath expr="//t[@t-call='web.layout']" position="attributes">
+            <attribute name="body_classname.f">o_web_client mk_sidebar_type_{{ request.env.user.sidebar_type or 'large' }}</attribute>
         </xpath>
     </template>
-    
+
 </odoo>

@@ -2,12 +2,12 @@
 <templates xml:space="preserve">
     <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
         <xpath expr="//t[@t-else='']/div" position="replace">
-            <div t-if="!isScopedApp" class="o_navbar_apps_menu">
+            <div t-if="!this.isScopedApp" class="o_navbar_apps_menu">
                 <button class="o_navbar_sidebar_toggle border-0" 
                         data-hotkey="h" 
                         title="Home Menu"
-                        t-on-click.prevent="toggleSidebar">
-                    <i class="oi oi-apps fs-4"/>
+                        t-on-click.prevent="() => this.toggleSidebar()">
+                    <i class="oi fs-4" data-icon="apps"/>
                 </button>
             </div>
         </xpath>
@@ -15,22 +15,22 @@
 
     <t t-inherit="web.NavBar" t-inherit-mode="extension">
         <xpath expr="//nav" position="after">
-            <t t-portal="'body'">
-                <div t-if="sidebarState.isOpen" class="o_custom_sidebar_overlay" t-on-click="closeSidebar"/>
-                <div class="o_apps_sidebar" t-att-class="{ 'o_sidebar_open': sidebarState.isOpen }" t-on-click.stop="">
+            <t t-custom-portal="'body'">
+                <div t-if="this.sidebarState.isOpen" class="o_custom_sidebar_overlay" t-on-click="() => this.closeSidebar()"/>
+                <div class="o_apps_sidebar" t-att-class="{ 'o_sidebar_open': this.sidebarState.isOpen }" t-on-click.stop="">
                     <div class="o_sidebar_header">
                         <h3>Applications</h3>
-                        <i class="oi oi-close o_sidebar_close" t-on-click="closeSidebar"/>
+                        <i class="oi o_sidebar_close" data-icon="close" t-on-click="() => this.closeSidebar()"/>
                     </div>
                     <div class="o_apps_sidebar_content">
-                        <div t-foreach="menuService.getApps()" t-as="app" t-key="app.id" 
+                        <div t-foreach="this.menuService.getApps()" t-as="app" t-key="app.id" 
                              class="o_apps_sidebar_item" 
                              t-on-click="() => this.onNavBarAppClick(app)">
                             <div class="o_app_icon_container">
                                 <img t-if="app.webIconData" t-att-src="app.webIconData" class="o_app_icon"/>
-                                <i t-else="" class="fa fa-th-large o_app_icon_placeholder"/>
+                                <i t-else="" class="oi o_app_icon_placeholder" data-icon="grid_view"/>
                             </div>
-                            <span class="o_app_name" t-esc="app.name"/>
+                            <span class="o_app_name" t-out="app.name"/>
                         </div>
                     </div>
                 </div>

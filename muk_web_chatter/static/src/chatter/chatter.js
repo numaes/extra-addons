@@ -1,27 +1,17 @@
 /* @odoo-module */
 
 import { patch } from "@web/core/utils/patch";
-import { browser } from "@web/core/browser/browser";
 
-import { Chatter } from "@mail/chatter/web_portal/chatter";
+import { Chatter } from "@mail/chatter/web_portal_project/chatter";
+
+import { setShowTracking, trackingState } from "../core/tracking_state";
 
 patch(Chatter.prototype, {
     setup() {
         super.setup();
-        const showTracking = browser.localStorage.getItem(
-            'muk_web_chatter.tracking'
-        );
-        this.state.showTracking = (
-            showTracking != null ? JSON.parse(showTracking) : true
-        );
+        this.trackingState = trackingState;
     },
     onClickTrackingToggle() {
-        const showTracking = !this.state.showTracking;
-        browser.localStorage.setItem(
-            'muk_web_chatter.tracking', showTracking
-        );
-        this.state.showTracking = showTracking;
+        setShowTracking(!this.trackingState.show);
     },
 });
-
-

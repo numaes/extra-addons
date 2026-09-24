@@ -228,6 +228,14 @@ input[type="radio"]:checked {
     --o-caret-color: #{$text-muted};
 }
 
+// [20.0] Core now paints the chatter's container with the web client background, a
+// light colour, behind the glass card; in 18.0 it had none. Transparent again, so the
+// card sits on the theme's wallpaper like the form does.
+.o-mail-ChatterContainer,
+.o-mail-Form-chatter {
+    background-color: transparent !important;
+}
+
 .o-mail-Chatter {
     @include glass-card($glass-bg-light, $blur-medium);
     border: 2px solid $glass-border !important;

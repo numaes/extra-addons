@@ -2,25 +2,20 @@
 
 import { patch } from "@web/core/utils/patch";
 
-import { Thread } from '@mail/core/common/thread';
+import { Thread } from "@mail/core/common/thread";
+
+import { trackingState } from "../tracking_state";
 
 patch(Thread.prototype, {
-    get displayMessages() {
-        let messages = (
-            this.props.order === 'asc' ?
-            this.props.thread.nonEmptyMessages :
-            [...this.props.thread.nonEmptyMessages].reverse()
-        );
-        if (!this.props.showTrackingMessages) {
-            messages = messages.filter(
-                (msg) => msg.trackingValues.length == 0
-            );
+    /**
+     * Hide tracking messages in a record's chatter when the user turned them off.
+     * Discuss channels are never filtered.
+     */
+    get orderedMessages() {
+        const messages = super.orderedMessages;
+        if (trackingState.show || this.props.thread.model === "discuss.channel") {
+            return messages;
         }
-        return messages;
+        return messages.filter((message) => message.message_type !== "tracking");
     },
 });
-
-Thread.props = [
-    ...Thread.props,
-    'showTrackingMessages?',
-];
