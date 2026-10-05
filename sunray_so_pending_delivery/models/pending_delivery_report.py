@@ -1,4 +1,4 @@
-from odoo import models, fields, tools
+from odoo import api, fields, models, tools
 
 class PendingDeliveryReport(models.Model):
     _name = "sunray.pending.delivery.report"
@@ -9,6 +9,7 @@ class PendingDeliveryReport(models.Model):
 
     order_id = fields.Many2one('sale.order', string="Sale Order", readonly=True)
     partner_id = fields.Many2one('res.partner', string="Customer", readonly=True)
+    partner_credit = fields.Monetary(related='partner_id.credit', string="Saldo pendiente", readonly=True)
     date_order = fields.Datetime(string="Order Date", readonly=True)
     product_id = fields.Many2one('product.product', string="Product", readonly=True)
     product_uom_qty = fields.Float(string="Ordered Quantity", readonly=True)
@@ -19,8 +20,21 @@ class PendingDeliveryReport(models.Model):
     price_subtotal = fields.Monetary(string="Subtotal (Tax Excl.)", readonly=True)
     price_total = fields.Monetary(string="Subtotal (Tax Incl.)", readonly=True)
     price_subtotal_pending = fields.Monetary(string="Pending Subtotal (Tax Excl.)", readonly=True)
+    price_total_pending = fields.Monetary(
+        string="Subtotal c/impuestos",
+        compute='_compute_price_total_pending',
+        readonly=True,
+    )
     user_id = fields.Many2one('res.users', string="Salesperson", readonly=True)
     company_id = fields.Many2one('res.company', string="Company", readonly=True)
+
+    @api.depends('price_subtotal_pending', 'price_total', 'price_subtotal')
+    def _compute_price_total_pending(self):
+        for record in self:
+            if record.price_subtotal:
+                record.price_total_pending = record.price_subtotal_pending * (record.price_total / record.price_subtotal)
+            else:
+                record.price_total_pending = record.price_subtotal_pending
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
