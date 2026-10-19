@@ -31,7 +31,7 @@
     'author': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
     'license': 'LGPL-3',
-    'depends': ['web', 'base'],
+    'depends': ['web', 'base', 'account_statement_base'],
     'assets': {
         'web.assets_backend': [
             'theme_liquid_glass/static/src/scss/variables.scss',
