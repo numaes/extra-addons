@@ -542,6 +542,9 @@ class AccountAssetAsset(models.Model):
             return depreciation_ids.create_grouped_move()
         return depreciation_ids.create_move()
 
+    def action_create_entries_today(self):
+        self._compute_entries(fields.Date.today())
+
     @api.model_create_multi
     def create(self, vals_list):
         assets = super(AccountAssetAsset, self.with_context(mail_create_nolog=True)).create(vals_list)
@@ -597,6 +600,7 @@ class AccountAssetDepreciationLine(models.Model):
                                 store=True)
     move_posted_check = fields.Boolean(compute='_get_move_posted_check',
                                        string='Posted', store=True)
+    is_overdue = fields.Boolean(compute='_compute_is_overdue', string='Overdue')
     currency_id = fields.Many2one('res.currency', string='Currency',
                                   related='asset_id.currency_id',
                                   readonly=True)
@@ -610,6 +614,12 @@ class AccountAssetDepreciationLine(models.Model):
     def _get_move_posted_check(self):
         for line in self:
             line.move_posted_check = True if line.move_id and line.move_id.state == 'posted' else False
+
+    @api.depends('depreciation_date')
+    def _compute_is_overdue(self):
+        today = fields.Date.today()
+        for line in self:
+            line.is_overdue = bool(line.depreciation_date and line.depreciation_date <= today)
 
     def create_move(self, post_move=True):
         created_moves = self.env['account.move']
