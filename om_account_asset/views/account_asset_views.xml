@@ -81,7 +81,7 @@
                                            invisible="parent_state != 'open'"/>
                                     <field name="move_posted_check" readonly="1"/>
                                     <field name="parent_state" readonly="1"/>
-                                    <field name="is_overdue" invisible="1"/>
+                                    <field name="is_overdue" readonly="1"/>
                                     <button name="create_move" string="Create Entry" type="object" icon="fa-plus"
                                             invisible="move_check or not is_overdue or parent_state != 'open'"/>
                                 </list>
