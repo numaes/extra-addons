@@ -77,7 +77,7 @@
                                     <field name="remaining_value" readonly="1" widget="monetary" string="Residual"/>
                                     <field name="move_check" readonly="1"
                                            invisible="parent_state != 'open'"/>
-                                    <field name="move_posted_check" invisible="1"/>
+                                    <field name="move_posted_check" readonly="1"/>
                                     <field name="parent_state" invisible="1"/>
                                 </list>
                                 <form string="Depreciation Lines" create="false">
