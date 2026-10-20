@@ -584,7 +584,7 @@ class AccountAssetDepreciationLine(models.Model):
     asset_id = fields.Many2one('account.asset.asset', string='Asset',
                                required=True, ondelete='cascade')
     parent_state = fields.Selection(related='asset_id.state',
-                                    string='State of Asset')
+                                    string='State of Asset', store=True)
     amount = fields.Monetary(string='Current Depreciation',
                              required=True)
     remaining_value = fields.Monetary(string='Next Period Depreciation',
