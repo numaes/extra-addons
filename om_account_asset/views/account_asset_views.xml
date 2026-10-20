@@ -78,7 +78,7 @@
                                     <field name="move_check" readonly="1"
                                            invisible="parent_state != 'open'"/>
                                     <field name="move_posted_check" readonly="1"/>
-                                    <field name="parent_state" invisible="1"/>
+                                    <field name="parent_state" readonly="1"/>
                                 </list>
                                 <form string="Depreciation Lines" create="false">
                                     <group>
